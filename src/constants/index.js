@@ -90,11 +90,15 @@ export const footerLinks = [
     links: [
       {
         name: "Terms & Services",
-        link: "https://app.termly.io/document/terms-and-conditions/22db5147-f672-4e1a-8ce9-0568d1c88332",
+        href: "https://app.termly.io/document/terms-and-conditions/22db5147-f672-4e1a-8ce9-0568d1c88332",
       },
 			{
         name: "Privacy Policy",
-        link: "https://app.termly.io/document/privacy-policy/73841773-0c89-4160-9269-9bc3ba0a4dbd",
+        href: "https://app.termly.io/document/privacy-policy/73841773-0c89-4160-9269-9bc3ba0a4dbd",
+      },
+			{
+        name: "Sitemap",
+        href: "/sitemap.xml",
       },
     ],
   },
