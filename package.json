@@ -1,14 +1,16 @@
 {
   "name": "bank_website",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
+    "build:deploy": "env-cmd -f .env.production yarn build && firebase deploy -P prod-friendly-realtor --only hosting",
+    "dev": "vite",
     "preview": "vite preview"
   },
   "dependencies": {
+    "env-cmd": "^10.1.0",
     "firebase": "^9.18.0",
     "js-cookie": "^3.0.1",
     "react": "^18.2.0",
