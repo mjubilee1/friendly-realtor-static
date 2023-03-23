@@ -9,7 +9,7 @@ const NotFound404 = lazy(() => import('./pages/404'));
 const App = () => {
 	return <FirebaseProvider>
 		<BrowserRouter>
-			<div className={`bg-primary w-full overflow-hidden`}>
+			<div className={`bg-secondary w-full overflow-hidden`}>
 				{window.location.pathname === "/" &&
 				<div>
 					<div className={`${styles.paddingX} ${styles.flexCenter}`}>
@@ -18,13 +18,13 @@ const App = () => {
 						</div>
 					</div>
 
-					<div className={`bg-primary ${styles.flexStart}`}>
+					<div className={`bg-secondary ${styles.flexStart}`}>
 						<div className={`${styles.boxWidth}`}>
 							<Hero />
 						</div>
 					</div>
 				</div>}
-				<div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
+				<div className={`bg-secondary ${styles.paddingX} ${styles.flexCenter}`}>
 				<Routes>
 					<Route
 						path="*"
