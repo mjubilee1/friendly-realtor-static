@@ -9,7 +9,7 @@ const Hero = () => {
         <div className="flex flex-row justify-between items-center w-full">
           <h1 className="flex-1 font-ubuntu font-semibold ss:text-[72px] text-[52px] text-white ss:leading-[100px] leading-[75px]">
 					A powerful tool to <br className="sm:block hidden"/> {" "}
-            <span className="text-gradient">Streamline</span> {" "}
+            <span className="text-primary">Streamline</span> {" "}
           </h1>
 
           <div className="ss:flex hidden md:mr-4 mr-0">
