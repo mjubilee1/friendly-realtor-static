@@ -35,12 +35,8 @@ const App = () => {
 						element={
 							<Suspense>
 								<div className={`${styles.boxWidth}`}>
-									<Stats />
 									<Business />
-									<Billing />
-									<CardDeal />
-									<Testimonials />
-									<CTA />
+									{/*<Testimonials />*/}
 									<Footer />
 								</div>
 							</Suspense>

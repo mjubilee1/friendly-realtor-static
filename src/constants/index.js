@@ -19,21 +19,21 @@ export const features = [
   {
     id: "feature-1",
     icon: star,
-    title: "Rewards",
+    title: "Quick CMA estimates",
     content:
-      "The best credit cards offer some tantalizing combinations of promotions and prizes",
+      "Get a CMA estimate within seconds, that saves you to focus on building relationships.",
   },
   {
     id: "feature-2",
     icon: shield,
-    title: "100% Secured",
+    title: "Continue Education Learning",
     content:
-      "We take proactive steps make sure your information and transactions are secure.",
+      "We take pride in providing tool that help you deliver effiencelty in the field.",
   },
   {
     id: "feature-3",
     icon: send,
-    title: "Balance Transfer",
+    title: "Continue Renewal License Tracker",
     content:
       "A balance transfer credit card can save you a lot of money in interest charges.",
   },
