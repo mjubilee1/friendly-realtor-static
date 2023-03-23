@@ -7,7 +7,7 @@ const Hero = () => {
     <section id="home" className={`flex md:flex-row flex-col ${styles.paddingY}`}>
       <div className={`flex-1 flex justify-start items-start flex-col xl:px-0 sm:px-16 px-6`}>
         <div className="flex flex-row justify-between items-center w-full">
-          <h1 className="flex-1 font-poppins font-semibold ss:text-[72px] text-[52px] text-white ss:leading-[100px] leading-[75px]">
+          <h1 className="flex-1 font-ubuntu font-semibold ss:text-[72px] text-[52px] text-white ss:leading-[100px] leading-[75px]">
 					A powerful tool to <br className="sm:block hidden"/> {" "}
             <span className="text-gradient">Streamline</span> {" "}
           </h1>
@@ -16,7 +16,7 @@ const Hero = () => {
               <GetStarted />
           </div>
         </div>
-        <h1  className="font-poppins font-semibold ss:text-[68px] text-[52px] text-white ss:leading-[100px] leading-[75px] w-full">your Real estate business?</h1>
+        <h1  className="font-ubuntu font-semibold ss:text-[68px] text-[52px] text-white ss:leading-[100px] leading-[75px] w-full">your Real estate business?</h1>
       </div>
 
 

@@ -10,7 +10,7 @@ module.exports = {
         dimBlue: "rgba(9, 151, 124, 0.1)",
       },
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        ubuntu: ["Ubuntu", "sans-serif"],
       },
     },
     screens: {
