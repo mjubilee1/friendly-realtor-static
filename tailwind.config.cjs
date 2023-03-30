@@ -7,7 +7,7 @@ module.exports = {
         primary: "#02FDAA",
         secondary: "#2D3243",
         dimWhite: "#F2F2F2",
-        dimBlue: "rgba(9, 151, 124, 0.1)",
+        dimGreen: "rgba(2, 253, 170, 0.1)",
       },
       fontFamily: {
         ubuntu: ["Ubuntu", "sans-serif"],
