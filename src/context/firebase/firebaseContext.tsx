@@ -28,12 +28,14 @@ export function FirebaseProvider({ children }) {
       measurementId: import.meta.env.VITE__FIREBASE_MEASUREMENT_ID
     });
     setFirebaseApp(app);
-  }, [firebaseApp]);
+  }, []);
 
   useEffect(() => {
-    setFireStore(getFirestore(firebaseApp));
-    setFirebaseStorage(getStorage(firebaseApp));
-    setAnalytics(getAnalytics(firebaseApp));
+		if (firebaseApp) {
+			setFireStore(getFirestore(firebaseApp));
+			setFirebaseStorage(getStorage(firebaseApp));
+			setAnalytics(getAnalytics(firebaseApp));
+		}
   }, [firebaseApp]);
 
   return <FirebaseContext.Provider value={{ fireStore, firebaseStorage, analytics }}>{children}</FirebaseContext.Provider>;

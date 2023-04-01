@@ -21,10 +21,9 @@ export default function AddLink({ ...props }: AddLinkProps) {
   }
 
   if (isExternal(to)) {
-    const newWindowSrText = target && target === '_blank' ? <span className="sr-only">This link opens a new window</span> : null;
     return (
       <a href={to} {...props}>
-        {children} {newWindowSrText}
+        {children}
       </a>
     );
   }

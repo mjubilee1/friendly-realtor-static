@@ -4,12 +4,14 @@ import { Billing, Business, CardDeal, CTA, Footer, Navbar, Stats, Testimonials, 
 import { FirebaseProvider } from './context';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProfilePage from './pages/profile';
+import AppRoutes from './router/AppRoutes';
 
 const NotFound404 = lazy(() => import('./pages/404'));
 
 const App = () => {
-	return <FirebaseProvider>
+	return (
 		<BrowserRouter>
+		<FirebaseProvider>
 			<div className={`bg-secondary w-full overflow-hidden`}>
 					<div className={`${styles.paddingX} ${styles.flexCenter}`}>
 						<div className={`${styles.boxWidth}`}>
@@ -48,8 +50,9 @@ const App = () => {
 				</Routes>
 				</div>
 			</div>
+			</FirebaseProvider>
 		</BrowserRouter>
-	</FirebaseProvider>
+	)
 };
 
 export default App;
