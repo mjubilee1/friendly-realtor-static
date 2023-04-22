@@ -6,7 +6,7 @@ import { firestore } from '../../context';
 
 const ProfilePage = ({ data }) => {
 
-	if (!data.name) {
+	if (!data || !data.name) {
 		return <p className="text-white text-4xl flex justify-center">No Profile Found!</p>
 	}
 
@@ -44,7 +44,22 @@ const ProfilePage = ({ data }) => {
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+	const userRef = collection(firestore, "users");
+	const querySnapshot = await getDocs(userRef);
+	let data = [];
+	querySnapshot.forEach((doc) => {
+		data.push(doc.data())
+	});
+
+  const paths = data.filter((user) => user.userName).map((user) => ({
+    params: { username: user.userName },
+  }))
+
+  return { paths, fallback: false }
+}
+
+export async function getStaticProps(context) {
 	const userRef = collection(firestore, "users");
 	const q = query(userRef, where("username", "==", context.params.username));
 	const querySnapshot = await getDocs(q);
