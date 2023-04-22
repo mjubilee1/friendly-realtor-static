@@ -6,8 +6,8 @@ import { firestore } from '../../context';
 
 const ProfilePage = ({ data }) => {
 
-	if (!data) {
-		return null
+	if (!data.name) {
+		return <p className="text-white text-4xl flex justify-center">No Profile Found!</p>
 	}
 
 	return (
