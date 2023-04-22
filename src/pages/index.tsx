@@ -1,7 +1,6 @@
 import styles from "../styles/styles";
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import {  Navbar, Hero } from "../components";
+import {  Navbar, Hero, Footer } from "../components";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +24,7 @@ export default function Home() {
 				<div className={`bg-secondary ${styles.paddingX} ${styles.flexCenter}`}>
 				</div>
 			</div>
+			<Footer />
 	</main>
   )
 }
