@@ -19,21 +19,21 @@ export const features = [
   {
     id: "feature-1",
     icon: star,
-    title: "Rewards",
+    title: "Quick CMA estimates",
     content:
-      "The best credit cards offer some tantalizing combinations of promotions and prizes",
+      "Get a CMA estimate within seconds, that saves you to focus on building relationships.",
   },
   {
     id: "feature-2",
     icon: shield,
-    title: "100% Secured",
+    title: "Continue Education Learning",
     content:
-      "We take proactive steps make sure your information and transactions are secure.",
+      "We take pride in providing tool that help you deliver effiencelty in the field.",
   },
   {
     id: "feature-3",
     icon: send,
-    title: "Balance Transfer",
+    title: "Continue Renewal License Tracker",
     content:
       "A balance transfer credit card can save you a lot of money in interest charges.",
   },
@@ -90,11 +90,15 @@ export const footerLinks = [
     links: [
       {
         name: "Terms & Services",
-        link: "https://app.termly.io/document/terms-and-conditions/22db5147-f672-4e1a-8ce9-0568d1c88332",
+        href: "https://app.termly.io/document/terms-and-conditions/22db5147-f672-4e1a-8ce9-0568d1c88332",
       },
 			{
         name: "Privacy Policy",
-        link: "https://app.termly.io/document/privacy-policy/73841773-0c89-4160-9269-9bc3ba0a4dbd",
+        href: "https://app.termly.io/document/privacy-policy/73841773-0c89-4160-9269-9bc3ba0a4dbd",
+      },
+			{
+        name: "Sitemap",
+        href: "/sitemap.xml",
       },
     ],
   },
@@ -104,22 +108,12 @@ export const socialMedia = [
   {
     id: "social-media-1",
     icon: instagram,
-    link: "https://www.instagram.com/",
+    link: "https://www.instagram.com/friendlyrealtor.app/",
   },
   {
     id: "social-media-2",
     icon: facebook,
-    link: "https://www.facebook.com/",
-  },
-  {
-    id: "social-media-3",
-    icon: twitter,
-    link: "https://www.twitter.com/",
-  },
-  {
-    id: "social-media-4",
-    icon: linkedin,
-    link: "https://www.linkedin.com/",
+    link: "https://www.facebook.com/profile.php?id=100091290482188",
   },
 ];
 
