@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link'
 import { Button } from '..';
 import { AddLinkProps } from './AddLinkTypes';
 
@@ -29,7 +30,7 @@ export default function AddLink({ ...props }: AddLinkProps) {
   }
 
   return (
-    <Link to={to} {...props}>
+    <Link href={to} {...props}>
       {children}
     </Link>
   );

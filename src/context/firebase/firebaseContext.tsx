@@ -19,13 +19,13 @@ export function FirebaseProvider({ children }) {
 
   useEffect(() => {
     const app = initializeApp({
-      apiKey: import.meta.env.VITE_FIREBASE_KEY,
-      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-      appId: import.meta.env.VITE_FIREBASE_APP_ID,
-      measurementId: import.meta.env.VITE__FIREBASE_MEASUREMENT_ID
+      apiKey: process.env.NEXT_PUBLIC_FIREBASE_KEY,
+      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+      appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+      measurementId: process.env.NEXT_PUBLIC__FIREBASE_MEASUREMENT_ID
     });
     setFirebaseApp(app);
   }, []);
@@ -38,7 +38,7 @@ export function FirebaseProvider({ children }) {
 		}
   }, [firebaseApp]);
 
-  return <FirebaseContext.Provider value={{ fireStore, firebaseStorage, analytics }}>{children}</FirebaseContext.Provider>;
+  return <FirebaseContext.Provider value={{ fireStore, firebaseApp, firebaseStorage, analytics }}>{children}</FirebaseContext.Provider>;
 }
 
 export const useFirebaseContext = () => useContext(FirebaseContext);
