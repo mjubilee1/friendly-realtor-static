@@ -1,6 +1,6 @@
 import styles from "../styles/styles";
 import { Inter } from 'next/font/google'
-import {  Navbar, Hero, Footer } from "../components";
+import {  Navbar, Hero, Footer, Business } from "../components";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,6 +22,7 @@ export default function Home() {
 						</div>
 					</div>
 				<div className={`bg-secondary ${styles.paddingX} ${styles.flexCenter}`}>
+					<Business />
 				</div>
 			</div>
 			<Footer />
