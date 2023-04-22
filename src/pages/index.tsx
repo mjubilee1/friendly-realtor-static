@@ -17,12 +17,11 @@ export default function Home() {
 						</div>
 					</div>
 
-					{window.location.pathname === "/" &&
 					<div className={`bg-secondary ${styles.flexStart}`}>
 						<div className={`${styles.boxWidth}`}>
 							<Hero />
 						</div>
-					</div>}
+					</div>
 				<div className={`bg-secondary ${styles.paddingX} ${styles.flexCenter}`}>
 				</div>
 			</div>
