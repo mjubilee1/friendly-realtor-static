@@ -1,17 +1,9 @@
 import styles from "../styles/styles";
-import { Ubuntu } from 'next/font/google'
-import { Hero, Footer, Business } from "../components";
-
-const ubuntu = Ubuntu({
-	subsets: ['latin'],
-	weight: "300"
-})
+import { Hero, Business } from "../components";
 
 export default function Home() {
   return (
-    <main
-      className={`flex bg-gray-500 min-h-screen flex-col items-center justify-between p-24 ${ubuntu.className}`}
-    >
+    <div>
 				<div className={`bg-secondary w-full overflow-hidden`}>
 					<div className={`bg-secondary ${styles.flexStart}`}>
 						<div className={`${styles.boxWidth}`}>
@@ -22,7 +14,6 @@ export default function Home() {
 					<Business />
 				</div>
 			</div>
-			<Footer />
-	</main>
+	</div>
   )
 }
