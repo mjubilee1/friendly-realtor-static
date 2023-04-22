@@ -38,7 +38,7 @@ export function FirebaseProvider({ children }) {
 		}
   }, [firebaseApp]);
 
-  return <FirebaseContext.Provider value={{ fireStore, firebaseStorage, analytics }}>{children}</FirebaseContext.Provider>;
+  return <FirebaseContext.Provider value={{ fireStore, firebaseApp, firebaseStorage, analytics }}>{children}</FirebaseContext.Provider>;
 }
 
 export const useFirebaseContext = () => useContext(FirebaseContext);
