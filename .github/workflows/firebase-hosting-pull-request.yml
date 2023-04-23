@@ -3,18 +3,15 @@
 
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
-
 jobs:
   build_and_preview:
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install Dependencies
-        run: yarn
-      - name: Build
-        run: yarn build
-      - name: Preview Deployment
-        uses: w9jds/firebase-action@master
+      - uses: actions/checkout@v2
+      - run: yarn build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting --preview --token ${{ secrets.FIREBASE_TOKEN }}
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_FRIENDLY_REALTOR }}'
+          projectId: prod-friendly-realtor

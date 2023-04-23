@@ -11,12 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: 'npm ci && npm run build:ci'
+      - run: yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_FRIENDLY_REALTOR }}'
           channelId: live
-          projectId: your-firebase-project-id
-        env:
-          FIREBASE_CLI_PREVIEWS: hostingchannels
+          projectId: prod-friendly-realtor
