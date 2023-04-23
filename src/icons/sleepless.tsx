@@ -2,7 +2,12 @@ import React from 'react';
 
 function Sleepless({ formattedClassName }: { formattedClassName: string }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className={`${formattedClassName}`} viewBox="0 0 24 24">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      className={`${formattedClassName}`}
+      viewBox="0 0 24 24"
+    >
       <g transform="translate(0.000000,32.000000) scale(0.100000,-0.100000)">
         <path
           d="M122 308 c-45 -12 -72 -59 -72 -124 0 -73 16 -84 119 -84 80 0 82 -1

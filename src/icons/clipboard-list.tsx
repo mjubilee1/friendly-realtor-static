@@ -1,14 +1,32 @@
 import React from 'react';
 
-function svgIcon(formattedClassName: string, fill: string, stroke: string, viewBox: string, children: React.ReactNode) {
+function svgIcon(
+  formattedClassName: string,
+  fill: string,
+  stroke: string,
+  viewBox: string,
+  children: React.ReactNode,
+) {
   return (
-    <svg className={`${formattedClassName}`} fill={fill} stroke={stroke} viewBox={viewBox} xmlns="https://www.w3.org/2000/svg">
+    <svg
+      className={`${formattedClassName}`}
+      fill={fill}
+      stroke={stroke}
+      viewBox={viewBox}
+      xmlns="https://www.w3.org/2000/svg"
+    >
       {children}
     </svg>
   );
 }
 
-export default function ClipboardList({ solid, formattedClassName }: { solid: boolean; formattedClassName: string }) {
+export default function ClipboardList({
+  solid,
+  formattedClassName,
+}: {
+  solid: boolean;
+  formattedClassName: string;
+}) {
   const fill = solid ? 'currentColor' : 'none';
   const viewBox = solid ? '0 0 20 20' : '0 0 24 24';
   const stroke = solid ? '' : 'currentColor';
