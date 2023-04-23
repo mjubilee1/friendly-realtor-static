@@ -2,7 +2,12 @@ import React from 'react';
 
 function DinersClub({ formattedClassName }: { formattedClassName: string }) {
   return (
-    <svg className={`${formattedClassName}`} version="1.1" viewBox="0 0 780 500" xmlns="https://www.w3.org/2000/svg">
+    <svg
+      className={`${formattedClassName}`}
+      version="1.1"
+      viewBox="0 0 780 500"
+      xmlns="https://www.w3.org/2000/svg"
+    >
       <path
         d="M53.384,15h671.731c21.198,0,38.385,16.852,38.385,37.64v395.218   c0,20.789-17.187,37.642-38.385,37.642H53.384C32.185,485.5,15,468.647,15,447.858V52.64C15,31.852,32.185,15,53.384,15z"
         fill="none"

@@ -2,7 +2,12 @@ import React from 'react';
 
 function AmericanExpress({ formattedClassName }: { formattedClassName: string }) {
   return (
-    <svg className={`${formattedClassName}`} version="1.1" viewBox="0 0 780 500" xmlns="https://www.w3.org/2000/svg">
+    <svg
+      className={`${formattedClassName}`}
+      version="1.1"
+      viewBox="0 0 780 500"
+      xmlns="https://www.w3.org/2000/svg"
+    >
       <path
         d="M53.539,15h674.423c21.285,0,38.538,16.923,38.538,37.8v396.9   c0,20.875-17.253,37.8-38.538,37.8H53.539C32.254,487.5,15,470.575,15,449.7V52.8C15,31.923,32.254,15,53.539,15z"
         fill="none"
@@ -24,7 +29,10 @@ function AmericanExpress({ formattedClassName }: { formattedClassName: string })
         fill="currentColor"
       />
       <polygon points="358.32 339.08 328.3 306.52 358.32 275 358.32 339.08" fill="currentColor" />
-      <path d="m402.73 303.54h-25.271v-20.354h25.499c7.059 0 11.96 2.811 11.96 9.801-1e-3 6.911-4.676 10.554-12.188 10.553z" fill="currentColor" />
+      <path
+        d="m402.73 303.54h-25.271v-20.354h25.499c7.059 0 11.96 2.811 11.96 9.801-1e-3 6.911-4.676 10.554-12.188 10.553z"
+        fill="currentColor"
+      />
       <path
         d="m498.97 299.49c-2.613 1.516-5.85 1.645-9.655 1.645h-23.754v-17.949h24.08c3.479 0 6.965 0.071 9.331 1.442 2.534 1.293 4.051 3.771 4.051 7.19 0 3.418-1.517 6.174-4.051 7.672h-2e-3z"
         fill="currentColor"

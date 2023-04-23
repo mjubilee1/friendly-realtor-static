@@ -3,7 +3,12 @@ import React from 'react';
 function Cog({ solid, formattedClassName }: { solid: boolean; formattedClassName: string }) {
   if (solid) {
     return (
-      <svg className={`${formattedClassName}`} fill="currentColor" viewBox="0 0 20 20" xmlns="https://www.w3.org/2000/svg">
+      <svg
+        className={`${formattedClassName}`}
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="https://www.w3.org/2000/svg"
+      >
         <path
           fillRule="evenodd"
           d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561
@@ -17,7 +22,13 @@ function Cog({ solid, formattedClassName }: { solid: boolean; formattedClassName
   }
 
   return (
-    <svg className={`${formattedClassName}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+    <svg
+      className={`${formattedClassName}`}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="https://www.w3.org/2000/svg"
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -27,7 +38,12 @@ function Cog({ solid, formattedClassName }: { solid: boolean; formattedClassName
           00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0
           001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
       />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+      />
     </svg>
   );
 }

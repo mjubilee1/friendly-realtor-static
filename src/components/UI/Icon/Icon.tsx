@@ -1,6 +1,3 @@
-
- 
-
 import React from 'react';
 import AccountCheck from '../../../icons/account-check';
 import Adjustments from '../../../icons/adjustments';
@@ -191,10 +188,18 @@ export default function Icon({ name, color, size, solid, className }: IconProp) 
     'chart-bar': <ChartBar solid={!!solid} formattedClassName={formattedClassName} />,
     check: <Check solid={!!solid} formattedClassName={formattedClassName} />,
     'circle-check': <CircleCheck solid={!!solid} formattedClassName={formattedClassName} />,
-    'chevron-double-down': <ChevronDoubleDown solid={!!solid} formattedClassName={formattedClassName} />,
-    'chevron-double-left': <ChevronDoubleLeft solid={!!solid} formattedClassName={formattedClassName} />,
-    'chevron-double-right': <ChevronDoubleRight solid={!!solid} formattedClassName={formattedClassName} />,
-    'chevron-double-up': <ChevronDoubleUp solid={!!solid} formattedClassName={formattedClassName} />,
+    'chevron-double-down': (
+      <ChevronDoubleDown solid={!!solid} formattedClassName={formattedClassName} />
+    ),
+    'chevron-double-left': (
+      <ChevronDoubleLeft solid={!!solid} formattedClassName={formattedClassName} />
+    ),
+    'chevron-double-right': (
+      <ChevronDoubleRight solid={!!solid} formattedClassName={formattedClassName} />
+    ),
+    'chevron-double-up': (
+      <ChevronDoubleUp solid={!!solid} formattedClassName={formattedClassName} />
+    ),
     'chevron-down': <ChevronDown solid={!!solid} formattedClassName={formattedClassName} />,
     'chevron-left': <ChevronLeft solid={!!solid} formattedClassName={formattedClassName} />,
     'chevron-right': <ChevronRight solid={!!solid} formattedClassName={formattedClassName} />,
@@ -218,7 +223,9 @@ export default function Icon({ name, color, size, solid, className }: IconProp) 
     elo: <Elo formattedClassName={formattedClassName} />,
     'emoji-happy': <EmojiHappy solid={!!solid} formattedClassName={formattedClassName} />,
     'endeavors-pre-alpha': <EndeavorsPreAlpha formattedClassName={formattedClassName} />,
-    'exclamation-circle': <ExclamationCircle solid={!!solid} formattedClassName={formattedClassName} />,
+    'exclamation-circle': (
+      <ExclamationCircle solid={!!solid} formattedClassName={formattedClassName} />
+    ),
     'external-link': <ExternalLink solid={!!solid} formattedClassName={formattedClassName} />,
     eye: <Eye solid={!!solid} formattedClassName={formattedClassName} />,
     facebook: <Facebook formattedClassName={formattedClassName} />,
@@ -229,7 +236,9 @@ export default function Icon({ name, color, size, solid, className }: IconProp) 
     hipercard: <Hipercard formattedClassName={formattedClassName} />,
     heart: <Heart solid={!!solid} formattedClassName={formattedClassName} />,
     home: <Home solid={!!solid} formattedClassName={formattedClassName} />,
-    'information-circle': <InformationCircle solid={!!solid} formattedClassName={formattedClassName} />,
+    'information-circle': (
+      <InformationCircle solid={!!solid} formattedClassName={formattedClassName} />
+    ),
     instagram: <Instagram formattedClassName={formattedClassName} />,
     jcb: <JCB formattedClassName={formattedClassName} />,
     'lightning-bolt': <LightningBolt solid={!!solid} formattedClassName={formattedClassName} />,
@@ -248,7 +257,9 @@ export default function Icon({ name, color, size, solid, className }: IconProp) 
     'pencil-alt': <PencilAlt solid={!!solid} formattedClassName={formattedClassName} />,
     play: <Play solid={!!solid} formattedClassName={formattedClassName} />,
     plus: <Plus solid={!!solid} formattedClassName={formattedClassName} />,
-    'question-mark-circle': <QuestionMarkCircle solid={!!solid} formattedClassName={formattedClassName} />,
+    'question-mark-circle': (
+      <QuestionMarkCircle solid={!!solid} formattedClassName={formattedClassName} />
+    ),
     refresh: <Refresh solid={!!solid} formattedClassName={formattedClassName} />,
     rss: <RSS solid={!!solid} formattedClassName={formattedClassName} />,
     search: <Search solid={!!solid} formattedClassName={formattedClassName} />,
@@ -272,7 +283,7 @@ export default function Icon({ name, color, size, solid, className }: IconProp) 
     x: <X solid={!!solid} formattedClassName={formattedClassName} />,
     youtube: <Youtube formattedClassName={formattedClassName} />,
     'zoom-in': <ZoomIn solid={!!solid} formattedClassName={formattedClassName} />,
-    'zoom-out': <ZoomOut solid={!!solid} formattedClassName={formattedClassName} />
+    'zoom-out': <ZoomOut solid={!!solid} formattedClassName={formattedClassName} />,
   };
   return iconMap[name] || null;
 }

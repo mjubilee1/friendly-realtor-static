@@ -2,7 +2,11 @@ import React from 'react';
 
 function UnionPay({ formattedClassName }: { formattedClassName: string }) {
   return (
-    <svg className={`${formattedClassName}`} viewBox="0 0 780 500" xmlns="https://www.w3.org/2000/svg">
+    <svg
+      className={`${formattedClassName}`}
+      viewBox="0 0 780 500"
+      xmlns="https://www.w3.org/2000/svg"
+    >
       <g fill="none" fillRule="evenodd">
         <rect x="15" y="15" width="720" height="441" rx="25" stroke="#393939" strokeWidth="30" />
         <path
