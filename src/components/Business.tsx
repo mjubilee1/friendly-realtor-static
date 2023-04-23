@@ -24,20 +24,11 @@ const FeatureCard = ({ icon, title, content, index }) => (
 const Business = () => (
   <section id="features" className={layout.section}>
     <div className={layout.sectionInfo}>
-      <h2 className={styles.heading2}>
-        Real Esate software, <br className="sm:block hidden" /> that works for you.
-      </h2>
+      <h2 className={styles.heading2}>Real Esate software that works for you.</h2>
       <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
         Whether you're a real estate agent, broker, or investor, this software can help you stay
         organized, save time, and close more deals than ever before
       </p>
-      <a href="https://testflight.apple.com/join/88VYYxs4">
-        <Image
-          src={apple}
-          alt="friendly_realtor_app"
-          className="w-[128.86px] h-[42.05px] mt-8 object-contain mr-5 cursor-pointer"
-        />
-      </a>
     </div>
 
     <div className={`${layout.sectionImg} flex-col`}>
