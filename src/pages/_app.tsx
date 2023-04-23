@@ -15,24 +15,23 @@ const ubuntu = Ubuntu({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-		<div>
-			<Head>
-				<title>Friendly Realtor</title>
-        <link rel='shortcut icon' href='/favicon.ico' />
-			</Head>
-			 <div
-      className={`flex min-h-screen flex-col items-center justify-between p-12 ${ubuntu.className}`}
-    >
-      <div className="w-full">
-        <div className={`${styles.boxWidth}`}>
-          <Navbar />
+    <div>
+      <Head>
+        <title>Friendly Realtor</title>
+        <link rel="icon" href="/logo.png" />
+      </Head>
+      <div
+        className={`flex min-h-screen flex-col items-center justify-between p-12 ${ubuntu.className}`}
+      >
+        <div className="w-full">
+          <div className={`${styles.boxWidth}`}>
+            <Navbar />
+          </div>
         </div>
+        <DefaultSeo {...SEO} />
+        <Component {...pageProps} />
+        <Footer />
       </div>
-      <DefaultSeo {...SEO} />
-      <Component {...pageProps} />
-      <Footer />
     </div>
-
-		</div>
-     );
+  );
 }
