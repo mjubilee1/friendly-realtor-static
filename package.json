@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build && next export",
+    "deploy": "firebase deploy --only hosting",
     "dev": "next dev",
     "lint": "next lint",
     "prettier": "prettier --write 'src/**/*.{ts,tsx,js,jsx}' ",
