@@ -17,7 +17,13 @@ const NavBar = () => {
                 index === navLinks.length - 1 ? 'mr-0' : 'mr-10'
               } text-white`}
             >
-              {el.to ? <a href={`${el.to}`} target='_blank'>{el.title}</a> : <a href={`${el.id}`}>{el.title}</a>}
+              {el.to ? (
+                <a href={`${el.to}`} target="_blank">
+                  {el.title}
+                </a>
+              ) : (
+                <a href={`${el.id}`}>{el.title}</a>
+              )}
             </li>
           );
         })}
@@ -45,7 +51,13 @@ const NavBar = () => {
                     index === navLinks.length - 1 ? 'mr-0' : 'mb-4'
                   } text-white`}
                 >
-              {el.to ? <a href={`${el.to}`} target='_blank'>{el.title}</a> : <a href={`${el.id}`}>{el.title}</a>}
+                  {el.to ? (
+                    <a href={`${el.to}`} target="_blank">
+                      {el.title}
+                    </a>
+                  ) : (
+                    <a href={`${el.id}`}>{el.title}</a>
+                  )}
                 </li>
               );
             })}
