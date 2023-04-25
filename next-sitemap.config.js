@@ -5,7 +5,6 @@ module.exports = {
   exclude: ["/404"],
   generateRobotsTxt: true,
 	outDir: "./public",
-	sourceDir: "./build",
   robotsTxtOptions: {
     policies: [
       {
