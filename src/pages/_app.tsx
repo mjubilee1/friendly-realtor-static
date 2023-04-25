@@ -10,6 +10,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
 import * as fbq from '../util';
+import { fireAnalytics } from '../context'
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -23,7 +24,8 @@ export default function App({ Component, pageProps }: AppProps) {
     // This pageview only triggers the first time (it's important for Pixel to have real information)
     fbq.pageview();
 
-    const handleRouteChange = () => {
+		const handleRouteChange = (url) => {
+      fireAnalytics.logEvent("page_view", { page_path: url });
       fbq.pageview();
     };
 
