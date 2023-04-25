@@ -64,6 +64,7 @@ const Footer = () => {
           ))}
         </div>
       </div>
+      <div className="w-full text-xs">100 E Redwood St, Baltimore, MD, United States, 21212</div>
     </section>
   );
 };

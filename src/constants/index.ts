@@ -28,8 +28,8 @@ export const navLinks = [
     id: '/',
     title: 'Product',
   },
-	{
-		to: 'https://q7u2nrm2bx7.typeform.com/to/OieZFM6p',
+  {
+    to: 'https://q7u2nrm2bx7.typeform.com/to/OieZFM6p',
     title: 'Learn More',
   },
 ];
