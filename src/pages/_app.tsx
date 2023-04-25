@@ -39,6 +39,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <div>
       <Head>
         <title>Friendly Realtor</title>
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      	<meta name="description" content="Looking for a powerful tool to streamline your real estate business? Look no further than FriendlyRealtor, the IOS app designed to help real estate agents make the most of their time and produce better results in the field. With user-friendly features and cutting-edge technology, FriendlyRealtor is the ultimate solution for busy real estate professionals. Download it now and see the difference for yourself!"/>
         <link rel="icon" href="/logo.png" />
       </Head>
       <Script

@@ -7,7 +7,6 @@ export default function Home() {
       <div className={`bg-secondary w-full overflow-hidden`}>
         <div className={`bg-secondary ${styles.flexStart}`}>
           <div className={`${styles.boxWidth}`}>
-						djfdsjsdj
             <Hero />
           </div>
         </div>
