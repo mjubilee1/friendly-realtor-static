@@ -17,12 +17,20 @@ const Hero = () => {
           your Real estate business.
         </h1>
         <h6 className="font-ubuntu">
-          Our mission is to empower new real estate agents by providing them with the tools and
-          resources they need to succeed. We are committed to simplifying the real estate process
-          and providing valuable support to our clients. Our goal is to help agents save time and
-          grow their businesses, while fostering lasting relationships along the way. We believe
-          that by empowering agents to achieve their full potential in the industry, we can create a
-          more dynamic and prosperous real estate community.
+          Our mission at Friendly Realtor is to achieve three vital economic objectives - increased
+          revenue, expanded market share, and improved profitability - within 24 months through the
+          provision of innovative real estate agent solutions. As a company, we are committed to
+          helping new real estate agents save time and grow their businesses, which is why we aim to
+          achieve these objectives. We recognize the challenges that new real estate agents face,
+          and our goal is to simplify the real estate process, provide valuable resources, and
+          foster long-term relationships with our clients. We believe that our products and services
+          will enable new real estate agents to achieve their full potential in the industry.
+          Through our innovative solutions, we are dedicated to empowering new real estate agents,
+          providing them with the tools and resources necessary to build successful businesses. We
+          are committed to creating a supportive and collaborative environment that encourages
+          growth and development. Ultimately, our mission is to make a positive impact on the real
+          estate industry by helping new real estate agents succeed, fostering long-term
+          partnerships, and delivering exceptional value to our clients.
         </h6>
         <a href="https://testflight.apple.com/join/88VYYxs4">
           <Image
