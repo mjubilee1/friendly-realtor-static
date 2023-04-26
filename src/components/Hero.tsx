@@ -14,16 +14,15 @@ const Hero = () => {
           </h1>
         </div>
         <h1 className="font-ubuntu font-semibold ss:text-[68px] text-[52px] text-white ss:leading-[100px] leading-[75px] w-full">
-          your Real estate business?
+          your Real estate business.
         </h1>
         <h6 className="font-ubuntu">
-          Our mission is to develop an IOS app product that will assist new realtors in their
-          journey to success by minimizing mistakes and building a community of realtors helping
-          realtors. Through our innovative technology, we aim to bridge the gap in the real estate
-          industry by reducing the fail rate of realtors within three years. Our goal is to create a
-          collaborative and supportive environment within our app, where new realtors can thrive,
-          achieve their goals, and contribute to a stronger and more successful real estate
-          industry.
+          Our mission is to empower new real estate agents by providing them with the tools and
+          resources they need to succeed. We are committed to simplifying the real estate process
+          and providing valuable support to our clients. Our goal is to help agents save time and
+          grow their businesses, while fostering lasting relationships along the way. We believe
+          that by empowering agents to achieve their full potential in the industry, we can create a
+          more dynamic and prosperous real estate community.
         </h6>
         <a href="https://testflight.apple.com/join/88VYYxs4">
           <Image
