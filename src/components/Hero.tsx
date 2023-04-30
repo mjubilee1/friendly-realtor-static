@@ -32,7 +32,7 @@ const Hero = () => {
           estate industry by helping new real estate agents succeed, fostering long-term
           partnerships, and delivering exceptional value to our clients.
         </h6>
-        <a href="https://testflight.apple.com/join/88VYYxs4">
+        <a href="https://apps.apple.com/us/app/friendlyrealtor/id6446328944">
           <Image
             src={apple}
             alt="friendly_realtor_app"
