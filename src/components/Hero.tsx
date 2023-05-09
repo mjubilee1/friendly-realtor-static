@@ -1,9 +1,31 @@
 import React from 'react';
 import styles from '../styles/styles';
 import { iphoneScreen, apple } from '../assets';
+import { AddLink } from './UI';
 import Image from 'next/image';
+import { fbEvent, gtagEvent } from '../util';
+import { useRouter } from 'next/router';
 
 const Hero = () => {
+	const router = useRouter();
+
+  const handleClick = () => {
+		fbEvent('button_click', {
+			content_name: 'download_now_btn',
+			content_category: 'user_interaction',
+			value: 1,
+		});
+
+    gtagEvent({
+      action: 'button_click',
+      category: 'user_interaction',
+      label: 'download_now_btn',
+      value: 1,
+    });
+
+    router.push('https://apps.apple.com/us/app/friendlyrealtor/id6446328944');
+  };
+
   return (
     <section id="home" className={`flex md:flex-row flex-col ${styles.paddingY}`}>
       <div className={`flex-1 flex justify-start items-start flex-col xl:px-0 sm:px-16 px-6`}>
@@ -32,13 +54,13 @@ const Hero = () => {
           estate industry by helping new real estate agents succeed, fostering long-term
           partnerships, and delivering exceptional value to our clients.
         </h6>
-        <a href="https://apps.apple.com/us/app/friendlyrealtor/id6446328944">
+        <AddLink onClick={handleClick}>
           <Image
             src={apple}
             alt="friendly_realtor_app"
             className="w-44 mt-8 object-contain mr-5 cursor-pointer"
           />
-        </a>
+        </AddLink>
       </div>
 
       <div className={`flex-1 flex ${styles.flexCenter} md:mr-0  my-10 relative`}>
