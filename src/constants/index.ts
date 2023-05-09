@@ -29,7 +29,7 @@ export const navLinks = [
     title: 'Product',
   },
   {
-    to: 'https://q7u2nrm2bx7.typeform.com/to/OieZFM6p',
+    to: 'https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J',
     title: 'Learn More',
   },
 ];

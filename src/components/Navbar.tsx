@@ -2,9 +2,31 @@ import React, { useState } from 'react';
 import { close, logo, menu } from '../assets';
 import { navLinks } from '../constants';
 import Image from 'next/image';
+import { AddLink } from './UI';
+import { fbEvent, gtagEvent } from '../util';
+import { useRouter } from 'next/router';
 
 const NavBar = () => {
+	const router = useRouter();
   const [toggle, setToggle] = useState(false);
+
+	const handleClick = (to: string) => {
+		fbEvent('button_click', {
+			content_name: 'learn_more_btn',
+			content_category: 'user_interaction',
+			value: 1,
+		});
+
+    gtagEvent({
+      action: 'button_click',
+      category: 'user_interaction',
+      label: 'learn_more_btn',
+      value: 1,
+    });
+
+    router.push('https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J');
+	}
+
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
       <Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
@@ -18,9 +40,9 @@ const NavBar = () => {
               } text-white`}
             >
               {el.to ? (
-                <a href={`${el.to}`} target="_blank">
-                  {el.title}
-                </a>
+                <AddLink onClick={() => handleClick(el.to)}>
+									{el.title}
+                </AddLink>
               ) : (
                 <a href={`${el.id}`}>{el.title}</a>
               )}
@@ -44,6 +66,7 @@ const NavBar = () => {
         >
           <ul className="list-none flex flex-col justify-end items-center flex-1">
             {navLinks.map((el, index) => {
+							console.log(el.to)
               return (
                 <li
                   key={el.id}
@@ -52,9 +75,9 @@ const NavBar = () => {
                   } text-white`}
                 >
                   {el.to ? (
-                    <a href={`${el.to}`} target="_blank">
+                    <AddLink onClick={() => handleClick(el.to)}>
                       {el.title}
-                    </a>
+                    </AddLink>
                   ) : (
                     <a href={`${el.id}`}>{el.title}</a>
                   )}
