@@ -7,15 +7,15 @@ import { fbEvent, gtagEvent } from '../util';
 import { useRouter } from 'next/router';
 
 const NavBar = () => {
-	const router = useRouter();
+  const router = useRouter();
   const [toggle, setToggle] = useState(false);
 
-	const handleClick = (to: string) => {
-		fbEvent('button_click', {
-			content_name: 'learn_more_btn',
-			content_category: 'user_interaction',
-			value: 1,
-		});
+  const handleClick = (to: string) => {
+    fbEvent('button_click', {
+      content_name: 'learn_more_btn',
+      content_category: 'user_interaction',
+      value: 1,
+    });
 
     gtagEvent({
       action: 'button_click',
@@ -25,7 +25,7 @@ const NavBar = () => {
     });
 
     router.push('https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J');
-	}
+  };
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
@@ -40,9 +40,7 @@ const NavBar = () => {
               } text-white`}
             >
               {el.to ? (
-                <AddLink onClick={() => handleClick(el.to)}>
-									{el.title}
-                </AddLink>
+                <AddLink onClick={() => handleClick(el.to)}>{el.title}</AddLink>
               ) : (
                 <a href={`${el.id}`}>{el.title}</a>
               )}
@@ -66,7 +64,7 @@ const NavBar = () => {
         >
           <ul className="list-none flex flex-col justify-end items-center flex-1">
             {navLinks.map((el, index) => {
-							console.log(el.to)
+              console.log(el.to);
               return (
                 <li
                   key={el.id}
@@ -75,9 +73,7 @@ const NavBar = () => {
                   } text-white`}
                 >
                   {el.to ? (
-                    <AddLink onClick={() => handleClick(el.to)}>
-                      {el.title}
-                    </AddLink>
+                    <AddLink onClick={() => handleClick(el.to)}>{el.title}</AddLink>
                   ) : (
                     <a href={`${el.id}`}>{el.title}</a>
                   )}

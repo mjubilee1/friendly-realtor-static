@@ -7,14 +7,14 @@ import { fbEvent, gtagEvent } from '../util';
 import { useRouter } from 'next/router';
 
 const Hero = () => {
-	const router = useRouter();
+  const router = useRouter();
 
   const handleClick = () => {
-		fbEvent('button_click', {
-			content_name: 'download_now_btn',
-			content_category: 'user_interaction',
-			value: 1,
-		});
+    fbEvent('button_click', {
+      content_name: 'download_now_btn',
+      content_category: 'user_interaction',
+      value: 1,
+    });
 
     gtagEvent({
       action: 'button_click',
