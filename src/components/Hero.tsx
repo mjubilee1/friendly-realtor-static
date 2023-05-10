@@ -10,14 +10,14 @@ const Hero = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    fbEvent('button_click', {
+    fbEvent('download_btn_click', {
       content_name: 'download_now_btn',
       content_category: 'user_interaction',
       value: 1,
     });
 
     gtagEvent({
-      action: 'button_click',
+      action: 'download_btn_click',
       category: 'user_interaction',
       label: 'download_now_btn',
       value: 1,
