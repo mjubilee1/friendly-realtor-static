@@ -11,14 +11,14 @@ const NavBar = () => {
   const [toggle, setToggle] = useState(false);
 
   const handleClick = (to: string) => {
-    fbEvent('button_click', {
+    fbEvent('learn_more_click', {
       content_name: 'learn_more_btn',
       content_category: 'user_interaction',
       value: 1,
     });
 
     gtagEvent({
-      action: 'button_click',
+      action: 'learn_more_click',
       category: 'user_interaction',
       label: 'learn_more_btn',
       value: 1,
