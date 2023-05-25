@@ -1,14 +1,10 @@
-# *
 User-agent: *
 Disallow: /404
 
-# *
 User-agent: *
 Allow: /
 
-# Host
-Host: https://friendlyrealtor.app/
+Host: friendlyrealtor.app
 
-# Sitemaps
 Sitemap: https://friendlyrealtor.app/sitemap.xml
 Sitemap: https://friendlyrealtor.app/server-sitemap.xml
