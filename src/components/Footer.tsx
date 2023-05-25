@@ -33,7 +33,10 @@ const Footer = () => {
                         index !== footerlink.links.length - 1 ? 'mb-4' : 'mb-0'
                       }`}
                     >
-                      <a href={link.href} target={link.name === 'Sitemap' ? '_self' : '_blank'}>
+                      <a
+                        href={link.href}
+                        target={link.name === 'Sitemap' || 'Blogs' ? '_self' : '_blank'}
+                      >
                         {link.name}
                       </a>
                     </li>
