@@ -64,7 +64,6 @@ const NavBar = () => {
         >
           <ul className="list-none flex flex-col justify-end items-center flex-1">
             {navLinks.map((el, index) => {
-              console.log(el.to);
               return (
                 <li
                   key={el.id}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AddLink, Icon } from '../../components/UI';
-import { collection, where, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, where, query } from 'firebase/firestore';
 import Image from 'next/image';
 import { firestore } from '../../context';
 import Head from 'next/head';
@@ -31,7 +31,7 @@ const ProfilePage = ({ data }) => {
           <div className="flex items-center justify-center mt-3 mb-6 flex-col">
             <h1 className="text-lg text-gray-500">Get Connected</h1>
             <div className="flex mt-2 gap-4">
-              {Object.keys(data.socials[0]).map((social) => {
+              {data.socials && Object.keys(data.socials[0]).map((social) => {
                 const socialLink = data.socials[0][social];
                 return (
                   <AddLink to={socialLink} target="_blank" key={socialLink}>
@@ -65,20 +65,30 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const userRef = collection(firestore, 'users');
-  const q = query(userRef, where('username', '==', context.params.username));
-  const querySnapshot = await getDocs(q);
-  let data = {};
-  querySnapshot.forEach((doc) => {
-    data = doc.data();
-    return;
-  });
+  try {
+		const userRef = collection(firestore, 'users');
+		const q = query(userRef, where('userName', '==', context.params.username));
+		const querySnapshot = await getDocs(q);
 
-  return {
-    props: {
-      data: JSON.parse(JSON.stringify(data)),
-    },
-  };
+		if (!querySnapshot.empty) {
+			// Get the first document from the query snapshot
+			const userDocRef = querySnapshot.docs[0];
+
+			return {
+        props: {
+          data: JSON.parse(JSON.stringify(userDocRef.data())),
+        },
+      };
+		} else {
+			return {
+        props: {
+          data: {},
+        },
+      };
+		}
+  } catch (error) {
+    console.log('error was caused', error);
+  }
 }
 
 export default ProfilePage;
