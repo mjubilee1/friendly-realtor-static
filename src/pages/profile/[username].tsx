@@ -1,6 +1,6 @@
 import React from 'react';
 import { AddLink, Icon } from '../../components/UI';
-import { doc, collection, getDocs, where, getDoc, query } from 'firebase/firestore';
+import { collection, getDocs, where, query } from 'firebase/firestore';
 import Image from 'next/image';
 import { firestore } from '../../context';
 import Head from 'next/head';
