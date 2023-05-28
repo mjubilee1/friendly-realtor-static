@@ -61,4 +61,30 @@ const BlogPage = () => {
   );
 };
 
+export async function getStaticPaths() {
+  const entries = await fetchEntries('blogPost');
+
+  const paths = entries
+    .map((data) => ({
+      params: { title: data.fields.slug },
+    }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps(context) {
+  const { params } = context;
+  const slug = params.title; // Assuming the parameter is named 'title'
+
+	const entries = await fetchEntries('blogPost');
+	const entry = entries.find((entry) => entry.fields.slug === slug);
+
+  return {
+    props: {
+      data: entry, // Pass the data to the page component
+    },
+  };
+}
+
+
 export default BlogPage;
