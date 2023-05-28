@@ -1,5 +1,6 @@
 import { createClient } from 'contentful';
 
+console.log("try this", process.env)
 // Initialize Contentful client
 export const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || '',
