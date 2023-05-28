@@ -29,6 +29,10 @@ export const navLinks = [
     title: 'Product',
   },
   {
+    id: '/blogs',
+    title: 'Blogs',
+  },
+  {
     to: 'https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J',
     title: 'Learn More',
   },
@@ -115,6 +119,10 @@ export const footerLinks = [
       {
         name: 'Sitemap',
         href: '/sitemap.xml',
+      },
+      {
+        name: 'Blogs',
+        href: '/blogs',
       },
     ],
   },

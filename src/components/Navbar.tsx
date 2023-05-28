@@ -3,7 +3,7 @@ import { close, logo, menu } from '../assets';
 import { navLinks } from '../constants';
 import Image from 'next/image';
 import { AddLink } from './UI';
-import { fbEvent, gtagEvent } from '../util';
+import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 import { useRouter } from 'next/router';
 
 const NavBar = () => {

@@ -7,7 +7,8 @@ import { Navbar, Footer } from '../components';
 import styles from '../styles/styles';
 import { Ubuntu } from 'next/font/google';
 import Head from 'next/head';
-import { FB_PIXEL_ID, GA_TRACKING_ID } from '../util';
+import { FB_PIXEL_ID, GA_TRACKING_ID } from '../utils/analyticsUtil';
+import '../pages/blogs/blog.css';
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
