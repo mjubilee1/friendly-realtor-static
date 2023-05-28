@@ -45,7 +45,7 @@ const BlogPage = () => {
       <Container>
         <h1>{blogPost.fields.title}</h1>
         <p>Author: {blogPost.fields.author.fields.name}</p>
-        <Image src={imgUrl} alt={imgAlt} />
+        <Image src={imgUrl} alt={imgAlt} className="mt-12 mb-20" />
         <ReactMarkdown>{blogPost.fields.excerpt}</ReactMarkdown>
       </Container>
     </div>

@@ -1,9 +1,72 @@
 .post-container {
-	width: 100%;
-	padding-top: 16px;
-	padding-bottom: 16px;
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .post-container h1 {
-	font-size: 40px;
+  font-size: 40px;
+}
+
+.post-container h2 {
+  font-size: 32px;
+}
+
+.post-container h3 {
+  font-size: 24px;
+}
+
+.post-container p {
+  margin-bottom: 16px;
+}
+
+.post-container strong {
+  font-weight: bold;
+}
+
+.post-container em {
+  font-style: italic;
+}
+
+.post-container del {
+  text-decoration: line-through;
+}
+
+.post-container ul {
+  list-style-type: disc;
+  margin-bottom: 16px;
+  margin-left: 24px;
+}
+
+.post-container ol {
+  list-style-type: decimal;
+  margin-bottom: 16px;
+  margin-left: 24px;
+}
+
+.post-container li {
+  margin-bottom: 8px;
+}
+
+.post-container code {
+  font-family: 'Courier New', monospace;
+  background-color: #f8f8f8;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.post-container pre {
+  font-family: 'Courier New', monospace;
+  background-color: #f8f8f8;
+  padding: 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+  line-height: 1.4;
+}
+
+.post-container blockquote {
+  margin-left: 24px;
+  border-left: 2px solid #888888;
+  padding-left: 16px;
+  color: #888888;
 }
