@@ -31,14 +31,15 @@ const ProfilePage = ({ data }) => {
           <div className="flex items-center justify-center mt-3 mb-6 flex-col">
             <h1 className="text-lg text-gray-500">Get Connected</h1>
             <div className="flex mt-2 gap-4">
-              {data.socials && Object.keys(data.socials[0]).map((social) => {
-                const socialLink = data.socials[0][social];
-                return (
-                  <AddLink to={socialLink} target="_blank" key={socialLink}>
-                    <Icon name={social} size="large" color="black" />
-                  </AddLink>
-                );
-              })}
+              {data.socials &&
+                Object.keys(data.socials[0]).map((social) => {
+                  const socialLink = data.socials[0][social];
+                  return (
+                    <AddLink to={socialLink} target="_blank" key={socialLink}>
+                      <Icon name={social} size="large" color="black" />
+                    </AddLink>
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -66,26 +67,26 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   try {
-		const userRef = collection(firestore, 'users');
-		const q = query(userRef, where('userName', '==', context.params.username));
-		const querySnapshot = await getDocs(q);
+    const userRef = collection(firestore, 'users');
+    const q = query(userRef, where('userName', '==', context.params.username));
+    const querySnapshot = await getDocs(q);
 
-		if (!querySnapshot.empty) {
-			// Get the first document from the query snapshot
-			const userDocRef = querySnapshot.docs[0];
+    if (!querySnapshot.empty) {
+      // Get the first document from the query snapshot
+      const userDocRef = querySnapshot.docs[0];
 
-			return {
+      return {
         props: {
           data: JSON.parse(JSON.stringify(userDocRef.data())),
         },
       };
-		} else {
-			return {
+    } else {
+      return {
         props: {
           data: {},
         },
       };
-		}
+    }
   } catch (error) {
     console.log('error was caused', error);
   }
