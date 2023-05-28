@@ -31,11 +31,11 @@ const BlogPage = () => {
     );
   }
 
-  const imgUrl = blogPost.fields.featuredImage
-    ? blogPost.fields.featuredImage.fields.file.url
+  const imgUrl = blogPost.fields.featureImage
+    ? blogPost.fields.featureImage.fields.file.url
     : '/logo.png';
-  const imgAlt = blogPost.fields.featuredImage
-    ? blogPost.fields.featuredImage.fields.title
+  const imgAlt = blogPost.fields.featureImage
+    ? blogPost.fields.featureImage.fields.title
     : 'Friendly Realtor Photo';
 
   return (
@@ -54,7 +54,7 @@ const BlogPage = () => {
       <Container>
         <h1>{blogPost.fields.title}</h1>
         <p>Author: {blogPost.fields.author.fields.name}</p>
-        <Image src={imgUrl} alt={imgAlt} className="mt-12 mb-20" />
+        <Image src={imgUrl} alt={imgAlt} size="w-full h-72" className="mt-12 mb-20" />
         <ReactMarkdown>{blogPost.fields.excerpt}</ReactMarkdown>
       </Container>
     </div>

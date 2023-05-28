@@ -22,12 +22,18 @@ const AllBlogPage = () => {
 
   return (
     <Container>
-			  <Head>
-					<title> Discover Friendly Realtors Blog Post</title>
-					<meta name="description" content="Explore our latest blog post to discover valuable insights and tips from friendly realtors." />
-					<meta property="og:title" content="Discover Friendly Realtors Blog Post" />
-					<meta property="og:description" content="Explore our latest blog post to discover valuable insights and tips from friendly realtors." />
-				</Head>
+      <Head>
+        <title> Discover Friendly Realtors Blog Post</title>
+        <meta
+          name="description"
+          content="Explore our latest blog post to discover valuable insights and tips from friendly realtors."
+        />
+        <meta property="og:title" content="Discover Friendly Realtors Blog Post" />
+        <meta
+          property="og:description"
+          content="Explore our latest blog post to discover valuable insights and tips from friendly realtors."
+        />
+      </Head>
       <Header as="h1" className="pb-8">
         Discover Friendly Realtors Blog Post
       </Header>
