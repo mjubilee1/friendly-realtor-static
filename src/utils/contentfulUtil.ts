@@ -1,7 +1,7 @@
 import { createClient } from 'contentful';
 
 // Initialize Contentful client
-const client = createClient({
+export const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || '',
   accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN || '',
 });
@@ -33,6 +33,7 @@ export async function fetchEntryById(entryId: string) {
 
 // Export the utility functions as an object
 const ContentfulUtil = {
+  client,
   fetchEntries,
   fetchEntryById,
 };
