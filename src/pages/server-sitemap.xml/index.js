@@ -1,23 +1,7 @@
 import { collection, getDocs } from 'firebase/firestore';
 import { firestore } from '../../context';
 import { getServerSideSitemap } from 'next-sitemap';
-
-function generateSiteMap(data) {
-  return `<?xml version="1.0" encoding="UTF-8"?>
-   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-     ${data
-       .filter((data) => data.userName)
-       .map(({ userName }) => {
-         return `
-       <url>
-           <loc>${`https://friendlyrealtor.app/profile/${userName}`}</loc>
-       </url>
-     `;
-       })
-       .join('')}
-   </urlset>
- `;
-}
+import { fetchEntries } from '../../utils/contentfulUtil';
 
 export const getServerSideProps = async (ctx) => {
   const userRef = collection(firestore, 'users');
@@ -27,12 +11,19 @@ export const getServerSideProps = async (ctx) => {
     profiles.push(doc.data());
   });
 
+  const blogPosts = await fetchEntries('blogPost');
+
   const newSitemaps = profiles.map((profile) => ({
     loc: `${process.env.NEXT_PUBLIC_DOMAIN_URL}${profile.userName}`,
     lastmod: new Date().toISOString(),
   }));
 
-  const fields = [...newSitemaps];
+  const blogPostSitemaps = blogPosts.items.map((blogPost) => ({
+    loc: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/blog/${blogPost.fields.slug}`,
+    lastmod: new Date(blogPost.sys.updatedAt).toISOString(),
+  }));
+
+  const fields = [...newSitemaps, ...blogPostSitemaps];
   return getServerSideSitemap(fields, ctx);
 };
 
