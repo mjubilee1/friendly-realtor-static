@@ -3,6 +3,7 @@ import { Image, Icon, Container } from '../../components/UI';
 import { useEffect, useState } from 'react';
 import { fetchEntries } from '../../utils/contentfulUtil';
 import ReactMarkdown from 'react-markdown';
+import Head from 'next/head';
 
 const BlogPage = () => {
   const [blogPost, setBlogPost] = useState();
@@ -39,6 +40,14 @@ const BlogPage = () => {
 
   return (
     <div className="post-container">
+      <Head>
+        <title>{blogPost.fields.title} - Blog</title>
+        <meta name="description" content={blogPost.fields.seoDescription} />
+        <meta property="og:title" content={blogPost.fields.title} />
+        <meta property="og:description" content={blogPost.fields.seoDescription} />
+        <meta property="og:image" content={imgUrl} />
+        <meta property="og:image:alt" content={imgAlt} />
+      </Head>
       <Link href="/blogs">
         <Icon name="arrow-left" color="white" size="large" />
       </Link>
