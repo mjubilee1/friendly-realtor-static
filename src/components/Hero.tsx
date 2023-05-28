@@ -3,7 +3,7 @@ import styles from '../styles/styles';
 import { iphoneScreen, apple } from '../assets';
 import { AddLink } from './UI';
 import Image from 'next/image';
-import { fbEvent, gtagEvent } from '../util';
+import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 import { useRouter } from 'next/router';
 
 const Hero = () => {

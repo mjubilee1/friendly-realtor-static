@@ -12,3 +12,11 @@ export const gtagEvent = ({ action, category, label, value }) => {
     value: value,
   });
 };
+
+// Export the utility functions as an object
+const AnalyticsUtil = {
+  gtagEvent,
+  fbEvent,
+};
+
+export default AnalyticsUtil;

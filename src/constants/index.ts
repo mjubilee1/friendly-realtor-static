@@ -28,7 +28,7 @@ export const navLinks = [
     id: '/',
     title: 'Product',
   },
-	{
+  {
     id: '/blogs',
     title: 'Blogs',
   },
