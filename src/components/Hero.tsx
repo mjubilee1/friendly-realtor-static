@@ -30,14 +30,12 @@ const Hero = () => {
     <section id="home" className={`flex md:flex-row flex-col ${styles.paddingY}`}>
       <div className={`flex-1 flex justify-start items-start flex-col xl:px-0 sm:px-16 px-6`}>
         <div className="flex flex-row justify-between items-center w-full">
-          <h1 className="flex-1 font-ubuntu font-semibold ss:text-[72px] text-[52px] text-white ss:leading-[100px] leading-[75px]">
-            A powerful tool to <br className="sm:block hidden" />{' '}
-            <span className="text-primary">Streamline</span>{' '}
+          <h1 className="flex-1 mb-8 font-ubuntu font-semibold ss:text-[32px] text-[32px] text-white">
+            Designed specifically for realtors, this comprehensive realtor toolkit is a valuable
+            resource that offers a wide range of resources and information to assist you in making
+            informed decisions throughout your clients' home buying journey.
           </h1>
         </div>
-        <h1 className="font-ubuntu font-semibold ss:text-[68px] text-[52px] text-white ss:leading-[100px] leading-[75px] w-full">
-          your Real estate business.
-        </h1>
         <h6 className="font-ubuntu">
           Our mission at Friendly Realtor is to achieve three vital economic objectives - increased
           revenue, expanded market share, and improved profitability - within 24 months through the

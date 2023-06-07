@@ -24,11 +24,16 @@ const FeatureCard = ({ icon, title, content, index }) => (
 const Business = () => (
   <section id="features" className={layout.section}>
     <div className={layout.sectionInfo}>
-      <h2 className={styles.heading2}>Real Esate software that works for you.</h2>
-      <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
-        Whether you're a real estate agent, broker, or investor, this software can help you stay
-        organized, save time, and close more deals than ever before
-      </p>
+      <h2 className={styles.heading2}>We have identified key challenges faced by realtors.</h2>
+      <ul className={`${styles.paragraph} max-w-[470px]`}>
+        <li className="mt-5">* Identifying and reaching out to qualified leads</li>
+        <li className="mt-5">* Competing in a crowded real estate market</li>
+        <li className="mt-5">* Building a strong referral network</li>
+        <li className="mt-5">* Juggling multiple clients and appointments</li>
+        <li className="mt-5">* Prioritizing tasks and deadlines</li>
+        <li className="mt-5">* Managing administrative work and paperwork efficiently</li>
+        <li className="mt-5">* Striking a work-life balance</li>
+      </ul>
     </div>
 
     <div className={`${layout.sectionImg} flex-col`}>

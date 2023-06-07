@@ -3,7 +3,9 @@ import { createClient } from 'contentful';
 // Initialize Contentful client
 export const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || 'v3wxyl8kvdve',
-  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN || 'L7QcNsQyrn5kH5wn0jep7tZQBnIWeTJ2E6gJ8ViLX3k',
+  accessToken:
+    process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN ||
+    'L7QcNsQyrn5kH5wn0jep7tZQBnIWeTJ2E6gJ8ViLX3k',
 });
 
 // Fetch entries from Contentful

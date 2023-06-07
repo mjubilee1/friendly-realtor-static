@@ -13,6 +13,7 @@ import {
   send,
   shield,
   star,
+  quotes,
 } from '../assets';
 
 export const navLinks = [
@@ -40,8 +41,15 @@ export const navLinks = [
 
 export const features = [
   {
-    id: 'feature-1',
+    id: 'feature-0',
     icon: star,
+    title: 'Best Seller Lead Generation for Realtors',
+    content:
+      'Generate leads of best-selling properties in seconds, allowing you to focus on building relationships.',
+  },
+  {
+    id: 'feature-1',
+    icon: quotes,
     title: 'Quick CMA estimates',
     content:
       'Get a CMA estimate within seconds, that saves you to focus on building relationships.',
