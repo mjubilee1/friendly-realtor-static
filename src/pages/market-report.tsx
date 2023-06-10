@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
 import Head from 'next/head';
+import React, { useEffect } from 'react';
 
-const InternalPage = () => {
+const MarketReportPage = () => {
   useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
@@ -14,14 +14,16 @@ const InternalPage = () => {
     }
   }, []);
 
+  const marketDescription = '{marketDescription}';
+
   return (
     <>
       <Head>
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="description" content={marketDescription} />
       </Head>
       <div id="content-container" />
     </>
   );
 };
 
-export default InternalPage;
+export default MarketReportPage;
