@@ -10,7 +10,7 @@ const IdxPage = () => {
     document.body.appendChild(script);
 
     return () => {
-      script.parentNode?.removeChild(script);
+      document.body.removeChild(script);
     };
   }, []);
 
