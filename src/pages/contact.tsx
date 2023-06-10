@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
 import Head from 'next/head';
+import React, { useEffect } from 'react';
 
-const InternalPage = () => {
+const ContactPage = () => {
   useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
@@ -17,11 +17,11 @@ const InternalPage = () => {
   return (
     <>
       <Head>
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="description" content="" />
       </Head>
       <div id="content-container" />
     </>
   );
 };
 
-export default InternalPage;
+export default ContactPage;

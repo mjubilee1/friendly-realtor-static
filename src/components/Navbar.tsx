@@ -11,20 +11,20 @@ const NavBar = () => {
   const [toggle, setToggle] = useState(false);
 
   const handleClick = (to: string) => {
-    fbEvent('learn_more_click', {
-      content_name: 'learn_more_btn',
+    fbEvent('take_survey_click', {
+      content_name: 'take_survey_btn',
       content_category: 'user_interaction',
       value: 1,
     });
 
     gtagEvent({
-      action: 'learn_more_click',
+      action: 'take_survey_click',
       category: 'user_interaction',
-      label: 'learn_more_btn',
+      label: 'take_survey_btn',
       value: 1,
     });
 
-    router.push('https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J');
+    router.push('https://docs.google.com/forms/d/e/1FAIpQLSf2nr-xa4BDh6stpU9ySdPIyH_PSLN6H6HWcWwcw3Jp89NvKg/viewform?usp=sf_link');
   };
 
   return (
@@ -40,7 +40,7 @@ const NavBar = () => {
               } text-white`}
             >
               {el.to ? (
-                <AddLink onClick={() => handleClick(el.to)}>{el.title}</AddLink>
+                <AddLink onClick={() => handleClick(el.to)} size="none" className="text-[16px] font-normal tracking-normal">{el.title}</AddLink>
               ) : (
                 <a href={`${el.id}`}>{el.title}</a>
               )}

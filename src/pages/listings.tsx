@@ -19,9 +19,7 @@ const ListingsPage = () => {
       <Head>
         <meta name="description" content="" />
       </Head>
-      <div>Above all content</div>
       <div id="content-container" />
-      <div>Below all content</div>
     </>
   );
 };

@@ -23,11 +23,11 @@ export const navLinks = [
   },
   {
     id: '/',
-    title: 'Features',
+    title: 'Services',
   },
   {
-    id: '/',
-    title: 'Product',
+    id: '/listings',
+    title: 'Listings',
   },
   {
     id: '/blogs',
@@ -35,7 +35,7 @@ export const navLinks = [
   },
   {
     to: 'https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J',
-    title: 'Learn More',
+    title: 'Take Survey',
   },
 ];
 
@@ -131,6 +131,10 @@ export const footerLinks = [
       {
         name: 'Blogs',
         href: '/blogs',
+      },
+			{
+        name: 'Contact',
+        href: '/contact',
       },
     ],
   },
