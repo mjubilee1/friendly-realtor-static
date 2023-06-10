@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const ServicesPage = () => {
   return (
     <div>
-			 <Head>
+      <Head>
         <meta name="description" content="" />
       </Head>
       <div id="content-container" />
@@ -22,6 +22,6 @@ const ServicesPage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default ServicesPage;

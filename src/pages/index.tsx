@@ -1,10 +1,10 @@
 import styles from '../styles/styles';
-import { Hero, Business } from '../components';
+import { DefaultHero } from '../components';
 import Head from 'next/head';
 import { useEffect } from 'react';
 
 const HomePage = () => {
-	useEffect(() => {
+  useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
 		document.currentScript.replaceWith(ihfKestrel.render());
@@ -18,12 +18,16 @@ const HomePage = () => {
 
   return (
     <>
-			 <Head>
+      <Head>
         <meta name="description" content="" />
       </Head>
+      <DefaultHero
+        title="Discover. Explore. Possess."
+        subTitle="Uncover hidden gems, embrace new horizons, and claim your dreams."
+      />
       <div id="content-container" />
     </>
   );
-}
+};
 
 export default HomePage;
