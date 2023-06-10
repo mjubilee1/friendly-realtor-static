@@ -6,27 +6,27 @@ import Image from 'next/image';
 const Footer = () => {
   return (
     <section className={`${styles.flexCenter} ${styles.paddingY} flex-col w-full`}>
-        {footerLinks.map((footerlink) => (
-            <ul className="flex w-full justify-between">
-              {footerlink.links.map((link, index) => {
-                return (
-                  <li
-                    key={link.name}
-                    className={`font-ubuntu font-normal text-[16px] leading-[24px] text-dimWhite hover:text-secondary cursor-pointer ${
-                      index !== footerlink.links.length - 1 ? 'mb-4' : 'mb-0'
-                    }`}
-                  >
-                    <a
-                      href={link.href}
-                      target={link.name === 'Sitemap' || 'Blogs' ? '_self' : '_blank'}
-                    >
-                      {link.name}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-        ))}
+      {footerLinks.map((footerlink) => (
+        <ul className="flex w-full justify-between">
+          {footerlink.links.map((link, index) => {
+            return (
+              <li
+                key={link.name}
+                className={`font-ubuntu font-normal text-[16px] leading-[24px] text-dimWhite hover:text-secondary cursor-pointer ${
+                  index !== footerlink.links.length - 1 ? 'mb-4' : 'mb-0'
+                }`}
+              >
+                <a
+                  href={link.href}
+                  target={link.name === 'Sitemap' || 'Blogs' ? '_self' : '_blank'}
+                >
+                  {link.name}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      ))}
 
       <div className="w-full flex justify-between items-center md:flex-row flex-col pt-6 border-t-[1px] border-t-[#3F3E45]">
         <p className="font-ubuntu font-normal text-center text-[18px] leading-[27px] text-white">
