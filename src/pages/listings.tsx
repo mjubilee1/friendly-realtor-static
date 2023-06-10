@@ -2,11 +2,12 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 
 const ListingsPage = () => {
-
-  useEffect(() => {
+	useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
-      document.currentScript.replaceWith(ihfKestrel.render());
+		if (document.querySelector("#content-container")) {
+			document.querySelector("#content-container").innerHTML = ihfKestrel.render();
+		}
     `;
 
     document.body.appendChild(script);
@@ -21,9 +22,9 @@ const ListingsPage = () => {
       <Head>
         <meta name="description" content="" />
       </Head>
-      <div>
-        Listing Page Content
-      </div>
+			<div>Above all content</div>
+      <div id="content-container" />      
+			<div>Below all content</div>
     </>
   );
 };
