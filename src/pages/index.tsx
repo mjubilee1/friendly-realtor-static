@@ -1,5 +1,6 @@
 import styles from '../styles/styles';
 import { DefaultHero } from '../components';
+import { Checklist } from '../components/UI';
 import Head from 'next/head';
 import { useEffect } from 'react';
 
@@ -25,6 +26,7 @@ const HomePage = () => {
         title="Discover. Explore. Possess."
         subTitle="Uncover hidden gems, embrace new horizons, and claim your dreams."
       />
+      <Checklist />
       <div id="content-container" />
     </>
   );

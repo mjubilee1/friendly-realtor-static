@@ -21,9 +21,9 @@ const DefaultHero = (props: HeroProps) => {
         className="z-0 object-cover"
       />
       <div className="absolute inset-0 flex flex-col justify-center text-white z-10 ml-4 w-96">
-				<Header as="h3" className="font-bold mt-4 text-black">
-					{title}
-				</Header>
+        <Header as="h3" className="font-bold mt-4 text-black">
+          {title}
+        </Header>
         <p className="text-lg text-black">{subTitle}</p>
       </div>
     </div>
