@@ -11,7 +11,6 @@ export type HeroProps = {
 const DefaultHero = (props: HeroProps) => {
   const { title, subTitle, src } = props;
 
-	console.log(title)
   return (
     <div className="relative w-full h-[32rem]">
       <Image
