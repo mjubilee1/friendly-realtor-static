@@ -24,7 +24,9 @@ const NavBar = () => {
       value: 1,
     });
 
-    router.push('https://docs.google.com/forms/d/e/1FAIpQLSf2nr-xa4BDh6stpU9ySdPIyH_PSLN6H6HWcWwcw3Jp89NvKg/viewform?usp=sf_link');
+    router.push(
+      'https://docs.google.com/forms/d/e/1FAIpQLSf2nr-xa4BDh6stpU9ySdPIyH_PSLN6H6HWcWwcw3Jp89NvKg/viewform?usp=sf_link',
+    );
   };
 
   return (
@@ -40,7 +42,13 @@ const NavBar = () => {
               } text-white`}
             >
               {el.to ? (
-                <AddLink onClick={() => handleClick(el.to)} size="none" className="text-[16px] font-normal tracking-normal">{el.title}</AddLink>
+                <AddLink
+                  onClick={() => handleClick(el.to)}
+                  size="none"
+                  className="text-[16px] font-normal tracking-normal"
+                >
+                  {el.title}
+                </AddLink>
               ) : (
                 <a href={`${el.id}`}>{el.title}</a>
               )}

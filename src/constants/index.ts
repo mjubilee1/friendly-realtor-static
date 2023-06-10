@@ -25,7 +25,7 @@ export const navLinks = [
     id: '/services',
     title: 'For Realtors',
   },
-	{
+  {
     to: 'https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J',
     title: 'Take Survey',
   },
@@ -128,7 +128,7 @@ export const footerLinks = [
         name: 'Blogs',
         href: '/blogs',
       },
-			{
+      {
         name: 'Contact',
         href: '/contact',
       },
