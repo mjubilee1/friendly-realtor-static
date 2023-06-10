@@ -22,20 +22,16 @@ export const navLinks = [
     title: 'Home',
   },
   {
-    id: '/',
-    title: 'Services',
+    id: '/services',
+    title: 'For Realtors',
   },
-  {
-    id: '/listings',
-    title: 'Listings',
+	{
+    to: 'https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J',
+    title: 'Take Survey',
   },
   {
     id: '/blogs',
     title: 'Blogs',
-  },
-  {
-    to: 'https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J',
-    title: 'Take Survey',
   },
 ];
 
