@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import Head from 'next/head';
+import { useEffect } from 'react';
 
-const IdxPage = () => {
+const ListingsPage = () => {
+
   useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
@@ -14,7 +16,16 @@ const IdxPage = () => {
     };
   }, []);
 
-  return <div>IDX Page</div>;
+  return (
+    <>
+      <Head>
+        <meta name="description" content="" />
+      </Head>
+      <div>
+        Listing Page Content
+      </div>
+    </>
+  );
 };
 
-export default IdxPage;
+export default ListingsPage;
