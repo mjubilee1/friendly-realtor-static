@@ -1,19 +1,29 @@
 import styles from '../styles/styles';
 import { Hero, Business } from '../components';
+import Head from 'next/head';
+import { useEffect } from 'react';
 
-export default function Home() {
+const HomePage = () => {
+	useEffect(() => {
+    const script = document.createElement('script');
+    script.innerHTML = `
+		document.currentScript.replaceWith(ihfKestrel.render());
+    `;
+
+    const contentContainer = document.querySelector('#content-container');
+    if (contentContainer) {
+      contentContainer.appendChild(script);
+    }
+  }, []);
+
   return (
-    <div>
-      <div className={`bg-secondary w-full overflow-hidden`}>
-        <div className={`bg-secondary ${styles.flexStart}`}>
-          <div className={`${styles.boxWidth}`}>
-            <Hero />
-          </div>
-        </div>
-        <div className={`bg-secondary ${styles.paddingX} ${styles.flexCenter}`}>
-          <Business />
-        </div>
-      </div>
-    </div>
+    <>
+			 <Head>
+        <meta name="description" content="" />
+      </Head>
+      <div id="content-container" />
+    </>
   );
 }
+
+export default HomePage;
