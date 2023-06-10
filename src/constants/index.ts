@@ -29,6 +29,14 @@ export const navLinks = [
     id: '/services',
     title: 'For Realtors',
   },
+	{
+    id: '/mortgage-calculator',
+    title: 'Mortgage Calculator',
+  },
+	{
+    id: '/valuation',
+    title: 'Free Home Valuation',
+  },
   {
     to: 'https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J',
     title: 'Take Survey',
