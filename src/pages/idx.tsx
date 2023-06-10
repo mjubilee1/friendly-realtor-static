@@ -1,20 +1,27 @@
 import React, { useEffect } from 'react';
+import Head from 'next/head';
 
-const IdxPage = () => {
+const InternalPage = () => {
   useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
-      document.currentScript.replaceWith(ihfKestrel.render());
+		document.currentScript.replaceWith(ihfKestrel.render());
     `;
 
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    const contentContainer = document.querySelector('#content-container');
+    if (contentContainer) {
+      contentContainer.appendChild(script);
+    }
   }, []);
 
-  return <div>IDX Page</div>;
+	return (
+    <>
+      <Head>
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div id="content-container" />
+    </>
+  );
 };
 
-export default IdxPage;
+export default InternalPage;

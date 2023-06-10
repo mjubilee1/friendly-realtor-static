@@ -5,14 +5,13 @@ const ListingPage = () => {
   useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
-      document.currentScript.replaceWith(ihfKestrel.render());
+		document.currentScript.replaceWith(ihfKestrel.render());
     `;
 
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    const contentContainer = document.querySelector('#content-container');
+    if (contentContainer) {
+      contentContainer.appendChild(script);
+    }
   }, []);
 
   const listingPhotoUrl = '{listingPhotoUrl}';
@@ -36,7 +35,7 @@ const ListingPage = () => {
           content={`${listingAddress}, ${listingCity} Real Estate, ${listingCity} Property for Sale`}
         />
       </Head>
-      <div>Listing Page</div>
+      <div id="content-container" />
     </>
   );
 };
