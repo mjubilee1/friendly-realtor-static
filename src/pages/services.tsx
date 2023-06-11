@@ -1,7 +1,6 @@
 import styles from '../styles/styles';
 import { Hero, Business } from '../components';
 import Head from 'next/head';
-import { useEffect } from 'react';
 
 const ServicesPage = () => {
   return (
