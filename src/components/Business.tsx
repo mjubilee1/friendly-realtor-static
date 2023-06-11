@@ -7,7 +7,7 @@ const FeatureCard = ({ icon, title, content, index }) => (
   <div
     className={`flex flex-row p-6 rounded-[20px] ${
       index !== features.length - 1 ? 'mb-6' : 'mb-0'
-    } feature-card`}
+    } feature-card items-baseline`}
   >
     <div className={`w-[64px] h-[64px] rounded-full ${styles.flexCenter} bg-dimGreen`}>
       <Image src={icon} alt="star" className="w-[50%] h-[50%] object-contain" />

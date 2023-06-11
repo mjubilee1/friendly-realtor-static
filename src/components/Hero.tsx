@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/styles';
 import { iphoneScreen, apple } from '../assets';
-import { AddLink } from './UI';
+import { AddLink, Button } from './UI';
 import Image from 'next/image';
 import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 import { useRouter } from 'next/router';
@@ -25,6 +25,10 @@ const Hero = () => {
 
     router.push('https://apps.apple.com/us/app/friendlyrealtor/id6446328944');
   };
+
+	const handleNavigateStipe = () => {
+		router.push('https://buy.stripe.com/fZeeY11WK13a5rOaEF')
+	}
 
   return (
     <section id="home" className={`flex md:flex-row flex-col ${styles.paddingY}`}>
@@ -52,13 +56,16 @@ const Hero = () => {
           estate industry by helping new real estate agents succeed, fostering long-term
           partnerships, and delivering exceptional value to our clients.
         </h6>
-        <AddLink onClick={handleClick}>
-          <Image
-            src={apple}
-            alt="friendly_realtor_app"
-            className="w-44 mt-8 object-contain mr-5 cursor-pointer"
-          />
-        </AddLink>
+				<div className="flex items-center mt-8">
+					<AddLink onClick={handleClick}>
+						<Image
+							src={apple}
+							alt="friendly_realtor_app"
+							className="w-44 object-contain mr-5 cursor-pointer"
+						/>
+					</AddLink>
+					<Button type="submit" color="" className="px-4 py-4 bg-primary rounded-md text-xl" onClick={handleNavigateStipe}>Advertise With Us.</Button>
+				</div>
       </div>
 
       <div className={`flex-1 flex ${styles.flexCenter} md:mr-0  my-10 relative`}>
