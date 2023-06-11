@@ -10,13 +10,13 @@ const ServicesPage = () => {
         <meta name="description" content="" />
       </Head>
       <div id="content-container" />
-      <div className={`bg-secondary w-full overflow-hidden`}>
-        <div className={`bg-secondary ${styles.flexStart}`}>
+      <div className={`w-full overflow-hidden`}>
+        <div className={`${styles.flexStart}`}>
           <div className={`${styles.boxWidth}`}>
             <Hero />
           </div>
         </div>
-        <div className={`bg-secondary ${styles.paddingX} ${styles.flexCenter}`}>
+        <div className={`${styles.paddingX} ${styles.flexCenter}`}>
           <Business />
         </div>
       </div>
