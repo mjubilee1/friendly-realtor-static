@@ -2,6 +2,7 @@ export { default as AddLink } from './AddLink';
 export { default as Button } from './Button';
 export { default as Checklist } from './Checklist';
 export { default as Container } from './Container';
+export { default as DropdownMenu } from './DropdownMenu';
 export { default as Icon } from './Icon';
 export { default as Divider } from './Divider';
 export { default as Header } from './Header';
