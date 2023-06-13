@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { close, logo, menu } from '../assets';
 import { navLinks } from '../constants';
 import Image from 'next/image';
-import { AddLink } from './UI';
+import { AddLink, DropdownMenu } from './UI';
 import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 import { useRouter } from 'next/router';
 
@@ -41,7 +41,9 @@ const NavBar = () => {
                 index === navLinks.length - 1 ? 'mr-0' : 'mr-10'
               } text-white`}
             >
-              {el.to ? (
+              {el.dropdown ? (
+                <DropdownMenu dropdownItems={el.dropdown} title={el.title} />
+              ) : el.to ? (
                 <AddLink
                   onClick={() => handleClick(el.to)}
                   size="none"
@@ -50,7 +52,7 @@ const NavBar = () => {
                   {el.title}
                 </AddLink>
               ) : (
-                <a href={`${el.id}`}>{el.title}</a>
+                <a href={el.id}>{el.title}</a>
               )}
             </li>
           );

@@ -28,7 +28,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props: Chec
     }
   }, [checked, innerRef]);
 
-  console.log('value', value);
   return (
     <div
       className={`flex flex-row m-0 p-0 relative items-center gap-x-1 ${getLabelPosClass(

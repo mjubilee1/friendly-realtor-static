@@ -26,9 +26,9 @@ const Hero = () => {
     router.push('https://apps.apple.com/us/app/friendlyrealtor/id6446328944');
   };
 
-	const handleNavigateStipe = () => {
-		router.push('https://buy.stripe.com/fZeeY11WK13a5rOaEF')
-	}
+  const handleNavigateStipe = () => {
+    router.push('https://buy.stripe.com/fZeeY11WK13a5rOaEF');
+  };
 
   return (
     <section id="home" className={`flex md:flex-row flex-col ${styles.paddingY}`}>
@@ -56,16 +56,23 @@ const Hero = () => {
           estate industry by helping new real estate agents succeed, fostering long-term
           partnerships, and delivering exceptional value to our clients.
         </h6>
-				<div className="flex items-center mt-8">
-					<AddLink onClick={handleClick}>
-						<Image
-							src={apple}
-							alt="friendly_realtor_app"
-							className="w-44 object-contain mr-5 cursor-pointer"
-						/>
-					</AddLink>
-					<Button type="submit" color="" className="px-4 py-4 bg-primary rounded-md text-xl" onClick={handleNavigateStipe}>Advertise With Us.</Button>
-				</div>
+        <div className="flex items-center mt-8">
+          <AddLink onClick={handleClick}>
+            <Image
+              src={apple}
+              alt="friendly_realtor_app"
+              className="w-44 object-contain mr-5 cursor-pointer"
+            />
+          </AddLink>
+          <Button
+            type="submit"
+            color=""
+            className="px-4 py-4 bg-primary rounded-md text-xl"
+            onClick={handleNavigateStipe}
+          >
+            Advertise With Us.
+          </Button>
+        </div>
       </div>
 
       <div className={`flex-1 flex ${styles.flexCenter} md:mr-0  my-10 relative`}>

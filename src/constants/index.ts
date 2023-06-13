@@ -21,7 +21,7 @@ export const navLinks = [
     id: '/',
     title: 'Home',
   },
-	{
+  {
     id: '/property-organizer',
     title: 'Saved Searches',
   },
@@ -29,17 +29,27 @@ export const navLinks = [
     id: '/services',
     title: 'For Realtors',
   },
-	{
-    id: '/mortgage-calculator',
-    title: 'Mortgage Calculator',
-  },
-	{
-    id: '/valuation',
-    title: 'Free Home Valuation',
+  {
+    id: '/resources',
+    title: 'Resources',
+    dropdown: [
+      {
+        id: '/valuation',
+        title: 'Free Home Valuation',
+      },
+      {
+        id: '/mortgage-calculator',
+        title: 'Mortgage Calculator',
+      },
+      {
+        to: 'https://docs.google.com/forms/d/e/1FAIpQLSf2nr-xa4BDh6stpU9ySdPIyH_PSLN6H6HWcWwcw3Jp89NvKg/viewform',
+        title: 'Take Survey',
+      },
+    ],
   },
   {
-    to: 'https://q7u2nrm2bx7.typeform.com/to/MIXNgH1J',
-    title: 'Take Survey',
+    id: 'https://forum.friendlyrealtor.app/',
+    title: 'Forum',
   },
   {
     id: '/blogs',
