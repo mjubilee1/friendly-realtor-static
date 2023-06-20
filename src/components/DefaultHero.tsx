@@ -5,8 +5,8 @@ import { Header } from './UI';
 
 export type HeroProps = {
   src?: StaticImageData;
-  title: string;
-  subTitle: string;
+  title?: string;
+  subTitle?: string;
 };
 
 const DefaultHero = (props: HeroProps) => {
