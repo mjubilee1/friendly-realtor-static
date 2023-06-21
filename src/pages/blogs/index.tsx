@@ -6,6 +6,8 @@ import Head from 'next/head';
 
 const AllBlogPage = () => {
   const [blogPosts, setBlogPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 9;
 
   useEffect(() => {
     async function fetchData() {
@@ -19,6 +21,16 @@ const AllBlogPage = () => {
 
     fetchData();
   }, []);
+
+  // Calculate the current posts to display
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Change page
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <Container>
@@ -38,7 +50,7 @@ const AllBlogPage = () => {
         Discover Friendly Realtors Blog Post
       </Header>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {blogPosts.map((post) => (
+        {currentPosts.map((post) => (
           <Link href={`/blogs/${post.fields.slug}`} key={post.sys.id} className="text-center">
             <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden">
               <Image
@@ -55,6 +67,31 @@ const AllBlogPage = () => {
             </div>
           </Link>
         ))}
+      </div>
+      <div className="flex justify-center mt-4">
+        {blogPosts.length > postsPerPage && (
+          <nav>
+            <ul className="flex gap-4">
+              {Array(Math.ceil(blogPosts.length / postsPerPage))
+                .fill()
+                .map((_, index) => (
+                  <li
+                    key={index}
+                    className={`px-2 bg-white rounded-xl ${
+                      currentPage === index + 1 ? 'bg-blue-500 text-white' : ''
+                    }`}
+                  >
+                    <button
+                      onClick={() => paginate(index + 1)}
+                      className={`focus:outline-none`}
+                    >
+                      <p className="text-black">{index + 1}</p>
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          </nav>
+        )}
       </div>
     </Container>
   );
