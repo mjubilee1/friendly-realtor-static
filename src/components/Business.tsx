@@ -5,14 +5,14 @@ import Image from 'next/image';
 
 const FeatureCard = ({ icon, title, content, index }) => (
   <div
-    className={`flex flex-row p-6 rounded-[20px] ${
+    className={`flex flex-col items-center md:flex-row p-6 rounded-[20px] ${
       index !== features.length - 1 ? 'mb-6' : 'mb-0'
-    } feature-card items-baseline`}
+    } feature-card`}
   >
-    <div className={`w-[64px] h-[64px] rounded-full ${styles.flexCenter} bg-dimGreen`}>
+    <div className={`w-[64px] h-[64px] rounded-full ${styles.flexCenter} bg-dimGreen mb-4 md:mb-0 md:mr-4`}>
       <Image src={icon} alt="star" className="w-[50%] h-[50%] object-contain" />
     </div>
-    <div className="flex-1 flex flex-col ml-3">
+    <div className="flex-1 flex flex-col w-[500px]">
       <h4 className="font-ubuntu font-semibold text-white text-[18px] leading-[23.4px] mb-1">
         {title}
       </h4>
@@ -22,10 +22,10 @@ const FeatureCard = ({ icon, title, content, index }) => (
 );
 
 const Business = () => (
-  <section id="features" className={layout.section}>
+  <section id="features" className={`${layout.section} md:flex-row md:justify-between`}>
     <div className={layout.sectionInfo}>
-      <h2 className={styles.heading2}>We have identified key challenges faced by realtors.</h2>
-      <ul className={`${styles.paragraph} max-w-[470px]`}>
+      <h2 className={`${styles.heading2} text-center md:text-left`}>We have identified key challenges faced by realtors.</h2>
+      <ul className={`${styles.paragraph} max-w-[470px] mx-auto md:mx-0 md:max-w-none`}>
         <li className="mt-5">* Identifying and reaching out to qualified leads</li>
         <li className="mt-5">* Competing in a crowded real estate market</li>
         <li className="mt-5">* Building a strong referral network</li>
@@ -36,7 +36,7 @@ const Business = () => (
       </ul>
     </div>
 
-    <div className={`${layout.sectionImg} flex-col`}>
+    <div className={`${layout.sectionImg} flex-col md:flex md:flex-wrap md:justify-between`}>
       {features.map((feature, index) => (
         <FeatureCard key={feature.id} {...feature} index={index} />
       ))}
