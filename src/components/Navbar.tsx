@@ -10,7 +10,7 @@ const NavBar = () => {
   const router = useRouter();
   const [toggle, setToggle] = useState(false);
 
-  const handleClick = (to: string) => {
+  const handleClick = (to) => {
     fbEvent('take_survey_click', {
       content_name: 'take_survey_btn',
       content_category: 'user_interaction',
@@ -24,9 +24,7 @@ const NavBar = () => {
       value: 1,
     });
 
-    router.push(
-      'https://docs.google.com/forms/d/e/1FAIpQLSf2nr-xa4BDh6stpU9ySdPIyH_PSLN6H6HWcWwcw3Jp89NvKg/viewform?usp=sf_link',
-    );
+    router.push(to);
   };
 
   return (
@@ -38,8 +36,8 @@ const NavBar = () => {
             <li
               key={el.id}
               className={`font-ubuntu font-normal cursor-pointer text-[16px] ${
-                index === navLinks.length - 1 ? 'mr-0' : 'mr-10'
-              } text-white`}
+                router.pathname === el.id ? 'text-blue-500' : 'text-white'
+              } ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'}`}
             >
               {el.dropdown ? (
                 <DropdownMenu dropdownItems={el.dropdown} title={el.title} />
@@ -78,8 +76,8 @@ const NavBar = () => {
                 <li
                   key={el.id}
                   className={`font-ubuntu font-normal cursor-pointer text-[16px] ${
-                    index === navLinks.length - 1 ? 'mr-0' : 'mb-4'
-                  } text-white`}
+                    router.pathname === el.id ? 'text-blue-500' : 'text-white'
+                  } ${index === navLinks.length - 1 ? 'mr-0' : 'mb-4'}`}
                 >
                   {el.to ? (
                     <AddLink onClick={() => handleClick(el.to)}>{el.title}</AddLink>
