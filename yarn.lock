@@ -3267,6 +3267,7 @@ __metadata:
     react-focus-lock: ^2.9.4
     react-hook-form: ^7.45.0
     react-markdown: ^8.0.7
+    react-social-icons: ^5.15.0
     tailwindcss: 3.3.1
     typescript: 5.0.4
     uuid: ^9.0.0
@@ -5836,7 +5837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.0.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -6094,6 +6095,17 @@ __metadata:
     "@types/react": ">=16"
     react: ">=16"
   checksum: 0f3e570975134a3382c3fe5189e04e742ae154941463bdfaab2293319da1f1585cb9b75b6f07d99f514c4d728d69cc1af3c96ab37df90003b3bcc210dd0001ba
+  languageName: node
+  linkType: hard
+
+"react-social-icons@npm:^5.15.0":
+  version: 5.15.0
+  resolution: "react-social-icons@npm:5.15.0"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: 15.x.x || 16.x.x || 17.x.x || 18.x.x
+  checksum: b93d2ca603f24825424a44a996215af261868247897bfced1ca37f8ab9dbceb14f73ed399e49b18c9f3d77faf7aad6b5f577553dc13e435d4c3bbb21bc08c278
   languageName: node
   linkType: hard
 

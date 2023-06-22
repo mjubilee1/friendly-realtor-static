@@ -81,10 +81,7 @@ const AllBlogPage = () => {
                       currentPage === index + 1 ? 'bg-blue-500 text-white' : ''
                     }`}
                   >
-                    <button
-                      onClick={() => paginate(index + 1)}
-                      className={`focus:outline-none`}
-                    >
+                    <button onClick={() => paginate(index + 1)} className={`focus:outline-none`}>
                       <p className="text-black">{index + 1}</p>
                     </button>
                   </li>

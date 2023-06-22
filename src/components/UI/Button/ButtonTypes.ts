@@ -7,7 +7,7 @@ export type ButtonType = 'button' | 'submit';
 export type ButtonProps = {
   // button type is import for accessibility
   id?: string;
-  type: ButtonType;
+  type?: ButtonType;
   color: ColorOptions;
   text?: string;
   children?: ReactNode;

@@ -82,10 +82,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <div
         className={`flex min-h-screen flex-col items-center justify-between p-12 ${ubuntu.className}`}
       >
-        <div className="w-full">
-          <div className={`${styles.boxWidth}`}>
-            <Navbar />
-          </div>
+        <div className={`${styles.boxWidth}`}>
+          <Navbar />
         </div>
         <DefaultSeo {...SEO} />
         <Component {...pageProps} />

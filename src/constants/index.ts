@@ -21,10 +21,10 @@ export const navLinks = [
     id: '/',
     title: 'Home',
   },
-  {
+  /*{
     id: '/property-organizer',
     title: 'Saved Searches',
-  },
+  },*/
   {
     id: '/services',
     title: 'For Realtors',
