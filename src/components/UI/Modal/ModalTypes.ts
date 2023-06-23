@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 export type ModalProps = {
+  id?: string;
   open: boolean;
   trigger?: ReactNode;
   onClose?: any;

@@ -67,6 +67,7 @@ function getPositionStyles(position: string) {
   return positionStyles;
 }
 export const Modal = ({
+  id,
   open,
   trigger,
   onClose,
@@ -147,7 +148,7 @@ export const Modal = ({
   const el = useRef(typeof document !== 'undefined' ? document.createElement('div') : undefined);
 
   return (
-    <>
+    <div id={id}>
       {trigger}
       {open &&
         // if autoFocus is set to true will set focus on first focusable element in module - Focus being handled above when focusLocked is true
@@ -196,6 +197,6 @@ export const Modal = ({
           </FocusLock>,
           modalRoot,
         )}
-    </>
+    </div>
   );
 };
