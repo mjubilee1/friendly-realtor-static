@@ -93,7 +93,7 @@ export const LoginModal = () => {
           <ForgotPasswordModal />
         </form>
         <div className="flex flex-col items-end">
-          <p>on login in with</p>
+          <p>or login in with</p>
           <div className="flex items-center mt-2 justify-end">
             <Button onClick={handleGoogleSignIn} className="!p-0 mr-2">
               <SocialIcon network="google" />
