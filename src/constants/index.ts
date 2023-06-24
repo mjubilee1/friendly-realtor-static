@@ -61,28 +61,51 @@ export const features = [
   {
     id: 'feature-0',
     icon: star,
-    title: 'Best Seller Lead Generation for Realtors',
+    title: 'Efficient Buyer Lead Generation for Realtors',
     content:
-      'Generate leads of best-selling properties in seconds, allowing you to focus on building relationships.',
+      'Effortlessly generate leads for top-selling properties within seconds, freeing up your time to prioritize relationship-building.',
   },
   {
     id: 'feature-1',
     icon: quotes,
-    title: 'Quick CMA estimates',
+    title: 'Streamline Showing Routes for New Realtors',
     content:
-      'Get a CMA estimate within seconds, that saves you to focus on building relationships.',
+      'Maximize efficiency by mapping showings based on proximity, helping new realtors prioritize appointments and minimize travel time.',
   },
   {
     id: 'feature-2',
     icon: shield,
-    title: 'Continue Education Learning',
-    content: 'We take pride in providing tool that help you deliver effiencelty in the field.',
+    title: 'Accurate and Swift CMA Estimates',
+    content:
+      'Gain an edge with precise and speedy CMA estimates, empowering realtors who need quick property value assessments for competitive advantage.',
   },
   {
     id: 'feature-3',
     icon: send,
-    title: 'Continue Renewal License Tracker',
-    content: 'A balance transfer credit card can save you a lot of money in interest charges.',
+    title: 'Enhanced Communication and Collaboration',
+    content:
+      'Connect and chat with clients, fellow realtors, and lenders effortlessly, fostering effective collaboration and support throughout the deal process.',
+  },
+  {
+    id: 'feature-4',
+    icon: shield,
+    title: 'Simplified Client and Deal Management',
+    content:
+      ' Seamlessly organize and manage real estate clients and transactions, supporting realtors who struggle with client relationship management and administrative tasks.',
+  },
+  {
+    id: 'feature-5',
+    icon: quotes,
+    title: 'Boost Your Online Presence',
+    content:
+      'Claim your complimentary realtor profile to showcase recent achievements, providing a professional online presence to attract potential clients and demonstrate expertise.',
+  },
+  {
+    id: 'feature-6',
+    icon: star,
+    title: 'Overcome Real Estate Challenges',
+    content:
+      'Tackle the toughest aspects of being a real estate agent with comprehensive tools and resources, empowering realtors to navigate challenges confidently.',
   },
 ];
 
