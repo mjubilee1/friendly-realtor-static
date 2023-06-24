@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Popup } from './UI';
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { firestore, auth } from '../context';
 import { Formik, Form, Field } from 'formik';

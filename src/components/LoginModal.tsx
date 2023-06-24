@@ -15,44 +15,45 @@ export const LoginModal = () => {
   const [loginError, setLoginError] = useState('');
   const [errorState, setErrorState] = useState<string>('');
 
-	const { isOpen, message, openPopup, closePopup } = usePopup();
+  const { isOpen, message, openPopup, closePopup } = usePopup();
 
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: ''
+      password: '',
     },
     validationSchema: Yup.object({
       email: Yup.string().email('Invalid email address').required('Required'),
-      password: Yup.string().required('Required')
+      password: Yup.string().required('Required'),
     }),
     onSubmit: async (values) => {
       try {
         const res = await signInWithEmailAndPassword(auth, values.email, values.password);
 
-				if (res.user.emailVerified) {
-
-				} else {
-					setLoginError('Error need to verify your email address!')
-				}
+        if (res.user.emailVerified) {
+          window.location.reload();
+        } else {
+          await sendEmailVerification(res.user);
+          openPopup('Email verification sent!');
+        }
       } catch (error) {
         setLoginError('Error logging in. Please check your credentials and try again.');
       }
-    }
+    },
   });
 
   const handleGoogleSignIn = async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
-			if (!res.user.emailVerified) {
-				await sendEmailVerification(res.user);
-				await setDoc(doc(firestore, 'buyers', res.user.uid), {
-					name: res.user.displayName,
-				});
-				openPopup('Email verification sent!');
-			} else {
-				window.location.reload();
-			}
+      if (!res.user.emailVerified) {
+        await sendEmailVerification(res.user);
+        await setDoc(doc(firestore, 'buyers', res.user.uid), {
+          name: res.user.displayName,
+        });
+        openPopup('Email verification sent!');
+      } else {
+        window.location.reload();
+      }
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -76,15 +77,15 @@ export const LoginModal = () => {
   const handleFacebookSignIn = async () => {
     try {
       const res = await signInWithPopup(auth, facebookProvider);
-			if (!res.user.emailVerified) {
-				await sendEmailVerification(res.user);
-				await setDoc(doc(firestore, 'buyers', res.user.uid), {
-					name: res.user.displayName,
-				});
-				openPopup('Email verification sent!');
-			} else {
-				window.location.reload();
-			}
+      if (!res.user.emailVerified) {
+        await sendEmailVerification(res.user);
+        await setDoc(doc(firestore, 'buyers', res.user.uid), {
+          name: res.user.displayName,
+        });
+        openPopup('Email verification sent!');
+      } else {
+        window.location.reload();
+      }
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -123,7 +124,7 @@ export const LoginModal = () => {
           <h2 className="text-2xl font-bold">Login to FriendlyRealtor</h2>
         </div>
         <form onSubmit={formik.handleSubmit}>
-					{errorState !== '' ? <div className="text-red-500 mt-2">{errorState}</div> : null}
+          {errorState !== '' ? <div className="text-red-500 mt-2">{errorState}</div> : null}
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2 font-medium">
               Email Address
@@ -174,15 +175,15 @@ export const LoginModal = () => {
             </Button>
           </div>
         </div>
-				{isOpen && (
-        <Popup
-          message={message}
-          onClose={() => {
-            closePopup();
-            setOpen(false);
-          }}
-        />
-      )}
+        {isOpen && (
+          <Popup
+            message={message}
+            onClose={() => {
+              closePopup();
+              setOpen(false);
+            }}
+          />
+        )}
       </Modal>
     </>
   );
