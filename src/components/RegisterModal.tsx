@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Modal, Popup } from './UI';
 import {
-  signInWithPopup,
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { firestore, auth, facebookProvider, googleProvider } from '../context';
-import { SocialIcon } from 'react-social-icons';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { firestore, auth } from '../context';
+import { Formik, Form, Field } from 'formik';
 import { usePopup } from './UI/Popup';
 
 export const RegisterModal = () => {
@@ -16,62 +14,6 @@ export const RegisterModal = () => {
 
   const [open, setOpen] = useState<boolean>(false);
   const [errorState, setErrorState] = useState<string>('');
-
-  const handleGoogleSignup = async () => {
-    try {
-      const res = await signInWithPopup(auth, googleProvider);
-      await sendEmailVerification(res.user);
-      await setDoc(doc(firestore, 'buyers', res.user.uid), {
-        name: res.user.displayName,
-      });
-      openPopup('Email verification sent!');
-    } catch (error) {
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          setErrorState('Email already in use, try another one.');
-          break;
-        case 'auth/invalid-email':
-          setErrorState('Please enter a valid email!');
-          break;
-        case 'auth/weak-password':
-          setErrorState('Please enter a stronger password!');
-          break;
-        case undefined:
-          setErrorState(error.message as string);
-          break;
-        default:
-          setErrorState(`Contact Support contact@friendlyrealtor.app ${error.message}`);
-      }
-    }
-  };
-
-  const handleFacebookSignUp = async () => {
-    try {
-      const res = await signInWithPopup(auth, facebookProvider);
-      await sendEmailVerification(res.user);
-      await setDoc(doc(firestore, 'buyers', res.user.uid), {
-        name: res.user.displayName,
-      });
-      openPopup('Email verification sent!');
-    } catch (error) {
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          setErrorState('Email already in use, try another one.');
-          break;
-        case 'auth/invalid-email':
-          setErrorState('Please enter a valid email!');
-          break;
-        case 'auth/weak-password':
-          setErrorState('Please enter a stronger password!');
-          break;
-        case undefined:
-          setErrorState(error.message as string);
-          break;
-        default:
-          setErrorState(`Contact Support contact@friendlyrealtor.app ${error.message}`);
-      }
-    }
-  };
 
   const handleSignUp = async (values) => {
     try {
@@ -204,17 +146,6 @@ export const RegisterModal = () => {
             >
               Register
             </button>
-            <div className="flex flex-col items-end">
-              <p>or sign up with</p>
-              <div className="flex items-center mt-2 justify-end">
-                <Button onClick={handleGoogleSignup} className="!p-0 mr-2">
-                  <SocialIcon network="google" />
-                </Button>
-                <Button onClick={handleFacebookSignUp} className="!p-0">
-                  <SocialIcon network="facebook" />
-                </Button>
-              </div>
-            </div>
           </Form>
         )}
       </Formik>
