@@ -9,7 +9,9 @@ const FeatureCard = ({ icon, title, content, index }) => (
       index !== features.length - 1 ? 'mb-6' : 'mb-0'
     } feature-card`}
   >
-    <div className={`w-[64px] h-[64px] rounded-full ${styles.flexCenter} bg-dimGreen mb-4 md:mb-0 md:mr-4`}>
+    <div
+      className={`w-[64px] h-[64px] rounded-full ${styles.flexCenter} bg-dimGreen mb-4 md:mb-0 md:mr-4`}
+    >
       <Image src={icon} alt="star" className="w-[50%] h-[50%] object-contain" />
     </div>
     <div className="flex-1 flex flex-col w-[500px]">
@@ -24,7 +26,9 @@ const FeatureCard = ({ icon, title, content, index }) => (
 const Business = () => (
   <section id="features" className={`${layout.section} md:flex-row md:justify-between`}>
     <div className={layout.sectionInfo}>
-      <h2 className={`${styles.heading2} text-center md:text-left`}>We have identified key challenges faced by realtors.</h2>
+      <h2 className={`${styles.heading2} text-center md:text-left`}>
+        We have identified key challenges faced by realtors.
+      </h2>
       <ul className={`${styles.paragraph} max-w-[470px] mx-auto md:mx-0 md:max-w-none`}>
         <li className="mt-5">* Identifying and reaching out to qualified leads</li>
         <li className="mt-5">* Competing in a crowded real estate market</li>
