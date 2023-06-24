@@ -4,7 +4,7 @@ import { ButtonProps } from './ButtonTypes';
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({
-    type,
+    type = 'button',
     color,
     children,
     icon,
@@ -37,6 +37,14 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     switch (color) {
+      case 'primary':
+        btnBgColor = 'bg-primary text-white';
+        btnBgColorHover = 'hover:bg-primary-light';
+        break;
+      case 'secondary':
+        btnBgColor = 'bg-blue-500';
+        btnBgColorHover = 'hover:bg-blue-400';
+        break;
       case 'blue':
         btnBgColor = 'bg-endeavors-blue-700 text-white';
         btnBgColorHover = 'hover:bg-endeavors-blue-600';

@@ -8,11 +8,11 @@ import FocusLock from 'react-focus-lock';
 import { ModalProps } from './ModalTypes';
 
 function CloseX({
-  toggle,
+  onClose,
   omitCloseX,
   color,
 }: {
-  toggle: () => void;
+  onClose: () => void;
   omitCloseX: boolean | undefined;
   color: string | undefined;
 }) {
@@ -23,7 +23,7 @@ function CloseX({
     <button
       aria-label="Close"
       className={`text-3xl cursor-pointer ${color || ''}`}
-      onClick={toggle}
+      onClick={onClose}
     >
       &times;
     </button>
@@ -67,14 +67,15 @@ function getPositionStyles(position: string) {
   return positionStyles;
 }
 export const Modal = ({
+  id,
   open,
   trigger,
-  toggle,
+  onClose,
   header,
   size,
   children,
   transparentBg,
-  position,
+  position = 'center',
   ariaLabel,
   paddingBottom,
   omitCloseX,
@@ -89,7 +90,8 @@ export const Modal = ({
 }: ModalProps) => {
   const [focusLocked, setFocusLocked] = useState(false);
   const positionStyles = getPositionStyles(position);
-  const modalRoot = document.querySelector('body') as HTMLElement;
+  const modalRoot =
+    typeof document !== 'undefined' ? (document.querySelector('body') as HTMLElement) : undefined;
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -101,8 +103,8 @@ export const Modal = ({
     }
     // allow modal to be closed on press of esc key (accessibility reasons)
     function close(e: any) {
-      if (e && e.key === 'Escape' && open && toggle) {
-        toggle();
+      if (e && e.key === 'Escape' && open && onClose) {
+        onClose();
       }
     }
     window.addEventListener('keydown', close);
@@ -111,7 +113,7 @@ export const Modal = ({
       window.removeEventListener('keydown', close);
       setFocusLocked(false);
     };
-  }, [focusLockDelay, open, toggle]);
+  }, [focusLockDelay, open, onClose]);
   // Set focus on modal when focuslocked
   // There's a prop to go on modal, 'autofocus' that will auto focus on a table element inside, but this defaults to the close button when active
   // 'autofocus' also doesn't seem to work when delayed from focusLockDelay
@@ -143,17 +145,17 @@ export const Modal = ({
   const rounded = omitRounded ? '' : 'rounded-lg';
   const defaultWithoutPosition = !positionStyles ? 'md:mt-10 mt-5' : '';
   const modalContentClassName = `z-30 overflow-auto w-full h-auto ${sizeStyles} ${defaultWithoutPosition} ${margin} ${rounded} ${className}`;
-  const el = useRef(document.createElement('div'));
+  const el = useRef(typeof document !== 'undefined' ? document.createElement('div') : undefined);
 
   return (
-    <>
+    <div id={id}>
       {trigger}
       {open &&
         // if autoFocus is set to true will set focus on first focusable element in module - Focus being handled above when focusLocked is true
         createPortal(
           <FocusLock autoFocus={false} disabled={!focusLocked}>
             <div
-              onClick={toggle}
+              onClick={onClose}
               className={`${open ? '' : 'hidden'} fixed top-0 left-0 w-full`}
               style={{ backgroundColor: 'rgba(0, 0, 0, 0.69)', zIndex: '2000' }}
               id="modal-container"
@@ -174,7 +176,7 @@ export const Modal = ({
                       } flex justify-between items-center px-6 py-1 md:py-2`}
                     >
                       <h5 className="text-xl inline-block">{header}</h5>
-                      <CloseX toggle={toggle} omitCloseX={omitCloseX} color={closeIconColor} />
+                      <CloseX onClose={onClose} omitCloseX={omitCloseX} color={closeIconColor} />
                     </div>
                   )}
                   <div className={`relative ${paddingB} ${header ? 'pt-5' : 'pt-0'}`}>
@@ -184,7 +186,7 @@ export const Modal = ({
                           closeXClassName || 'pr-3 -mt-1'
                         }`}
                       >
-                        <CloseX toggle={toggle} omitCloseX={omitCloseX} color={closeIconColor} />
+                        <CloseX onClose={onClose} omitCloseX={omitCloseX} color={closeIconColor} />
                       </div>
                     )}
                     {children}
@@ -195,7 +197,6 @@ export const Modal = ({
           </FocusLock>,
           modalRoot,
         )}
-    </>
+    </div>
   );
 };
-//  Argument of type '(e: KeyboardEvent<Element>) => void' is not assignable to parameter of type '(this: Window, ev: KeyboardEvent) => any'.\n      Types of parameters 'e' and 'ev' are incompatible.\n        Type 'KeyboardEvent' is missing the following properties from type 'KeyboardEvent<Element>': locale, nativeEvent, isDefaultPrevented, isPropagationStopped, persist\n  Overload 2 of 2, '(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions | undefined): void', gave the following error.\n    Argument of type '(e: KeyboardEvent<Element>) => void' is not assignable to parameter of type 'EventListenerOrEventListenerObject'.\n      Type '(e: KeyboardEvent<Element>) => void' is not assignable to type 'EventListener'.\n        Types of parameters 'e' and 'evt' are incompatible.\n          Type 'Event' is missing the following properties from type 'KeyboardEvent<Element>': altKey, charCode, ctrlKey, code, and 15 more.",

@@ -6,6 +6,7 @@ export { default as DropdownMenu } from './DropdownMenu';
 export { default as Icon } from './Icon';
 export { default as Divider } from './Divider';
 export { default as Header } from './Header';
+export { default as Popup } from './Popup';
 export { default as Modal } from './Modal';
 // export { default as MenuItem } from './MenuItem';
 export { default as Image } from './Image';

@@ -3,14 +3,16 @@ import { close, logo, menu } from '../assets';
 import { navLinks } from '../constants';
 import Image from 'next/image';
 import { AddLink, DropdownMenu } from './UI';
+import { RegisterModal } from './RegisterModal';
 import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 import { useRouter } from 'next/router';
+import { LoginModal } from './LoginModal';
 
 const NavBar = () => {
   const router = useRouter();
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState<boolean>(false);
 
-  const handleClick = (to) => {
+  const handleClick = (to: string) => {
     fbEvent('take_survey_click', {
       content_name: 'take_survey_btn',
       content_category: 'user_interaction',
@@ -28,35 +30,40 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="w-full flex py-6 justify-between items-center navbar">
-      <Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
-      <ul className="list-none sm:flex hidden justify-end items-center flxe-1">
-        {navLinks.map((el, index) => {
-          return (
-            <li
-              key={el.id}
-              className={`font-ubuntu font-normal cursor-pointer text-[16px] ${
-                router.pathname === el.id ? 'text-blue-500' : 'text-white'
-              } ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'}`}
-            >
-              {el.dropdown ? (
-                <DropdownMenu dropdownItems={el.dropdown} title={el.title} />
-              ) : el.to ? (
-                <AddLink
-                  onClick={() => handleClick(el.to)}
-                  size="none"
-                  className="text-[16px] font-normal tracking-normal"
-                >
-                  {el.title}
-                </AddLink>
-              ) : (
-                <a href={el.id}>{el.title}</a>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-
+    <nav className="w-full flex py-6 items-center justify-between navbar">
+      <div className="flex gap-10">
+        <Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
+        <ul className="list-none sm:flex hidden justify-end items-center flxe-1">
+          {navLinks.map((el, index) => {
+            return (
+              <li
+                key={el.id}
+                className={`font-ubuntu font-normal cursor-pointer text-[16px] ${
+                  router.pathname === el.id ? 'text-blue-500' : 'text-white'
+                } ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'}`}
+              >
+                {el.dropdown ? (
+                  <DropdownMenu dropdownItems={el.dropdown} title={el.title} />
+                ) : el.to ? (
+                  <AddLink
+                    onClick={() => handleClick(el.to)}
+                    size="none"
+                    className="text-[16px] font-normal tracking-normal"
+                  >
+                    {el.title}
+                  </AddLink>
+                ) : (
+                  <a href={el.id}>{el.title}</a>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <div className="flex gap-6">
+        <LoginModal />
+        <RegisterModal />
+      </div>
       <div className="sm:hidden flex flex-1 justify-end items-center">
         <Image
           src={toggle ? close : menu}
