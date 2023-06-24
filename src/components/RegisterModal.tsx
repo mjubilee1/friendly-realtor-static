@@ -8,13 +8,14 @@ import {
 import { doc, setDoc } from 'firebase/firestore';
 import { firestore, auth, facebookProvider, googleProvider } from '../context';
 import { SocialIcon } from 'react-social-icons';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { usePopup } from './UI/Popup';
 
 export const RegisterModal = () => {
   const { isOpen, message, openPopup, closePopup } = usePopup();
 
   const [open, setOpen] = useState<boolean>(false);
+  const [errorState, setErrorState] = useState<string>('');
 
   const handleGoogleSignup = async () => {
     try {
@@ -25,7 +26,22 @@ export const RegisterModal = () => {
       });
       openPopup('Email verification sent!');
     } catch (error) {
-      console.log('Error signing up with Google.', error);
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          setErrorState('Email already in use, try another one.');
+          break;
+        case 'auth/invalid-email':
+          setErrorState('Please enter a valid email!');
+          break;
+        case 'auth/weak-password':
+          setErrorState('Please enter a stronger password!');
+          break;
+        case undefined:
+          setErrorState(error.message as string);
+          break;
+        default:
+          setErrorState(`Contact Support contact@friendlyrealtor.app ${error.message}`);
+      }
     }
   };
 
@@ -38,7 +54,22 @@ export const RegisterModal = () => {
       });
       openPopup('Email verification sent!');
     } catch (error) {
-      console.log('Error signing up with Facebook.', error);
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          setErrorState('Email already in use, try another one.');
+          break;
+        case 'auth/invalid-email':
+          setErrorState('Please enter a valid email!');
+          break;
+        case 'auth/weak-password':
+          setErrorState('Please enter a stronger password!');
+          break;
+        case undefined:
+          setErrorState(error.message as string);
+          break;
+        default:
+          setErrorState(`Contact Support contact@friendlyrealtor.app ${error.message}`);
+      }
     }
   };
 
@@ -51,7 +82,22 @@ export const RegisterModal = () => {
       });
       openPopup('Email verification sent!');
     } catch (error) {
-      console.log('Error creating account.', error);
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          setErrorState('Email already in use, try another one.');
+          break;
+        case 'auth/invalid-email':
+          setErrorState('Please enter a valid email!');
+          break;
+        case 'auth/weak-password':
+          setErrorState('Please enter a stronger password!');
+          break;
+        case undefined:
+          setErrorState(error.message as string);
+          break;
+        default:
+          setErrorState(`Contact Support contact@friendlyrealtor.app ${error.message}`);
+      }
     }
   };
 
@@ -95,6 +141,7 @@ export const RegisterModal = () => {
       >
         {({ errors, values }) => (
           <Form>
+            {errorState !== '' ? <div className="text-red-500 mt-2">{errorState}</div> : null}
             <div className="mb-4">
               <label htmlFor="name" className="block mb-2 font-medium">
                 Full Name
