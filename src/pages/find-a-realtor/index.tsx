@@ -21,7 +21,7 @@ const FindARealtorPage = ({ users }) => {
 
   useEffect(() => {
     if (users?.length) {
-      const filteredRealtors = users.filter((user) => user.data.username);
+			const filteredRealtors = users.filter((user) => user.data.username || user.data.userName);
       setRealtors(filteredRealtors);
     }
   }, [users]);
@@ -39,7 +39,7 @@ const FindARealtorPage = ({ users }) => {
       </Header>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentRealtors.map((realtor) => (
-          <Link id={realtor.id} href={`/profile/${realtor.data.username}`} className="text-center">
+          <Link id={realtor.id} href={`/profile/${realtor.data.username || realtor.data.userName}`} className="text-center">
             <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden">
               <Image src={realtor.data.photo || ''} size="w-full h-64" />
               <div className="p-4">
