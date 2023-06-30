@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://friendlyrealtor.app</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/blogs</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/server-sitemap.xml</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/test</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/testAccount01</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/liljoy09</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/mjubil1</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/ttt</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/Roxana</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/shariece22</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/liljoy099</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/mcjeff66</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/Sean </loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/Tanu</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/ekarakoleva</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/MrsPratt</loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://friendlyrealtor.app/profile/davidhanlon </loc><lastmod>2023-05-28T06:19:23.886Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/contact</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/find-a-realtor</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/idx</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/listing</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/listings</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/market-report</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/mortgage-calculator</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/property-organizer</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/server-sitemap.xml</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/services</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/valuation</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/testAccount01</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/liljoy09</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/Roxana</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/shariece22</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/liljoy099</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/mcjeff66</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/Sean </loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/Schuleta1</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/elisdanis04</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/Tanu</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/alansgo11</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/ekarakoleva</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/MrsPratt</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/alansgo111</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/profile/davidhanlon </loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/the-journey-of-finding-a-house-unraveling-the-challenges</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/understanding-the-role-of-a-mortgage-lender-in-the-home-buying-process</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/the-maryland-mortgage-program-empowering-first-time-homebuyers</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/7-effective-ways-to-improve-your-credit-score</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/understanding-credit-scores-a-guide-for-homebuyers</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/decoding-real-estate-market-trends-and-mortgages-a-comprehensive-guide</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/pioneering-the-digital-age-the-impact-of-emerging-technology-in-the-real</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/navigating-the-field-the-challenge-of-lead-generation-for-new-realtors</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/strengthening-the-network-the-importance-of-agent-to-agent-referral-programs</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/property-valuation-the-heartbeat-of-real-estate</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/the-rigors-of-property-search-an-inside-look-for-realtors-and-clients</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/can-chat-gpts-truly-understand-our-emotions-exploring-ai-sentiment-analysis</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/the-future-of-real-estate-opportunities-and-challenges-in-a-changing-market</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/5-tips-for-first-time-homebuyers-to-find-their-dream-home</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/what-nobody-tells-you-about-being-a-real-estate-agent-challenges-rewards-and</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://friendlyrealtor.app/blogs/from-rookie-to-pro-essential-tips-for-new-real-estate-agents-to-succeed-in-a</loc><lastmod>2023-06-30T05:12:13.246Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
