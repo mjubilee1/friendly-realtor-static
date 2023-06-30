@@ -10,7 +10,6 @@ const ServicesPage = () => {
           "Designed specifically for realtors, this comprehensive realtor toolkit is a valuable resource that offers a wide range of resources and information to assist you in making informed decisions throughout your clients' home buying journey.",
       }}
     >
-      <div id="content-container" />
       <div className={`w-full overflow-hidden`}>
         <div className={`${styles.flexStart}`}>
           <div className={`${styles.boxWidth}`}>
