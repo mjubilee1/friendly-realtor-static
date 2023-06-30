@@ -16,7 +16,7 @@ const ubuntu = Ubuntu({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-	useEffect(() => {
+  useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
       document.currentScript.replaceWith(ihfKestrel.render());
