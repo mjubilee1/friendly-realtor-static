@@ -1,13 +1,15 @@
 import styles from '../styles/styles';
 import { Hero, Business } from '../components';
-import Head from 'next/head';
+import { Container } from '../components/UI';
 
 const ServicesPage = () => {
   return (
-    <div>
-      <Head>
-        <meta name="description" content="" />
-      </Head>
+    <Container
+      seoProps={{
+        description:
+          "Designed specifically for realtors, this comprehensive realtor toolkit is a valuable resource that offers a wide range of resources and information to assist you in making informed decisions throughout your clients' home buying journey.",
+      }}
+    >
       <div id="content-container" />
       <div className={`w-full overflow-hidden`}>
         <div className={`${styles.flexStart}`}>
@@ -19,7 +21,7 @@ const ServicesPage = () => {
           <Business />
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

@@ -14,6 +14,8 @@ import {
   shield,
   star,
   quotes,
+  youtube,
+  twitch,
 } from '../assets';
 
 export const navLinks = [
@@ -21,13 +23,9 @@ export const navLinks = [
     id: '/',
     title: 'Home',
   },
-  /*{
-    id: '/property-organizer',
-    title: 'Saved Searches',
-  },*/
   {
-    id: '/services',
-    title: 'For Realtors',
+    id: '/find-a-realtor',
+    title: 'Find A Realtor',
   },
   {
     id: '/resources',
@@ -177,6 +175,10 @@ export const footerLinks = [
         name: 'Contact',
         href: '/contact',
       },
+      {
+        href: '/services',
+        name: 'For Realtors',
+      },
     ],
   },
 ];
@@ -191,6 +193,26 @@ export const socialMedia = [
     id: 'social-media-2',
     icon: facebook,
     link: 'https://www.facebook.com/profile.php?id=100091290482188',
+  },
+  {
+    id: 'social-media-3',
+    icon: twitter,
+    link: 'https://twitter.com/FRealtorApp',
+  },
+  {
+    id: 'social-media-5',
+    icon: twitch,
+    link: 'https://www.twitch.tv/friendlyrealtor',
+  },
+  {
+    id: 'social-media-4',
+    icon: linkedin,
+    link: 'https://www.linkedin.com/in/friendly-realtor-427a4727a/',
+  },
+  {
+    id: 'social-media-6',
+    icon: youtube,
+    link: 'https://www.youtube.com/channel/UCp4zJrVV5VpRQm9eW8K0dug',
   },
 ];
 

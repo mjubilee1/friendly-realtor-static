@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Modal, Popup } from './UI';
+import { AddLink, Button, Modal, Popup } from './UI';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { firestore, auth } from '../context';
 import { Formik, Form, Field } from 'formik';
 import { usePopup } from './UI/Popup';
 
-export const RegisterModal = () => {
+export const RegisterModal = ({ mobile = false }) => {
   const { isOpen, message, openPopup, closePopup } = usePopup();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -58,9 +58,18 @@ export const RegisterModal = () => {
     <Modal
       open={open}
       trigger={
-        <Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
-          Register
-        </Button>
+        mobile ? (
+          <AddLink
+            onClick={() => setOpen((prev) => !prev)}
+            className="font-ubuntu my-2 font-normal cursor-pointer text-[16px] text-white"
+          >
+            Register
+          </AddLink>
+        ) : (
+          <Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
+            Register
+          </Button>
+        )
       }
       onClose={() => setOpen(false)}
       className="bg-white text-black p-4"

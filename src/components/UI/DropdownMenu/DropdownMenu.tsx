@@ -35,7 +35,7 @@ export const DropdownMenu = ({ title, dropdownItems }: DropdownMenuProps) => {
       {isOpen && (
         <ul
           ref={dropdownRef}
-          className="absolute mt-2 py-2 bg-black text-white rounded shadow-lg z-10"
+          className="absolute mt-2 py-2 bg-gray-400 text-white rounded shadow-lg z-10"
           onMouseEnter={handleMouseEnter}
           onClick={handleClick}
         >

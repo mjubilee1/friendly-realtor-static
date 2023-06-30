@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Image, Header, Container } from '../../components/UI';
 import { fetchEntries } from '../../utils/contentfulUtil';
-import Head from 'next/head';
 
 const AllBlogPage = () => {
   const [blogPosts, setBlogPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const postsPerPage = 9;
 
   useEffect(() => {
@@ -28,24 +27,18 @@ const AllBlogPage = () => {
   const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   // Change page
-  const paginate = (pageNumber) => {
+  const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
   return (
-    <Container>
-      <Head>
-        <title>Discover Friendly Realtors Blog Post</title>
-        <meta
-          name="description"
-          content="Explore our latest blog post to discover valuable insights and tips from friendly realtors."
-        />
-        <meta property="og:title" content="Discover Friendly Realtors Blog Post" />
-        <meta
-          property="og:description"
-          content="Explore our latest blog post to discover valuable insights and tips from friendly realtors."
-        />
-      </Head>
+    <Container
+      seoProps={{
+        title: 'Discover Friendly Realtors Blog Post',
+        description:
+          'Explore our latest blog post to discover valuable insights and tips from friendly realtors.',
+      }}
+    >
       <Header as="h1" className="pb-8 text-center">
         Discover Friendly Realtors Blog Post
       </Header>
@@ -70,24 +63,23 @@ const AllBlogPage = () => {
       </div>
       <div className="flex justify-center mt-4">
         {blogPosts.length > postsPerPage && (
-          <nav>
-            <ul className="flex gap-4">
-              {Array(Math.ceil(blogPosts.length / postsPerPage))
-                .fill()
-                .map((_, index) => (
-                  <li
-                    key={index}
-                    className={`px-2 bg-white rounded-xl ${
-                      currentPage === index + 1 ? 'bg-blue-500 text-white' : ''
-                    }`}
-                  >
-                    <button onClick={() => paginate(index + 1)} className={`focus:outline-none`}>
-                      <p className="text-black">{index + 1}</p>
-                    </button>
-                  </li>
-                ))}
-            </ul>
-          </nav>
+          <ul className="flex gap-4">
+            {Array(Math.ceil(blogPosts.length / postsPerPage))
+              .fill()
+              .map((_, index) => (
+                <li
+                  key={index}
+                  className={`px-2 bg-white rounded-xl ${
+                    currentPage === index + 1 ? '!bg-blue-500 !text-white' : ''
+                  }`}
+                  onClick={() => paginate(index + 1)}
+                >
+                  <button className={`focus:outline-none`}>
+                    <p className="text-black">{index + 1}</p>
+                  </button>
+                </li>
+              ))}
+          </ul>
         )}
       </div>
     </Container>
