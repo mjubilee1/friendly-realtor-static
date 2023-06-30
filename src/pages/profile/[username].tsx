@@ -103,6 +103,11 @@ export async function getStaticProps(context) {
     }
   } catch (error) {
     console.log('error was caused', error);
+    return {
+      props: {
+        data: {},
+      },
+    };
   }
 }
 

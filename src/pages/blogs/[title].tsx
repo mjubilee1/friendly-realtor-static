@@ -4,23 +4,12 @@ import { useEffect, useState } from 'react';
 import { fetchEntries } from '../../utils/contentfulUtil';
 import ReactMarkdown from 'react-markdown';
 
-const BlogPage = () => {
+const BlogPage = ({ data }) => {
   const [blogPost, setBlogPost] = useState();
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const entries = await fetchEntries('blogPost');
-        const currentSlug = window.location.pathname.replace('/blogs/', '');
-        const entry = entries.find((entry) => entry.fields.slug === currentSlug);
-        setBlogPost(entry);
-      } catch (error) {
-        console.log('Error fetching blog posts:', error);
-      }
-    }
-
-    fetchData();
-  }, []);
+    setBlogPost(data);
+  }, [data]);
 
   if (!blogPost) {
     return (

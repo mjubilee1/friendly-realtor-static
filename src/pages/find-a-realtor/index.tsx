@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Header, Container } from '../../components/UI';
 import Link from 'next/link';
+import { firestore } from '../../context';
+import { collection, getDocs, where, query } from 'firebase/firestore';
 
-const FindARealtorPage = () => {
-  const [realtors, setRealtors] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+const FindARealtorPage = ({ users }) => {
+  const [realtors, setRealtors] = useState([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const realtorsPerPage = 9;
+
+  // Calculate the current posts to display
+  const indexOfLast = currentPage * realtorsPerPage;
+  const indexOfFirst = indexOfLast - realtorsPerPage;
+  const currentRealtors = realtors.slice(indexOfFirst, indexOfLast);
 
   // Change page
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  console.log(currentPage);
+  useEffect(() => {
+    if (users?.length) {
+      const filteredRealtors = users.filter((user) => user.data.username);
+      setRealtors(filteredRealtors);
+    }
+  }, [users]);
+
   return (
     <Container
       seoProps={{
@@ -25,15 +38,17 @@ const FindARealtorPage = () => {
         Discover a Friendly Realtor in your area
       </Header>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {realtors.map((realtor) => (
-          <Link href="" className="text-center">
+        {currentRealtors.map((realtor) => (
+          <Link id={realtor.id} href={`/profile/${realtor.data.username}`} className="text-center">
             <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden">
-              <Image src="" size="w-full h-64" />
+              <Image src={realtor.data.photo || ''} size="w-full h-64" />
               <div className="p-4">
                 <Header as="h4" className="font-semibold mb-2">
-                  testing
+                  {realtor.data.name}
                 </Header>
-                <p className="mt-2">Service Areas: </p>
+                {realtor.data.location && (
+                  <p className="mt-2">{`Service Areas: ${realtor.data.location}`}</p>
+                )}
               </div>
             </div>
           </Link>
@@ -63,5 +78,30 @@ const FindARealtorPage = () => {
     </Container>
   );
 };
+
+export async function getStaticProps() {
+  try {
+    const userRef = collection(firestore, 'users');
+    const querySnapshot = await getDocs(userRef);
+
+    const usersData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      data: doc.data(),
+    }));
+
+    return {
+      props: {
+        users: JSON.parse(JSON.stringify(usersData)),
+      },
+    };
+  } catch (error) {
+    console.log('Error fetching users:', error);
+    return {
+      props: {
+        users: [],
+      },
+    };
+  }
+}
 
 export default FindARealtorPage;
