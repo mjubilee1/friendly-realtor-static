@@ -76,9 +76,9 @@ const NavBar = () => {
         <div
           className={`${
             toggle ? 'flex' : 'hidden'
-          } p-6 bg-black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
+          } p-6 bg-black-gradient absolute top-20  right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
         >
-          <ul className="list-none z-10 bg-gray-400 rounded-md py-4 px-4 flex flex-col justify-end items-center flex-1">
+          <ul className="list-none bg-gray-400 z-[1000] rounded-md py-4 px-4 flex flex-col justify-end items-center flex-1">
             <li>
               <LoginModal mobile />
             </li>
