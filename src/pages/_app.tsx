@@ -2,7 +2,7 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import SEO from '../../next-seo.config';
 import { DefaultSeo } from 'next-seo';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navbar, Footer } from '../components';
 import styles from '../styles/styles';
 import { Ubuntu } from 'next/font/google';
@@ -16,6 +16,18 @@ const ubuntu = Ubuntu({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+	useEffect(() => {
+    const script = document.createElement('script');
+    script.innerHTML = `
+      document.currentScript.replaceWith(ihfKestrel.render());
+    `;
+
+    const contentContainer = document.querySelector('#content-container');
+    if (contentContainer) {
+      contentContainer.appendChild(script);
+    }
+  }, []);
+
   return (
     <div>
       <Head>
