@@ -1,6 +1,25 @@
+import React, { useEffect } from 'react';
+import { Container } from '../components/UI';
 
 const ListingPage = () => {
-  return <div id="content-container" />;
+  useEffect(() => {
+    const removeElement = () => {
+      const element = document.querySelector('[data-react-helmet="true"]');
+      if (element) {
+        element.remove();
+      } else {
+        setTimeout(removeElement, 100); // Retry after 100 milliseconds
+      }
+    };
+
+    removeElement();
+  }, []);
+
+  return (
+    <Container>
+      <div id="content-container" />
+    </Container>
+  );
 };
 
 export default ListingPage;
