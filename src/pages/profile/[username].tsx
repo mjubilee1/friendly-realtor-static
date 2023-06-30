@@ -18,9 +18,27 @@ const ProfilePage = ({ data }) => {
     >
       <div className="h-[32rem] flex">
         <div className="bg-white overflow-auto rounded-lg w-full">
+					<div className="p-10">
+						<Header as="h3" className="uppercase text-gray-500">Real Estate Agent</Header>
+							{data.socials && (
+							<div className="flex justify-center mt-3 mb-6 flex-col">
+								<Header as="h5" className=" text-gray-500">Get Connected</Header>
+								<div className="text-black flex mt-2 gap-4">
+									{Object.keys(data.socials[0]).map((social) => {
+										const socialLink = data.socials[0][social];
+										return (
+											<AddLink to={socialLink} target="_blank" key={socialLink}>
+												<Icon name={social} size="large" color="black" />
+											</AddLink>
+										);
+									})}
+								</div>
+							</div>
+						)}
+					</div>
           <div className="flex flex-col-reverse md:flex-row justify-between px-4 pt-10 pb-6 md:pb-10 items-center gap-6">
             <div className="max-w-3xl">
-              <Header as="h1" className="text-black text-center mt-5">
+              <Header as="h3" className="text-black text-center mt-5">
                 {data.name}
               </Header>
               {data.location && <div className="text-gray-500 text-center text-md">
@@ -32,26 +50,6 @@ const ProfilePage = ({ data }) => {
             </div>
             <Image src={data.photo} width={300} height={300} alt="" className="p-4" />
           </div>
-          <div className="flex justify-between p-4">
-            <div>
-              <h1 className="text-xs uppercase text-gray-500">Real Estate Agent</h1>
-            </div>
-          </div>
-          {data.socials && (
-            <div className="flex items-center justify-center mt-3 mb-6 flex-col">
-              <h1 className="text-lg text-gray-500">Get Connected</h1>
-              <div className="flex mt-2 gap-4">
-                {Object.keys(data.socials[0]).map((social) => {
-                  const socialLink = data.socials[0][social];
-                  return (
-                    <AddLink to={socialLink} target="_blank" key={socialLink}>
-                      <Icon name={social} size="large" color="black" />
-                    </AddLink>
-                  );
-                })}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </Container>
