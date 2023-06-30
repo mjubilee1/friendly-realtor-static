@@ -30,10 +30,10 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="w-full flex py-6 items-center justify-between navbar">
-      <div className="flex gap-10">
+    <nav>
+      <div className="gap-10 mb-10 lg:flex hidden items-center justify-between">
         <Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
-        <ul className="list-none sm:flex hidden justify-end items-center flxe-1">
+        <ul className="flex list-none justify-end items-center flxe-1">
           {navLinks.map((el, index) => {
             return (
               <li
@@ -59,12 +59,13 @@ const NavBar = () => {
             );
           })}
         </ul>
+				<div className="flex gap-6">
+					<LoginModal />
+					<RegisterModal />
+				</div>
       </div>
-      <div className="flex gap-6">
-        <LoginModal />
-        <RegisterModal />
-      </div>
-      <div className="sm:hidden flex flex-1 justify-end items-center">
+      <div className="lg:hidden flex flex-1 justify-between items-center mb-8">
+				<Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
         <Image
           src={toggle ? close : menu}
           alt="menu"
@@ -77,7 +78,13 @@ const NavBar = () => {
             toggle ? 'flex' : 'hidden'
           } p-6 bg-black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
         >
-          <ul className="list-none z-10 bg-black px-4 flex flex-col justify-end items-center flex-1">
+          <ul className="list-none z-10 bg-gray-400 rounded-md py-4 px-4 flex flex-col justify-end items-center flex-1">
+						<li>
+							<LoginModal mobile />
+						</li>
+						<li>
+							<RegisterModal mobile />
+						</li>
             {navLinks.map((el, index) => {
               return (
                 <li

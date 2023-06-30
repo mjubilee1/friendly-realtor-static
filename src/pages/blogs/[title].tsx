@@ -58,12 +58,10 @@ const BlogPage = () => {
       <Link href="/blogs">
         <Icon name="arrow-left" color="white" size="large" />
       </Link>
-      <div className="container mx-auto px-4">
-        <h1>{blogPost.fields.title}</h1>
-        <p>Author: {blogPost.fields.author.fields.name}</p>
-        <Image src={imgUrl} alt={imgAlt} size="h-72" className="mt-12 mb-20 object-contain" />
-        <ReactMarkdown>{blogPost.fields.excerpt}</ReactMarkdown>
-      </div>
+			<h1>{blogPost.fields.title}</h1>
+			<p>Author: {blogPost.fields.author.fields.name}</p>
+			<Image src={imgUrl} alt={imgAlt} size="h-96" className="w-full mt-12 mb-20" />
+			<ReactMarkdown>{blogPost.fields.excerpt}</ReactMarkdown>
     </Container>
   );
 };

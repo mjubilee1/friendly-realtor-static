@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Popup } from './UI';
+import { AddLink, Button, Modal, Popup } from './UI';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { SocialIcon } from 'react-social-icons';
@@ -10,7 +10,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { usePopup } from './UI/Popup';
 
-export const LoginModal = () => {
+export const LoginModal = ({ mobile = false }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loginError, setLoginError] = useState('');
   const [errorState, setErrorState] = useState<string>('');
@@ -112,7 +112,8 @@ export const LoginModal = () => {
         open={open}
         id="login-modal"
         trigger={
-          <Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
+          mobile ? <AddLink onClick={() => setOpen((prev) => !prev)} className='font-ubuntu font-normal cursor-pointer text-[16px] text-white'>Login</AddLink> : 
+					<Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
             Login
           </Button>
         }
