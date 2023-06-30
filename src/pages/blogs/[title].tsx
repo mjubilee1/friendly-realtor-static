@@ -3,7 +3,6 @@ import { Image, Icon, Container } from '../../components/UI';
 import { useEffect, useState } from 'react';
 import { fetchEntries } from '../../utils/contentfulUtil';
 import ReactMarkdown from 'react-markdown';
-import Head from 'next/head';
 
 const BlogPage = () => {
   const [blogPost, setBlogPost] = useState();
@@ -25,9 +24,9 @@ const BlogPage = () => {
 
   if (!blogPost) {
     return (
-      <Container>
+      <div className="container mx-auto px-4">
         <p>Loading...</p>
-      </Container>
+      </div>
     );
   }
 
@@ -39,25 +38,33 @@ const BlogPage = () => {
     : 'Friendly Realtor Photo';
 
   return (
-    <div className="post-container">
-      <Head>
-        <title>{blogPost.fields.title} - Blog</title>
-        <meta name="description" content={blogPost.fields.seoDescription} />
-        <meta property="og:title" content={blogPost.fields.title} />
-        <meta property="og:description" content={blogPost.fields.seoDescription} />
-        <meta property="og:image" content={imgUrl} />
-        <meta property="og:image:alt" content={imgAlt} />
-      </Head>
+    <Container
+      seoProps={{
+        title: `${blogPost.fields.title} - Blog` || '',
+        description: blogPost.fields.seoDescription || '',
+        openGraph: {
+          images: [
+            {
+              url: imgUrl,
+              alt: imgAlt,
+              width: 850,
+              height: 650,
+            },
+          ],
+        },
+      }}
+      className="post-container"
+    >
       <Link href="/blogs">
         <Icon name="arrow-left" color="white" size="large" />
       </Link>
-      <Container>
+      <div className="container mx-auto px-4">
         <h1>{blogPost.fields.title}</h1>
         <p>Author: {blogPost.fields.author.fields.name}</p>
         <Image src={imgUrl} alt={imgAlt} size="h-72" className="mt-12 mb-20 object-contain" />
         <ReactMarkdown>{blogPost.fields.excerpt}</ReactMarkdown>
-      </Container>
-    </div>
+      </div>
+    </Container>
   );
 };
 

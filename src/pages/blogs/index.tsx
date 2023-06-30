@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Image, Header, Container } from '../../components/UI';
 import { fetchEntries } from '../../utils/contentfulUtil';
-import Head from 'next/head';
 
 const AllBlogPage = () => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -33,19 +32,13 @@ const AllBlogPage = () => {
   };
 
   return (
-    <Container>
-      <Head>
-        <title>Discover Friendly Realtors Blog Post</title>
-        <meta
-          name="description"
-          content="Explore our latest blog post to discover valuable insights and tips from friendly realtors."
-        />
-        <meta property="og:title" content="Discover Friendly Realtors Blog Post" />
-        <meta
-          property="og:description"
-          content="Explore our latest blog post to discover valuable insights and tips from friendly realtors."
-        />
-      </Head>
+    <Container
+      seoProps={{
+        title: 'Discover Friendly Realtors Blog Post',
+        description:
+          'Explore our latest blog post to discover valuable insights and tips from friendly realtors.',
+      }}
+    >
       <Header as="h1" className="pb-8 text-center">
         Discover Friendly Realtors Blog Post
       </Header>
