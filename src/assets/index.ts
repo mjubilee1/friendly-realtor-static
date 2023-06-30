@@ -56,6 +56,6 @@ export {
   people02,
   people03,
   homeBuyers,
-	youtube,
-	twitch
+  youtube,
+  twitch,
 };

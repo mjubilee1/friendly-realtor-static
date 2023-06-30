@@ -5,7 +5,7 @@ import { fetchEntries } from '../../utils/contentfulUtil';
 
 const AllBlogPage = () => {
   const [blogPosts, setBlogPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const postsPerPage = 9;
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const AllBlogPage = () => {
   const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   // Change page
-  const paginate = (pageNumber) => {
+  const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
@@ -63,24 +63,23 @@ const AllBlogPage = () => {
       </div>
       <div className="flex justify-center mt-4">
         {blogPosts.length > postsPerPage && (
-          <nav>
-            <ul className="flex gap-4">
-              {Array(Math.ceil(blogPosts.length / postsPerPage))
-                .fill()
-                .map((_, index) => (
-                  <li
-                    key={index}
-                    className={`px-2 bg-white rounded-xl ${
-                      currentPage === index + 1 ? 'bg-blue-500 text-white' : ''
-                    }`}
-                  >
-                    <button onClick={() => paginate(index + 1)} className={`focus:outline-none`}>
-                      <p className="text-black">{index + 1}</p>
-                    </button>
-                  </li>
-                ))}
-            </ul>
-          </nav>
+          <ul className="flex gap-4">
+            {Array(Math.ceil(blogPosts.length / postsPerPage))
+              .fill()
+              .map((_, index) => (
+                <li
+                  key={index}
+                  className={`px-2 bg-white rounded-xl ${
+                    currentPage === index + 1 ? '!bg-blue-500 !text-white' : ''
+                  }`}
+                  onClick={() => paginate(index + 1)}
+                >
+                  <button className={`focus:outline-none`}>
+                    <p className="text-black">{index + 1}</p>
+                  </button>
+                </li>
+              ))}
+          </ul>
         )}
       </div>
     </Container>
