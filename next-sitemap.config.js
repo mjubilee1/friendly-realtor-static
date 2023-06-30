@@ -2,7 +2,7 @@ const siteUrl = "https://friendlyrealtor.app/";
 
 module.exports = {
   siteUrl,
-  exclude: ["/404"],
+  exclude: ["/404", "/server-sitemap.xml"],
   generateRobotsTxt: true,
 	outDir: "./public",
   robotsTxtOptions: {
@@ -18,4 +18,5 @@ module.exports = {
       `${siteUrl}server-sitemap.xml`,
     ],
   },
+	sitemapSize: 7000,
 };
