@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../styles/styles';
-import { iphoneScreen, apple } from '../assets';
+import { apple } from '../assets';
 import { AddLink, Button } from './UI';
 import Image from 'next/image';
 import { fbEvent, gtagEvent } from '../utils/analyticsUtil';

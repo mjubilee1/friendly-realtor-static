@@ -112,10 +112,18 @@ export const LoginModal = ({ mobile = false }) => {
         open={open}
         id="login-modal"
         trigger={
-          mobile ? <AddLink onClick={() => setOpen((prev) => !prev)} className='font-ubuntu font-normal cursor-pointer text-[16px] text-white'>Login</AddLink> : 
-					<Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
-            Login
-          </Button>
+          mobile ? (
+            <AddLink
+              onClick={() => setOpen((prev) => !prev)}
+              className="font-ubuntu font-normal cursor-pointer text-[16px] text-white"
+            >
+              Login
+            </AddLink>
+          ) : (
+            <Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
+              Login
+            </Button>
+          )
         }
         onClose={() => setOpen(false)}
         className="bg-white text-black p-4"

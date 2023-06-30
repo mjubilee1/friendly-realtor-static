@@ -59,13 +59,13 @@ const NavBar = () => {
             );
           })}
         </ul>
-				<div className="flex gap-6">
-					<LoginModal />
-					<RegisterModal />
-				</div>
+        <div className="flex gap-6">
+          <LoginModal />
+          <RegisterModal />
+        </div>
       </div>
       <div className="lg:hidden flex flex-1 justify-between items-center mb-8">
-				<Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
+        <Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
         <Image
           src={toggle ? close : menu}
           alt="menu"
@@ -79,12 +79,12 @@ const NavBar = () => {
           } p-6 bg-black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
         >
           <ul className="list-none z-10 bg-gray-400 rounded-md py-4 px-4 flex flex-col justify-end items-center flex-1">
-						<li>
-							<LoginModal mobile />
-						</li>
-						<li>
-							<RegisterModal mobile />
-						</li>
+            <li>
+              <LoginModal mobile />
+            </li>
+            <li>
+              <RegisterModal mobile />
+            </li>
             {navLinks.map((el, index) => {
               return (
                 <li

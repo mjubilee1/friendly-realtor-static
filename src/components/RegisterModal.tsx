@@ -58,9 +58,18 @@ export const RegisterModal = ({ mobile = false }) => {
     <Modal
       open={open}
       trigger={
-				mobile ? <AddLink onClick={() => setOpen((prev) => !prev)} className='font-ubuntu my-2 font-normal cursor-pointer text-[16px] text-white'>Register</AddLink> :  <Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
-          Register
-        </Button>
+        mobile ? (
+          <AddLink
+            onClick={() => setOpen((prev) => !prev)}
+            className="font-ubuntu my-2 font-normal cursor-pointer text-[16px] text-white"
+          >
+            Register
+          </AddLink>
+        ) : (
+          <Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
+            Register
+          </Button>
+        )
       }
       onClose={() => setOpen(false)}
       className="bg-white text-black p-4"

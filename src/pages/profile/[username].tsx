@@ -1,38 +1,47 @@
 import React from 'react';
-import { AddLink, Icon } from '../../components/UI';
+import { Container, Header, AddLink, Icon } from '../../components/UI';
 import { collection, getDocs, where, query } from 'firebase/firestore';
 import Image from 'next/image';
 import { firestore } from '../../context';
-import Head from 'next/head';
 
 const ProfilePage = ({ data }) => {
   if (!data || !data.name) {
     return <p className="text-white text-4xl flex justify-center">No Profile Found!</p>;
   }
 
+  const defaultBio = `Experienced realtor ${data.name} dedicated to helping home buyers find their dream homes. Trustworthy guidance and exceptional service for a seamless home buying experience. Let's make your homeownership dreams a reality.`;
+  const defaultSeoBio = `Experienced realtor ${data.name} dedicated to helping home buyers find their dream homes in ${data.locations}. Trustworthy guidance and exceptional service for a seamless home buying experience. Let's make your homeownership dreams a reality.`;
+
   return (
-    <>
-      <Head>
-        <title>{data.name} - My Profile</title>
-      </Head>
-      <div className="h-screen flex items-center justify-center">
-        <div className="bg-white w-[900px] mt-10 rounded-lg">
-          <div className="flex items-center justify-center pt-10 flex-col">
-            <Image src={data.photo} className="rounded-full" width={96} height={96} alt="" />
-            <h1 className="text-gray-800 font-semibold text-xl mt-5">{data.name}</h1>
-            <h1 className="text-gray-500 text-sm">{data.location}</h1>
-            <h1 className="text-gray-500 text-sm p-4 text-center">{data.bio}</h1>
+    <Container
+      seoProps={{ title: `${data.name} - My Profile`, description: `${data.bio || defaultSeoBio}` }}
+    >
+      <div className="h-[32rem] flex">
+        <div className="bg-white overflow-auto rounded-lg w-full">
+          <div className="flex flex-col-reverse md:flex-row justify-between px-4 pt-10 pb-6 md:pb-10 items-center gap-6">
+            <div className="max-w-3xl">
+              <Header as="h1" className="text-black text-center mt-5">
+                {data.name}
+              </Header>
+              {data.location && <div className="text-gray-500 text-center text-md">
+                Serving the following locations: {data.location}
+              </div>}
+              <div className="text-gray-500 text-sm p-4 text-center max-sm overflow-hidden">
+                {data.bio || defaultBio}
+              </div>
+            </div>
+            <Image src={data.photo} width={300} height={300} alt="" className="p-4" />
           </div>
           <div className="flex justify-between p-4">
             <div>
               <h1 className="text-xs uppercase text-gray-500">Real Estate Agent</h1>
             </div>
           </div>
-          <div className="flex items-center justify-center mt-3 mb-6 flex-col">
-            <h1 className="text-lg text-gray-500">Get Connected</h1>
-            <div className="flex mt-2 gap-4">
-              {data.socials &&
-                Object.keys(data.socials[0]).map((social) => {
+          {data.socials && (
+            <div className="flex items-center justify-center mt-3 mb-6 flex-col">
+              <h1 className="text-lg text-gray-500">Get Connected</h1>
+              <div className="flex mt-2 gap-4">
+                {Object.keys(data.socials[0]).map((social) => {
                   const socialLink = data.socials[0][social];
                   return (
                     <AddLink to={socialLink} target="_blank" key={socialLink}>
@@ -40,11 +49,12 @@ const ProfilePage = ({ data }) => {
                     </AddLink>
                   );
                 })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
-    </>
+    </Container>
   );
 };
 
