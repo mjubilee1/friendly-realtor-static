@@ -10,7 +10,15 @@ const ProfilePage = ({ data }) => {
   }
 
   const defaultBio = `Experienced realtor ${data.name} dedicated to helping home buyers find their dream homes. Trustworthy guidance and exceptional service for a seamless home buying experience. Let's make your homeownership dreams a reality.`;
-  const defaultSeoBio = `Experienced realtor ${data.name} dedicated to helping home buyers find their dream homes in ${data.locations}. Trustworthy guidance and exceptional service for a seamless home buying experience. Let's make your homeownership dreams a reality.`;
+  const defaultSeoBio = `Experienced realtor ${
+    data.name
+  } dedicated to helping home buyers find their dream homes${
+    data.serviceZipCodes && data.serviceZipCodes.length > 0
+      ? ` in ${data.serviceZipCodes.join(', ')}`
+      : data.location
+      ? ` in ${data.location}`
+      : ''
+  }. Trustworthy guidance and exceptional service for a seamless home buying experience. Let's make your homeownership dreams a reality.`;
 
   return (
     <Container
@@ -45,10 +53,16 @@ const ProfilePage = ({ data }) => {
               <Header as="h3" className="text-black text-center mt-5">
                 {data.name}
               </Header>
-              {data.location && (
-                <div className="text-gray-500 text-center text-md">
-                  Serving the following locations: {data.location}
+              {data.serviceZipCodes && data.serviceZipCodes.length > 0 ? (
+                <div className="text-gray-500 text-center text-md mt-4">
+                  Serving the following locations: {data.serviceZipCodes.join(', ')}
                 </div>
+              ) : (
+                data.location && (
+                  <div className="text-gray-500 text-center text-md">
+                    Serving the following locations: {data.location}
+                  </div>
+                )
               )}
               <div className="text-gray-500 text-sm p-4 text-center max-sm overflow-hidden">
                 {data.bio || defaultBio}
@@ -89,9 +103,31 @@ export async function getStaticProps(context) {
       // Get the first document from the query snapshot
       const userDocRef = querySnapshot.docs[0];
 
+      const result = JSON.parse(JSON.stringify(userDocRef.data()));
+
+      if (result.serviceZipCodes?.length) {
+        const zipcodes = result.serviceZipCodes.join(',');
+
+        try {
+          const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${zipcodes}&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
+          );
+          const data = await response.json();
+
+          if (data?.results?.length) {
+            const postcodeLocalities = data.results
+              .map((field) => field.postcode_localities || [])
+              .flat();
+
+            result.serviceZipCodes = postcodeLocalities;
+          }
+        } catch (error) {
+          console.log('Error getting zip code data', error);
+        }
+      }
       return {
         props: {
-          data: JSON.parse(JSON.stringify(userDocRef.data())),
+          data: result,
         },
       };
     } else {
