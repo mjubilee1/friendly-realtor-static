@@ -39,9 +39,9 @@ const FindARealtorPage = ({ users }) => {
         Discover a Friendly Realtor in your area
       </Header>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {currentRealtors.map((realtor, index) => (
+        {currentRealtors.map((realtor) => (
           <Link
-            key={index}
+            id={realtor.id}
             href={`/profile/${realtor.data.username || realtor.data.userName}`}
             className="text-center"
           >
