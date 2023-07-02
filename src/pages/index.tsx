@@ -4,7 +4,6 @@ import { Checklist, Header, Container } from '../components/UI';
 import Head from 'next/head';
 
 const HomePage = () => {
-
   return (
     <>
       <Head>

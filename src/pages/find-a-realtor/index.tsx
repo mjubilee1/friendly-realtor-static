@@ -7,6 +7,8 @@ import { collection, getDocs, where, query } from 'firebase/firestore';
 const FindARealtorPage = ({ users }) => {
   const [realtors, setRealtors] = useState([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [serviceAreas, setServiceAreas] = useState<string[]>([]);
+
   const realtorsPerPage = 9;
 
   // Calculate the current posts to display
@@ -21,8 +23,7 @@ const FindARealtorPage = ({ users }) => {
 
   useEffect(() => {
     if (users?.length) {
-			const filteredRealtors = users.filter((user) => user.data.username || user.data.userName);
-      setRealtors(filteredRealtors);
+      setRealtors(users);
     }
   }, [users]);
 
@@ -38,16 +39,24 @@ const FindARealtorPage = ({ users }) => {
         Discover a Friendly Realtor in your area
       </Header>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {currentRealtors.map((realtor) => (
-          <Link id={realtor.id} href={`/profile/${realtor.data.username || realtor.data.userName}`} className="text-center">
+        {currentRealtors.map((realtor, index) => (
+          <Link
+            key={index}
+            href={`/profile/${realtor.data.username || realtor.data.userName}`}
+            className="text-center"
+          >
             <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden">
               <Image src={realtor.data.photo || ''} size="w-full h-64" />
               <div className="p-4">
                 <Header as="h4" className="font-semibold mb-2">
                   {realtor.data.name}
                 </Header>
-                {realtor.data.location && (
-                  <p className="mt-2">{`Service Areas: ${realtor.data.location}`}</p>
+                {realtor.data.serviceZipCodes && realtor.data.serviceZipCodes.length > 0 ? (
+                  <p className="mt-2">Service Areas: {realtor.data.serviceZipCodes.join(', ')}</p>
+                ) : (
+                  realtor.data.location && (
+                    <p className="mt-2">{`Service Areas: ${realtor.data.location}`}</p>
+                  )
                 )}
               </div>
             </div>
@@ -88,12 +97,51 @@ export async function getStaticProps() {
       id: doc.id,
       data: doc.data(),
     }));
+    const results = JSON.parse(JSON.stringify(usersData));
 
-    return {
-      props: {
-        users: JSON.parse(JSON.stringify(usersData)),
-      },
-    };
+    let filteredRealtors = [];
+    if (results?.length) {
+      filteredRealtors = results.filter((user) => user.data.username || user.data.userName);
+      if (filteredRealtors.length) {
+        const updatedRealtors = await Promise.all(
+          filteredRealtors.map(async (realtor) => {
+            if (realtor.data.serviceZipCodes?.length) {
+              const zipcodes = realtor.data.serviceZipCodes.join(',');
+
+              try {
+                const response = await fetch(
+                  `https://maps.googleapis.com/maps/api/geocode/json?address=${zipcodes}&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
+                );
+                const data = await response.json();
+
+                if (data?.results?.length) {
+                  const postcodeLocalities = data.results
+                    .map((field) => field.postcode_localities || [])
+                    .flat();
+
+                  return {
+                    ...realtor,
+                    data: {
+                      ...realtor.data,
+                      serviceZipCodes: postcodeLocalities,
+                    },
+                  };
+                }
+              } catch (error) {
+                console.log('Error getting zip code data', error);
+              }
+            }
+            return realtor;
+          }),
+        );
+
+        return {
+          props: {
+            users: updatedRealtors || [],
+          },
+        };
+      }
+    }
   } catch (error) {
     console.log('Error fetching users:', error);
     return {
