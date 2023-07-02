@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import { AxiosRequestHeaders, AxiosRequestConfig, ResponseType, UserToken } from './agentTypes';
 import { clearRefreshToken, setTokenCookies, clearSession } from '../utils/commonUtil';
 
-const serverApiBaseURL = `${process.env.NEXT_PULBIC_SERVER_URL}`;
+const serverApiBaseURL = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
 const token: string = Cookies.get('jwt');
 
 let retry401 = false;
@@ -70,7 +70,7 @@ axios.interceptors.response.use(
 function logout() {
   axios({
     method: 'post',
-    url: `${process.env.NEXT_PULBIC_SERVER_URL}/v1/logout`,
+    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/v1/logout`,
     headers: { Authorization: `Bearer ${Cookies.get('jwt')}` },
   }).finally(() => {
     clearSession();
