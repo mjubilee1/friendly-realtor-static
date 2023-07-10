@@ -32,7 +32,12 @@ const NavBar = () => {
   return (
     <nav>
       <div className="gap-10 mb-10 lg:flex hidden items-center justify-between">
-        <Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
+        <Image
+          src={logo}
+          alt="friendlyRealtor"
+          className="w-[100px] cursor-pointer"
+          onClick={() => router.push('/')}
+        />
         <ul className="flex list-none justify-end items-center flxe-1">
           {navLinks.map((el, index) => {
             return (
@@ -65,7 +70,12 @@ const NavBar = () => {
         </div>
       </div>
       <div className="lg:hidden flex flex-1 justify-between items-center mb-8">
-        <Image src={logo} alt="friendlyRealtor" className="w-[100px]" />
+        <Image
+          src={logo}
+          alt="friendlyRealtor"
+          className="w-[100px] cursor-pointer"
+          onClick={() => router.push('/')}
+        />
         <Image
           src={toggle ? close : menu}
           alt="menu"
@@ -93,7 +103,9 @@ const NavBar = () => {
                     router.pathname === el.id ? 'text-blue-500' : 'text-white'
                   } ${index === navLinks.length - 1 ? 'mr-0' : 'mb-4'}`}
                 >
-                  {el.to ? (
+                  {el.dropdown ? (
+                    <DropdownMenu dropdownItems={el.dropdown} title={el.title} />
+                  ) : el.to ? (
                     <AddLink onClick={() => handleClick(el.to)}>{el.title}</AddLink>
                   ) : (
                     <a href={`${el.id}`}>{el.title}</a>
