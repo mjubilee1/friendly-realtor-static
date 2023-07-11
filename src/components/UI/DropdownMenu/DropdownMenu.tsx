@@ -4,9 +4,17 @@ import { DropdownMenuProps } from './DropdownMenuTypes';
 export const DropdownMenu = ({ title, dropdownItems }: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  let closeTimeout;
 
   const handleMouseEnter = () => {
     setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    // Add a delay before closing the dropdown
+    closeTimeout = setTimeout(() => {
+      setIsOpen(false);
+    }, 100);
   };
 
   const handleClick = (e) => {
@@ -27,15 +35,26 @@ export const DropdownMenu = ({ title, dropdownItems }: DropdownMenuProps) => {
     };
   }, []);
 
+  // Clear the timeout when the component is unmounted or the state changes
+  useEffect(() => {
+    return () => {
+      clearTimeout(closeTimeout);
+    };
+  }, [closeTimeout]);
+
   return (
-    <div className="relative inline-block" onMouseEnter={handleMouseEnter}>
+    <div
+      className="relative inline-block"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <button className="font-ubuntu font-normal cursor-pointer text-[16px] text-white">
         {title}
       </button>
       {isOpen && (
         <ul
           ref={dropdownRef}
-          className="absolute mt-2 py-2 bg-gray-400 text-white rounded shadow-lg z-10"
+          className="absolute py-2 bg-gray-400 text-white rounded shadow-lg z-[1000]"
           onMouseEnter={handleMouseEnter}
           onClick={handleClick}
         >

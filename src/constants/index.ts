@@ -18,11 +18,38 @@ import {
   twitch,
 } from '../assets';
 
-export const navLinks = [
+export const communities = [
   {
-    id: '/',
-    title: 'Home',
+    title: 'Washington D.C.',
+    id: 'idx?path=/listing-report&id=2576362',
   },
+  {
+    title: 'Virginia',
+    id: 'idx?path=/listing-report&id=2576365',
+  },
+  {
+    title: 'Maryland',
+    id: 'idx?path=/listing-report&id=2576364',
+  },
+  {
+    title: 'New Jersey',
+    id: 'idx?path=/listing-report&id=2576370',
+  },
+  {
+    title: 'Pennsylvania',
+    id: 'idx?path=/listing-report&id=2576367',
+  },
+  {
+    title: 'West Virginia',
+    id: 'idx?path=/listing-report&id=2576369',
+  },
+  {
+    title: 'Delaware',
+    id: 'idx?path=/listing-report&id=2576368',
+  },
+];
+
+export const navLinks = [
   {
     id: '/find-a-realtor',
     title: 'Find A Realtor',
@@ -52,6 +79,11 @@ export const navLinks = [
   {
     id: '/blogs',
     title: 'Blogs',
+  },
+  {
+    id: '/communities',
+    title: 'Communities',
+    dropdown: communities,
   },
 ];
 
