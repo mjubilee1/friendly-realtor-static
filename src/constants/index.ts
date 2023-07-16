@@ -72,7 +72,7 @@ export const navLinks = [
       },
     ],
   },
-	{
+  {
     id: '/investors',
     title: 'Property Investments',
   },
