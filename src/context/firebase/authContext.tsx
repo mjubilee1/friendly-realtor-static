@@ -9,9 +9,9 @@ export type FirebaseProps = {
   firebaseStorage: FirebaseStorage;
 };
 
-export const FirebaseContext = createContext<any>({});
+export const AuthContext = createContext<any>({});
 
-export function FirebaseProvider({ children }) {
+export function AuthContextProvider({ children }) {
   const [firebaseApp, setFirebaseApp] = useState<FirebaseApp>();
   const [fireStore, setFireStore] = useState<any>();
   const [analytics, setAnalytics] = useState<any>();
@@ -39,10 +39,10 @@ export function FirebaseProvider({ children }) {
   }, [firebaseApp]);
 
   return (
-    <FirebaseContext.Provider value={{ fireStore, firebaseApp, firebaseStorage, analytics }}>
+    <AuthContext.Provider value={{ fireStore, firebaseApp, firebaseStorage, analytics }}>
       {children}
-    </FirebaseContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
-export const useFirebaseContext = () => useContext(FirebaseContext);
+export const useAuthContext = () => useContext(AuthContext);

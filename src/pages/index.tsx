@@ -9,7 +9,11 @@ const HomePage = () => {
       <Head>
         <meta name="description" content="" />
       </Head>
-      <DefaultHero />
+      <DefaultHero
+        title="Get Free Credit Score"
+        subTitle="Get a free credit score check during your home buying journey"
+        showRegister
+      />
       <Container className="max-w-full my-20 !mx-0 flex flex-col gap-6">
         <Header as="h2" className="text-primary">
           Helping Buyers Find Their Dream Home

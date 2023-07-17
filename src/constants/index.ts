@@ -77,10 +77,6 @@ export const navLinks = [
     title: 'Property Investments',
   },
   {
-    id: 'https://forum.friendlyrealtor.app/',
-    title: 'Forum',
-  },
-  {
     id: '/blogs',
     title: 'Blogs',
   },

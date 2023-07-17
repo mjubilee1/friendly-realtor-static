@@ -9,6 +9,7 @@ import { ForgotPasswordModal } from './ForgotPasswordModal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { usePopup } from './UI/Popup';
+import { setTokenCookies, setRefreshTokenCookies } from '../utils/commonUtil';
 
 export const LoginModal = ({ mobile = false }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -31,6 +32,8 @@ export const LoginModal = ({ mobile = false }) => {
         const res = await signInWithEmailAndPassword(auth, values.email, values.password);
 
         if (res.user.emailVerified) {
+          setTokenCookies(res.user.accessToken);
+          setRefreshTokenCookies(res._tokenResponse.refreshToken);
           window.location.reload();
         } else {
           await sendEmailVerification(res.user);
@@ -52,6 +55,8 @@ export const LoginModal = ({ mobile = false }) => {
         });
         openPopup('Email verification sent!');
       } else {
+        setTokenCookies(res.user.accessToken);
+        setRefreshTokenCookies(res._tokenResponse.refreshToken);
         window.location.reload();
       }
     } catch (error) {
@@ -84,6 +89,8 @@ export const LoginModal = ({ mobile = false }) => {
         });
         openPopup('Email verification sent!');
       } else {
+        setTokenCookies(res.user.accessToken);
+        setRefreshTokenCookies(res._tokenResponse.refreshToken);
         window.location.reload();
       }
     } catch (error) {
