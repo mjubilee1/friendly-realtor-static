@@ -7,10 +7,12 @@ import { RegisterModal } from './RegisterModal';
 import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 import { useRouter } from 'next/router';
 import { LoginModal } from './LoginModal';
+import { useAuthContext } from '../context';
 
 const NavBar = () => {
   const router = useRouter();
   const [toggle, setToggle] = useState<boolean>(false);
+  const { user, logoutUser } = useAuthContext();
 
   const handleClick = (to: string) => {
     fbEvent('take_survey_click', {
@@ -29,6 +31,14 @@ const NavBar = () => {
     router.push(to);
   };
 
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <nav>
       <div className="gap-10 mb-10 lg:flex hidden items-center justify-between">
@@ -38,7 +48,7 @@ const NavBar = () => {
           className="w-[100px] cursor-pointer"
           onClick={() => router.push('/')}
         />
-        <ul className="flex list-none justify-end items-center flxe-1">
+        <ul className="flex list-none justify-end items-center">
           {navLinks.map((el, index) => {
             return (
               <li
@@ -63,10 +73,26 @@ const NavBar = () => {
               </li>
             );
           })}
+          {user && (
+            <li
+              onClick={() => (window.location.href = '/house-hunter')}
+              className={`font-ubuntu font-normal cursor-pointer text-[16px] ml-10`}
+            >
+              House Hunter
+            </li>
+          )}
         </ul>
         <div className="flex gap-6">
-          <LoginModal />
-          <RegisterModal />
+          {!user ? (
+            <>
+              <LoginModal />
+              <RegisterModal />
+            </>
+          ) : (
+            <div onClick={handleLogout} className="cursor-pointer">
+              Sign Out
+            </div>
+          )}
         </div>
       </div>
       <div className="lg:hidden flex flex-1 justify-between items-center mb-8">
@@ -89,12 +115,20 @@ const NavBar = () => {
           } p-6 bg-black-gradient absolute top-20  right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
         >
           <ul className="list-none bg-gray-400 z-[1000] rounded-md py-4 px-4 flex flex-col justify-end items-center flex-1">
-            <li>
-              <LoginModal mobile />
-            </li>
-            <li>
-              <RegisterModal mobile />
-            </li>
+            {!user ? (
+              <>
+                <li>
+                  <LoginModal mobile />
+                </li>
+                <li>
+                  <RegisterModal mobile />
+                </li>
+              </>
+            ) : (
+              <div onClick={handleLogout} className="cursor-pointer">
+                Sign Out
+              </div>
+            )}
             {navLinks.map((el, index) => {
               return (
                 <li
@@ -113,6 +147,14 @@ const NavBar = () => {
                 </li>
               );
             })}
+            {user && (
+              <li
+                onClick={() => (window.location.href = '/house-hunter')}
+                className={`font-ubuntu font-normal cursor-pointer text-[16px] mt-4`}
+              >
+                House Hunter
+              </li>
+            )}
           </ul>
         </div>
       </div>

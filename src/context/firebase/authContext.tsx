@@ -1,48 +1,37 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { initializeApp, FirebaseApp } from 'firebase/app';
-import { getFirestore, Firestore } from 'firebase/firestore';
-import { getStorage, FirebaseStorage } from 'firebase/storage';
-import { getAnalytics } from 'firebase/analytics';
-
-export type FirebaseProps = {
-  fireStore: Firestore;
-  firebaseStorage: FirebaseStorage;
-};
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth, firestore } from '../firebase';
+import { collection, getDoc, doc } from 'firebase/firestore';
 
 export const AuthContext = createContext<any>({});
 
 export function AuthContextProvider({ children }) {
-  const [firebaseApp, setFirebaseApp] = useState<FirebaseApp>();
-  const [fireStore, setFireStore] = useState<any>();
-  const [analytics, setAnalytics] = useState<any>();
-  const [firebaseStorage, setFirebaseStorage] = useState<any>();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const app = initializeApp({
-      apiKey: process.env.NEXT_PUBLIC_FIREBASE_KEY,
-      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-      measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        const { uid } = currentUser;
+        const buyersCollectionRef = collection(firestore, 'buyers');
+        const buyerDocRef = doc(buyersCollectionRef, uid);
+        getDoc(buyerDocRef).then((docSnapshot) => {
+          if (docSnapshot.exists()) {
+            setUser(docSnapshot.data());
+          }
+        });
+      } else {
+        setUser(null);
+      }
     });
-    setFirebaseApp(app);
+
+    return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    if (firebaseApp) {
-      setFireStore(getFirestore(firebaseApp));
-      setFirebaseStorage(getStorage(firebaseApp));
-      setAnalytics(getAnalytics(firebaseApp));
-    }
-  }, [firebaseApp]);
+  const logoutUser = () => {
+    signOut(auth);
+  };
 
-  return (
-    <AuthContext.Provider value={{ fireStore, firebaseApp, firebaseStorage, analytics }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, logoutUser }}>{children}</AuthContext.Provider>;
 }
 
 export const useAuthContext = () => useContext(AuthContext);

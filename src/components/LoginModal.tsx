@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AddLink, Button, Modal, Popup } from './UI';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, getDoc, doc, setDoc } from 'firebase/firestore';
 import { SocialIcon } from 'react-social-icons';
 import { signInWithPopup, sendEmailVerification } from 'firebase/auth';
 import { firestore, auth, facebookProvider, googleProvider } from '../context';
@@ -31,10 +31,22 @@ export const LoginModal = ({ mobile = false }) => {
       try {
         const res = await signInWithEmailAndPassword(auth, values.email, values.password);
 
+        const usersCollectionRef = collection(firestore, 'users');
+        const userDocRef = doc(usersCollectionRef, res.user.uid);
+        getDoc(userDocRef).then((docSnapshot) => {
+          if (docSnapshot.exists()) {
+            const foundUser = docSnapshot.data();
+
+            if (!!foundUser) {
+              setLoginError(
+                'Error: User account found. You created an account as an agent. Try another email address.',
+              );
+            }
+          }
+        });
         if (res.user.emailVerified) {
           setTokenCookies(res.user.accessToken);
           setRefreshTokenCookies(res._tokenResponse.refreshToken);
-          window.location.reload();
         } else {
           await sendEmailVerification(res.user);
           openPopup('Email verification sent!');
@@ -57,7 +69,6 @@ export const LoginModal = ({ mobile = false }) => {
       } else {
         setTokenCookies(res.user.accessToken);
         setRefreshTokenCookies(res._tokenResponse.refreshToken);
-        window.location.reload();
       }
     } catch (error) {
       switch (error.code) {
@@ -91,7 +102,6 @@ export const LoginModal = ({ mobile = false }) => {
       } else {
         setTokenCookies(res.user.accessToken);
         setRefreshTokenCookies(res._tokenResponse.refreshToken);
-        window.location.reload();
       }
     } catch (error) {
       switch (error.code) {
