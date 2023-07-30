@@ -9,25 +9,24 @@ const HouseHunter = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
     },
     onSubmit: async (values) => {
-			try {
-				const data = {
-					// Add your data properties here
-					// For example:
-					userId: user.id,
-					reportType: 'credit',
-				};
-	
-				const response = await auth.submitCreditReport(data);
-				// Handle the response as needed
-				console.log(response.data);
-			} catch (error) {
-				// Handle the error
-				console.error(error);
-			}
-		},
+      try {
+        const data = {
+          // Add your data properties here
+          // For example:
+          userId: user.id,
+          reportType: 'credit',
+        };
+
+        const response = await auth.submitCreditReport(data);
+        // Handle the response as needed
+        console.log(response.data);
+      } catch (error) {
+        // Handle the error
+        console.error(error);
+      }
+    },
   });
 
   const { user } = useAuthContext();

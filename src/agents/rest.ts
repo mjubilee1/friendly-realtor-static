@@ -145,5 +145,5 @@ const requests = {
 export const auth = {
   getToken: () => requests.get(`${serverApiBaseURL}/v1/token`),
   logout: () => requests.post(`${serverApiBaseURL}/v1/logout`),
-	submitCreditReport: (data) => requests.post(`${serverApiBaseURL}/credit-report`, data),
+  submitCreditReport: (data) => requests.post(`${serverApiBaseURL}/credit-report`, data),
 };
