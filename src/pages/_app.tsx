@@ -77,12 +77,22 @@ export default function App({ Component, pageProps }: AppProps) {
 			`,
           }}
         ></script>
-        <script
+             <script
           dangerouslySetInnerHTML={{
             __html: `
-					(function(d, src, c) { var t=d.scripts[d.scripts.length - 1],s=d.createElement('script');s.id='la_x2s6df8d';s.defer=true;s.src=src;s.onload=s.onreadystatechange=function(){var rs=this.readyState;if(rs&&(rs!='complete')&&(rs!='loaded')){return;}c(this);};t.parentElement.insertBefore(s,t.nextSibling);})(document, 'https://friendlyrealtor.ladesk.com/scripts/track.js', function(e){ LiveAgent.createButton('f7o7hgc2', e); });`,
+              var $zoho = $zoho || {};
+              $zoho.salesiq = $zoho.salesiq || {widgetcode: "siqcebe308ba1a99390c9157e70f9e7ae67e09a8e0d7d0daab14f9c1be4761dc488", values: {}, ready: function() {}};
+              var d = document;
+              var s = d.createElement("script");
+              s.type = "text/javascript";
+              s.id = "zsiqscript";
+              s.defer = true;
+              s.src = "https://salesiq.zohopublic.com/widget";
+              var t = d.getElementsByTagName("script")[0];
+              t.parentNode.insertBefore(s, t);
+            `,
           }}
-        ></script>
+        />
       </Head>
       <noscript>
         <iframe
