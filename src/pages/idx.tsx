@@ -27,10 +27,10 @@ const InternalPage = () => {
             if (button.getAttribute('aria-label') === 'sign up') {
               button.remove();
             }
-						const buttonText = button.querySelector('.ui-button-label')?.textContent;
-						if (buttonText === 'Save Search') {
-							button.remove();
-						}
+            const buttonText = button.querySelector('.ui-button-label')?.textContent;
+            if (buttonText === 'Save Search') {
+              button.remove();
+            }
           });
         }
       } else {
