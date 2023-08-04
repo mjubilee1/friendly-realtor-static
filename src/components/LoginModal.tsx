@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { AddLink, Button, Modal, Popup } from './UI';
+import { splitName } from '../utils/commonUtil';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { SocialIcon } from 'react-social-icons';
-import { signInWithPopup, sendEmailVerification } from 'firebase/auth';
+import { signInWithPopup } from 'firebase/auth';
 import { firestore, auth, facebookProvider, googleProvider } from '../context';
 import { ForgotPasswordModal } from './ForgotPasswordModal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { usePopup } from './UI/Popup';
+import { user } from '../agents';
 
 export const LoginModal = ({ mobile = false }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -45,14 +47,19 @@ export const LoginModal = ({ mobile = false }) => {
   const handleGoogleSignIn = async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
-      if (!res.user.emailVerified) {
-        await sendEmailVerification(res.user);
-        await setDoc(doc(firestore, 'buyers', res.user.uid), {
-          name: res.user.displayName,
-        });
-        openPopup('Email verification sent!');
-      } else {
-        window.location.reload();
+
+      // Check if a document exists for the user
+      const userDocRef = doc(firestore, 'buyers', res.user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      if (!userDocSnap.exists()) {
+        const { firstName, lastName } = splitName(res.user.displayName || '');
+        const subscriberObj = {
+          firstName,
+          lastName,
+          emailAddress: res.user.email,
+        };
+        await setDoc(doc(firestore, 'buyers', res.user.uid), subscriberObj);
+        await user.newSubscriber(subscriberObj);
       }
     } catch (error) {
       switch (error.code) {
@@ -77,14 +84,19 @@ export const LoginModal = ({ mobile = false }) => {
   const handleFacebookSignIn = async () => {
     try {
       const res = await signInWithPopup(auth, facebookProvider);
-      if (!res.user.emailVerified) {
-        await sendEmailVerification(res.user);
-        await setDoc(doc(firestore, 'buyers', res.user.uid), {
-          name: res.user.displayName,
-        });
-        openPopup('Email verification sent!');
-      } else {
-        window.location.reload();
+
+      // Check if a document exists for the user
+      const userDocRef = doc(firestore, 'buyers', res.user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      if (!userDocSnap.exists()) {
+        const { firstName, lastName } = splitName(res.user.displayName || '');
+        const subscriberObj = {
+          firstName,
+          lastName,
+          emailAddress: res.user.email,
+        };
+        await setDoc(doc(firestore, 'buyers', res.user.uid), subscriberObj);
+        await user.newSubscriber(subscriberObj);
       }
     } catch (error) {
       switch (error.code) {
@@ -174,7 +186,7 @@ export const LoginModal = ({ mobile = false }) => {
           <ForgotPasswordModal />
         </form>
         <div className="flex flex-col items-end">
-          <p>or login in with</p>
+          <p>or login with</p>
           <div className="flex items-center mt-2 justify-end">
             <Button onClick={handleGoogleSignIn} className="!p-0 mr-2">
               <SocialIcon network="google" />

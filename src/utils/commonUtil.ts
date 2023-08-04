@@ -28,6 +28,25 @@ export const emailRegex = new RegExp(
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 );
 
+export const splitName = (name: string) => {
+  const nameParts = name.trim().split(' ');
+
+  // If there's only one name part, consider it as the first name and set last name as an empty string.
+  let firstName = nameParts[0];
+  let lastName = '';
+
+  // If there are more than one name parts, extract the last part as the last name.
+  if (nameParts.length > 1) {
+    lastName = nameParts.pop() || ''; // Remove the last name part from the array and set it as the last name.
+    firstName = nameParts.join(' '); // Rejoin the remaining parts as the first name.
+  }
+
+  return {
+    firstName,
+    lastName,
+  };
+};
+
 // Export the utility functions as an object
 const CommonUtil = {
   setTokenCookies,
@@ -36,6 +55,7 @@ const CommonUtil = {
   userLoggedIn,
   clearSession,
   emailRegex,
+  splitName,
 };
 
 export default CommonUtil;

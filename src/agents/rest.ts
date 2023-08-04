@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import { AxiosRequestHeaders, AxiosRequestConfig, ResponseType, UserToken } from './agentTypes';
 import { clearRefreshToken, setTokenCookies, clearSession } from '../utils/commonUtil';
 
-const serverApiBaseURL = `${process.env.NEXT_PULBIC_SERVER_URL}`;
+const serverApiBaseURL = `${process.env.NEXT_PUBLIC_SERVER_URL}`;
 const token: string = Cookies.get('jwt');
 
 let retry401 = false;
@@ -145,4 +145,14 @@ const requests = {
 export const auth = {
   getToken: () => requests.get(`${serverApiBaseURL}/v1/token`),
   logout: () => requests.post(`${serverApiBaseURL}/v1/logout`),
+};
+
+export const user = {
+  newSubscriber: (data: any) => {
+    const { emailAddress, firstName, lastName } = data;
+    const queryParams = `?emailAddress=${encodeURIComponent(
+      emailAddress,
+    )}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
+    return requests.post(`${serverApiBaseURL}/new-subscriber${queryParams}`);
+  },
 };
