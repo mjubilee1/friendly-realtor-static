@@ -146,3 +146,13 @@ export const auth = {
   getToken: () => requests.get(`${serverApiBaseURL}/v1/token`),
   logout: () => requests.post(`${serverApiBaseURL}/v1/logout`),
 };
+
+export const user = {
+  newSubscriber: (data: any) => {
+    const { emailAddress, firstName, lastName } = data;
+    const queryParams = `?emailAddress=${encodeURIComponent(
+      emailAddress,
+    )}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
+    return requests.post(`${serverApiBaseURL}/new-subscriber${queryParams}`);
+  },
+};
