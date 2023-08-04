@@ -70,7 +70,7 @@ axios.interceptors.response.use(
 function logout() {
   axios({
     method: 'post',
-    url: `${process.env.NEXT_PULBIC_SERVER_URL}/v1/logout`,
+    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/v1/logout`,
     headers: { Authorization: `Bearer ${Cookies.get('jwt')}` },
   }).finally(() => {
     clearSession();

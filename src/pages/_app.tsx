@@ -77,6 +77,22 @@ export default function App({ Component, pageProps }: AppProps) {
 			`,
           }}
         ></script>
+             <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              var $zoho = $zoho || {};
+              $zoho.salesiq = $zoho.salesiq || {widgetcode: "siqcebe308ba1a99390c9157e70f9e7ae67e09a8e0d7d0daab14f9c1be4761dc488", values: {}, ready: function() {}};
+              var d = document;
+              var s = d.createElement("script");
+              s.type = "text/javascript";
+              s.id = "zsiqscript";
+              s.defer = true;
+              s.src = "https://salesiq.zohopublic.com/widget";
+              var t = d.getElementsByTagName("script")[0];
+              t.parentNode.insertBefore(s, t);
+            `,
+          }}
+        />
       </Head>
       <noscript>
         <iframe
