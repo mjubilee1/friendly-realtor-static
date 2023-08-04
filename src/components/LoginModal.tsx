@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AddLink, Button, Modal, Popup } from './UI';
 import { splitName } from '../utils/commonUtil';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { SocialIcon } from 'react-social-icons';
 import { signInWithPopup } from 'firebase/auth';
