@@ -38,6 +38,7 @@ export const LoginModal = ({ mobile = false }) => {
           await sendEmailVerification(res.user);
           openPopup('Email verification sent!');
         }
+				setOpen(false);
       } catch (error) {
         setLoginError('Error logging in. Please check your credentials and try again.');
       }
@@ -61,6 +62,7 @@ export const LoginModal = ({ mobile = false }) => {
         await setDoc(doc(firestore, 'buyers', res.user.uid), subscriberObj);
         await user.newSubscriber(subscriberObj);
       }
+			setOpen(false);
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -98,6 +100,7 @@ export const LoginModal = ({ mobile = false }) => {
         await setDoc(doc(firestore, 'buyers', res.user.uid), subscriberObj);
         await user.newSubscriber(subscriberObj);
       }
+			setOpen(false);
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
