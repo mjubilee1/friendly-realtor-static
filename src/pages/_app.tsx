@@ -77,7 +77,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			`,
           }}
         ></script>
-             <script
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               var $zoho = $zoho || {};
