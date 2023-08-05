@@ -11,7 +11,7 @@ export const Label = React.forwardRef<HTMLLabelElement | HTMLSpanElement, LabelP
       </span>
     ) : (
       <label
-        className={`${className} text-white`}
+        className={`${className}`}
         htmlFor={htmlFor}
         // control, form, htmlFor
         ref={

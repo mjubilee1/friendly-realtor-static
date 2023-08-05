@@ -23,6 +23,7 @@ const HouseHunter = () => {
     },
     validationSchema: houseHunterValidationSchema,
     onSubmit: async (values) => {
+      console.log('values', values);
       try {
         const response = await apiUser.submitCreditReport(user.id, testRequestBody);
         // Handle the response as needed
@@ -73,51 +74,51 @@ const HouseHunter = () => {
         <Form onSubmit={formik.handleSubmit}>
           <Form.Row>
             <Form.Text
-              hideLabel
+              label="First Name"
               type="text"
               placeholder="First Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
             />
             <Form.Text
-              hideLabel
+              label="Middle Name"
               type="text"
               placeholder="Middle Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
             />
             <Form.Text
-              hideLabel
+              label="Last Name"
               type="text"
               placeholder="Last Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
             />
           </Form.Row>
           <Form.Row>
-            <Form.Date placeholder="Date Of Birth" />
+            <Form.Date label="DOB" placeholder="Date Of Birth" />
           </Form.Row>
           <Form.Text
-            hideLabel
+            label="Social Security Number"
             type="text"
             placeholder="Social Security Number"
             className="mb-3 px-4 pt-2 w-full border border-blue-500"
           />
           <Form.Row>
             <Form.Text
-              hideLabel
+              label="Address"
               type="text"
               placeholder="Address"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
             />
             <Form.Text
-              hideLabel
+              label="City"
               type="text"
               placeholder="City"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
             />
           </Form.Row>
           <Form.Row>
-            <Form.Select placeholder="State" options={states} />
+            <Form.Select label="State" placeholder="State" options={states} />
             <Form.Text
-              hideLabel
+              label="Zip Code"
               type="text"
               placeholder="Zip Code"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
