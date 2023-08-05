@@ -29,15 +29,15 @@ const HouseHunter = () => {
       ssn: '',
       address: {
         line1: '',
+        line2: '',
         city: '',
         state: '',
         zipCode: '',
       },
     },
-    resolver: resolver,
+    //resolver: resolver,
   });
 
-  console.log(getValues());
   if (!user) {
     return <div>You must be logged in to view this page.</div>;
   }
@@ -46,11 +46,89 @@ const HouseHunter = () => {
   const formattedScore = Number(score).toString();
 
   const onSubmit = async (values) => {
-    console.log('values', values);
+    const requestBodyData = {
+      consumerPii: {
+        primaryApplicant: {
+          name: {
+            lastName: values.lastName,
+            firstName: values.firstName,
+            middleName: values.middleName,
+          },
+          dob: values.dob.getFullYear(),
+          ssn: {
+            ssn: values.ssn,
+          },
+          currentAddress: {
+            line1: values.address.line1,
+            line2: values.address.line2,
+            city: values.address.city,
+            state: values.address.state?.value,
+            zipCode: values.address.zipCode,
+          },
+        },
+        requestor: {
+          subscriberCode: '2222222',
+        },
+        permissiblePurpose: {
+          type: '08',
+        },
+        resellerInfo: {
+          endUserName: 'CPAPIV2TC21',
+        },
+        vendorData: {
+          vendorNumber: '072',
+          vendorVersion: 'V1.29',
+        },
+        addOns: {
+          directCheck: '',
+          demographics: 'Only Phone',
+          clarityEarlyRiskScore: 'Y',
+          liftPremium: 'Y',
+          clarityData: {
+            clarityAccountId: '0000000',
+            clarityLocationId: '000000',
+            clarityControlFileName: 'test_file',
+            clarityControlFileVersion: '0000000',
+          },
+          renterRiskScore: 'N',
+          rentBureauData: {
+            primaryApplRentBureauFreezePin: '1234',
+            secondaryApplRentBureauFreezePin: '112233',
+          },
+          riskModels: {
+            modelIndicator: [''],
+            scorePercentile: '',
+          },
+          summaries: {
+            summaryType: [''],
+          },
+          fraudShield: 'Y',
+          mla: '',
+          ofacmsg: '',
+          consumerIdentCheck: {
+            getUniqueConsumerIdentifier: '',
+          },
+          joint: '',
+          paymentHistory84: '',
+          syntheticId: 'N',
+          taxRefundLoan: 'Y',
+          sureProfile: 'Y',
+          incomeAndEmploymentReport: 'Y',
+          incomeAndEmploymentReportData: {
+            verifierName: 'Experian',
+            reportType: 'ExpVerify-Plus',
+          },
+        },
+        customOptions: {
+          optionId: ['COADEX'],
+        },
+      },
+    };
     try {
-      const response = await apiUser.submitCreditReport(user.id, testRequestBody);
+      console.log(requestBodyData);
+      //const response = await apiUser.submitCreditReport(user.id, requestBodyData);
       // Handle the response as needed
-      setCreditProfile(response?.creditProfile[0]);
+      //setCreditProfile(response?.creditProfile[0]);
     } catch (error) {
       // Handle the error
       console.error(error);
@@ -140,14 +218,21 @@ const HouseHunter = () => {
               {...register('address.line1')}
             />
             <Form.Text
+              label="Address 2"
+              type="text"
+              placeholder="Address 2"
+              className="mb-3 px-4 pt-2 w-full border border-blue-500"
+              {...register('address.line2')}
+            />
+          </Form.Row>
+          <Form.Row>
+            <Form.Text
               label="City"
               type="text"
               placeholder="City"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
               {...register('address.city')}
             />
-          </Form.Row>
-          <Form.Row>
             <Controller
               control={control}
               name="address.state"
@@ -170,7 +255,7 @@ const HouseHunter = () => {
             />
           </Form.Row>
           <Form.Row>
-            <Button type="submit" color="secondary" disabled={Object.keys(errors).length > 0}>
+            <Button type="submit" color="secondary">
               Submit
             </Button>
           </Form.Row>
