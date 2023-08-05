@@ -4,7 +4,6 @@ import { BarProps } from './BarTypes';
 const Bar = (props: BarProps) => {
   const { number } = props;
 
-  console.log('numbe', number);
   const formattedScore = Math.min(Math.max(number, 300), 850);
   const percentage = ((formattedScore - 300) / (850 - 300)) * 100;
 
@@ -16,7 +15,6 @@ const Bar = (props: BarProps) => {
     return 'bg-red-500';
   };
 
-  console.log(formattedScore);
   return (
     <div className="bar-container bg-gray-200 w-full h-8 rounded-md">
       <div

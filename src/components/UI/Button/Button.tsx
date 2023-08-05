@@ -90,6 +90,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         type={btnType}
+        disabled={disabled}
         className={`${combinedClassNames} focus:outline-none bg-center items-center cursor-pointer shadow-xs rounded-full`}
         {...onClickProp}
       >

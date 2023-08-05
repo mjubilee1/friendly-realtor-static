@@ -1,7 +1,12 @@
 import * as Yup from 'yup';
 
-export const houseHunterValidationSchema = {};
-
+export const houseHunterValidationSchema = Yup.object().shape({
+  firstName: Yup.string().required('First name is required'),
+  lastName: Yup.string().required('Last name is required'),
+  ssn: Yup.string().required('Social Security Number is required'),
+  dob: Yup.date().required('Date of Birth is required'),
+  address: Yup.string().required('Address is required'),
+});
 export const testRequestBody = {
   consumerPii: {
     primaryApplicant: {
@@ -38,43 +43,9 @@ export const testRequestBody = {
     vendorVersion: 'V1.29',
   },
   addOns: {
-    directCheck: '',
-    demographics: 'Only Phone',
-    clarityEarlyRiskScore: 'Y',
-    liftPremium: 'Y',
-    clarityData: {
-      clarityAccountId: '0000000',
-      clarityLocationId: '000000',
-      clarityControlFileName: 'test_file',
-      clarityControlFileVersion: '0000000',
-    },
-    renterRiskScore: 'N',
-    rentBureauData: {
-      primaryApplRentBureauFreezePin: '1234',
-      secondaryApplRentBureauFreezePin: '112233',
-    },
     riskModels: {
       modelIndicator: [''],
       scorePercentile: '',
-    },
-    summaries: {
-      summaryType: [''],
-    },
-    fraudShield: 'Y',
-    mla: '',
-    ofacmsg: '',
-    consumerIdentCheck: {
-      getUniqueConsumerIdentifier: '',
-    },
-    joint: '',
-    paymentHistory84: '',
-    syntheticId: 'N',
-    taxRefundLoan: 'Y',
-    sureProfile: 'Y',
-    incomeAndEmploymentReport: 'Y',
-    incomeAndEmploymentReportData: {
-      verifierName: 'Experian',
-      reportType: 'ExpVerify-Plus',
     },
   },
   customOptions: {

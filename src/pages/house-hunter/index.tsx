@@ -5,7 +5,8 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import { user as apiUser } from '../../agents';
 import { houseHunterValidationSchema, testRequestBody } from './houseHunterTypes';
-import { Form } from 'formik';
+import { Field, ErrorMessage } from 'formik';
+
 const HouseHunter = () => {
   const { user } = useAuthContext();
   const [open, setOpen] = useState(false);
@@ -13,9 +14,14 @@ const HouseHunter = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      firstName: '',
+      lastName: '',
+      middleName: '',
+      dob: '',
+      ssn: '',
+      address: '',
     },
-    //validationSchema: houseHunterValidationSchema,
+    validationSchema: houseHunterValidationSchema,
     onSubmit: async (values) => {
       try {
         const response = await apiUser.submitCreditReport(user.id, testRequestBody);
@@ -63,7 +69,9 @@ const HouseHunter = () => {
       >
         <Header as="h2">Get Free Credit Report</Header>
         <form onSubmit={formik.handleSubmit}>
-          <button type="submit">Submit</button>
+          <Button type="submit" color="secondary" disabled={Object.keys(formik.errors).length > 0}>
+            Submit
+          </Button>
         </form>
       </Modal>
     </div>
