@@ -9,7 +9,9 @@ export type OptionType = {
   icon?: IconProp;
 };
 
-export const isOption = (option: any): option is OptionType => Object.prototype.hasOwnProperty.call(option, 'label') && Object.prototype.hasOwnProperty.call(option, 'value');
+export const isOption = (option: any): option is OptionType =>
+  Object.prototype.hasOwnProperty.call(option, 'label') &&
+  Object.prototype.hasOwnProperty.call(option, 'value');
 
 export type SelectStyleProps = {
   width?: 'xsmall' | 'small' | 'medium' | 'large' | 'responsive';

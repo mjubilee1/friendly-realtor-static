@@ -9,7 +9,18 @@ import { HelperMessage } from '../Shared/HelperMessage/HelperMessage';
 import './dateStyles.css';
 
 export function Date(props: DateProps) {
-  const { className, labelClassName, helperClassName, helperText, validationClassName, hideLabel, id, label, validationText, ...restProps } = props;
+  const {
+    className,
+    labelClassName,
+    helperClassName,
+    helperText,
+    validationClassName,
+    hideLabel,
+    id,
+    label,
+    validationText,
+    ...restProps
+  } = props;
 
   // If an id is not provided, generate one to explicitly bind the label to the input
   const fieldId = uuidv4() || id;
@@ -35,7 +46,11 @@ export function Date(props: DateProps) {
         {(helperText || validationText) && (
           <div className="mt-4">
             {helperText && <HelperMessage className={helperClassName}>{helperText}</HelperMessage>}
-            {validationText && <ValidationMessage className={validationClassName}>{validationText}</ValidationMessage>}
+            {validationText && (
+              <ValidationMessage className={validationClassName}>
+                {validationText}
+              </ValidationMessage>
+            )}
           </div>
         )}
       </div>

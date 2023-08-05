@@ -6,13 +6,13 @@ import { FormNumberProps } from './NumberType';
 
 export default {
   title: 'Components/Form/Form.Number',
-  component: FormNumber
+  component: FormNumber,
 } as Meta;
 
 const defaultArgs: FormNumberProps = {
   placeholder: '$0.00',
   type: 'text',
-  prefix: '$'
+  prefix: '$',
 };
 
 export const TextInput: Story<FormNumberProps> = (args) => <FormNumber {...args} />;

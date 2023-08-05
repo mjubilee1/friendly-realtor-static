@@ -5,7 +5,10 @@ import { OptionType } from '.';
 import { MenuList, Option, ValueContainer } from './MultiSelectComponents';
 import { IsMultiSelect, MultiSelectProps } from './SelectTypes';
 
-export const MultiSelect = React.forwardRef<SelectInstance<OptionType, IsMultiSelect>, MultiSelectProps>((props: MultiSelectProps, ref) => {
+export const MultiSelect = React.forwardRef<
+  SelectInstance<OptionType, IsMultiSelect>,
+  MultiSelectProps
+>((props: MultiSelectProps, ref) => {
   const { components, styles, name, ...restProps } = props;
 
   const combinedComponents: Partial<SelectComponents<OptionType, true, GroupBase<OptionType>>> = {
@@ -13,7 +16,7 @@ export const MultiSelect = React.forwardRef<SelectInstance<OptionType, IsMultiSe
     Option,
     MenuList,
     ValueContainer,
-    ...components
+    ...components,
   };
 
   return (

@@ -8,7 +8,7 @@ import Button from '../Button';
 
 export default {
   title: 'Components/DemoForm',
-  component: Form
+  component: Form,
 } as ComponentMeta<typeof Form>;
 
 export const DemoForm: Story<FormProps> = (args: FormProps) => {
@@ -16,15 +16,23 @@ export const DemoForm: Story<FormProps> = (args: FormProps) => {
   const formIcon: IconProp = {
     name: 'cog',
     color: 'black',
-    size: 'large'
+    size: 'large',
   };
 
   return (
-    <Form onSubmit={(e) => e.preventDefault()} {...restProps} className="flex flex-col gap-8 max-w-2xl p-8 rounded-md border-2 border-black">
+    <Form
+      onSubmit={(e) => e.preventDefault()}
+      {...restProps}
+      className="flex flex-col gap-8 max-w-2xl p-8 rounded-md border-2 border-black"
+    >
       <Form.Button type="button" color="green" label="Form Button">
         Authorize Things & Stuff
       </Form.Button>
-      <Form.Text label="Text Input" type="text" helperText="The quick brown fox jumped over the lazy dog" />
+      <Form.Text
+        label="Text Input"
+        type="text"
+        helperText="The quick brown fox jumped over the lazy dog"
+      />
       <Form.File label="File Input" />
       <Form.Switch label="Switch (checkbox)" />
       <Form.Info icon={formIcon} indent>
@@ -36,7 +44,7 @@ export const DemoForm: Story<FormProps> = (args: FormProps) => {
         label="Single Select"
         options={new Array(6).fill('').map((val, index) => ({
           label: `Office ${index + 1}`,
-          value: index + 1
+          value: index + 1,
         }))}
       />
       <Form.TextArea label="Text (multi-line)" />
@@ -59,7 +67,7 @@ export const DemoForm: Story<FormProps> = (args: FormProps) => {
         options={new Array(8).fill(0).map((val, index) => ({
           name: `Option ${index + 1}`,
           value: `option${index + 1}`,
-          checked: index === 1
+          checked: index === 1,
         }))}
       />
       <Form.Number

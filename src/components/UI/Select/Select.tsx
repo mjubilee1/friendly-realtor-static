@@ -6,13 +6,16 @@ import { IsSingleSelect, OptionType } from '.';
 import { SingleSelectProps } from './SelectTypes';
 import { Option, SingleValue } from './SingleSelectComponents';
 
-export const Select = React.forwardRef<SelectInstance<OptionType, IsSingleSelect>, SingleSelectProps>((props: SingleSelectProps, ref) => {
+export const Select = React.forwardRef<
+  SelectInstance<OptionType, IsSingleSelect>,
+  SingleSelectProps
+>((props: SingleSelectProps, ref) => {
   const { components, styles, onChange, value, ...restProps } = props;
   const combinedComponents: Partial<SelectComponents<OptionType, false, GroupBase<OptionType>>> = {
     // This library's custom components go here,
     Option,
     SingleValue,
-    ...components
+    ...components,
   };
 
   return (

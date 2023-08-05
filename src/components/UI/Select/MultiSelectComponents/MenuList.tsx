@@ -6,7 +6,9 @@ import { components, GroupBase, MenuListProps } from 'react-select';
 import Checkbox from '../../Checkbox';
 import { isOption, OptionType } from '../SelectTypes';
 
-export const MenuList: React.ComponentType<MenuListProps<OptionType, true, GroupBase<OptionType>>> = (props) => {
+export const MenuList: React.ComponentType<
+  MenuListProps<OptionType, true, GroupBase<OptionType>>
+> = (props) => {
   const { children, options, getValue, setValue, clearValue } = props;
 
   const selectAllOption = useMemo(() => ({ label: 'Select All', value: 'all' }), []);

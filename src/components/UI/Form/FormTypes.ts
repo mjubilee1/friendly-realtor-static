@@ -1,6 +1,10 @@
 import React from 'react';
 
-type FormStyleProps = { minWidth?: string | number; noLayout?: boolean; align?: 'left' | 'center' | 'right' };
+type FormStyleProps = {
+  minWidth?: string | number;
+  noLayout?: boolean;
+  align?: 'left' | 'center' | 'right';
+};
 
 export type FormProps = FormStyleProps & JSX.IntrinsicElements['form'];
 
@@ -22,5 +26,5 @@ export type BaseInputProps = {
 export const controlWidth = {
   large: 544,
   medium: 224,
-  small: 72
+  small: 72,
 };

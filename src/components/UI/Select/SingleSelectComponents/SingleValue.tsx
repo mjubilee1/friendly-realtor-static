@@ -3,7 +3,9 @@ import { components, GroupBase, SingleValueProps } from 'react-select';
 import Icon from '../../Icon';
 import { OptionType } from '..';
 
-export const SingleValue: React.ComponentType<SingleValueProps<OptionType, false, GroupBase<OptionType>>> = (props) => {
+export const SingleValue: React.ComponentType<
+  SingleValueProps<OptionType, false, GroupBase<OptionType>>
+> = (props) => {
   const { data, children } = props;
 
   const IconComponent = (
@@ -13,5 +15,9 @@ export const SingleValue: React.ComponentType<SingleValueProps<OptionType, false
     </>
   );
 
-  return <components.SingleValue {...props}>{data?.icon ? IconComponent : children}</components.SingleValue>;
+  return (
+    <components.SingleValue {...props}>
+      {data?.icon ? IconComponent : children}
+    </components.SingleValue>
+  );
 };

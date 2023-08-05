@@ -8,4 +8,6 @@ export type FormTextAreaProps = {
   className?: string;
 };
 
-export type TextAreaProps = BaseInputProps & FormTextAreaProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+export type TextAreaProps = BaseInputProps &
+  FormTextAreaProps &
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>;

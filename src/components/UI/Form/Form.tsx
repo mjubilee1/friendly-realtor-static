@@ -35,12 +35,14 @@ export default Object.assign(Form, {
   File: FileInput,
   Date,
   Info,
-  Password: React.forwardRef<HTMLInputElement, Omit<FormTextProps, 'type'>>((props, ref) => <FormText type="password" {...props} ref={ref} />),
+  Password: React.forwardRef<HTMLInputElement, Omit<FormTextProps, 'type'>>((props, ref) => (
+    <FormText type="password" {...props} ref={ref} />
+  )),
   Radio,
   Row: FormRow,
   Select: FormSelect,
   Switch: FormSwitch,
   Text: FormText,
   TextArea: FormTextArea,
-  Number: FormNumber
+  Number: FormNumber,
 });
