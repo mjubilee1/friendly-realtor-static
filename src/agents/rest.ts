@@ -145,7 +145,6 @@ const requests = {
 export const auth = {
   getToken: () => requests.get(`${serverApiBaseURL}/v1/token`),
   logout: () => requests.post(`${serverApiBaseURL}/v1/logout`),
-  submitCreditReport: (data) => requests.post(`${serverApiBaseURL}/credit-report`, data),
 };
 
 export const user = {
@@ -156,4 +155,5 @@ export const user = {
     )}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
     return requests.post(`${serverApiBaseURL}/new-subscriber${queryParams}`);
   },
+  submitCreditReport: (id, data) => requests.post(`${serverApiBaseURL}/credit-report/${id}`, data),
 };

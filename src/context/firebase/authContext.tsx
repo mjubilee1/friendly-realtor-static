@@ -16,7 +16,10 @@ export function AuthContextProvider({ children }) {
         const buyerDocRef = doc(buyersCollectionRef, uid);
         getDoc(buyerDocRef).then((docSnapshot) => {
           if (docSnapshot.exists()) {
-            setUser(docSnapshot.data());
+            setUser({
+              id: uid,
+              ...docSnapshot.data(),
+            });
           }
         });
       } else {
