@@ -23,3 +23,9 @@ body {
     #11101d 91.61%
   );
 }
+
+.react-datetime-picker__wrapper {
+  width: 100%;
+  height: 25px;
+}
+

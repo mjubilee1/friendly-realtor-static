@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../context';
 import { Modal, Bar, Button, Header } from '../../components/UI';
+import { Form } from '../../components/UI/Form';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { user as apiUser } from '../../agents';
-import { houseHunterValidationSchema, testRequestBody } from './houseHunterTypes';
-import { Field, ErrorMessage } from 'formik';
+import { houseHunterValidationSchema, testRequestBody, states } from './houseHunterTypes';
 
 const HouseHunter = () => {
   const { user } = useAuthContext();
@@ -67,12 +67,72 @@ const HouseHunter = () => {
         className="bg-white text-black p-4"
         closeXClassName="text-black"
       >
-        <Header as="h2">Get Free Credit Report</Header>
-        <form onSubmit={formik.handleSubmit}>
-          <Button type="submit" color="secondary" disabled={Object.keys(formik.errors).length > 0}>
-            Submit
-          </Button>
-        </form>
+        <Header as="h2" className="mb-4">
+          Get Free Credit Report
+        </Header>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Row>
+            <Form.Text
+              hideLabel
+              type="text"
+              placeholder="First Name"
+              className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            />
+            <Form.Text
+              hideLabel
+              type="text"
+              placeholder="Middle Name"
+              className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            />
+            <Form.Text
+              hideLabel
+              type="text"
+              placeholder="Last Name"
+              className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            />
+          </Form.Row>
+          <Form.Row>
+            <Form.Date placeholder="Date Of Birth" />
+          </Form.Row>
+          <Form.Text
+            hideLabel
+            type="text"
+            placeholder="Social Security Number"
+            className="mb-3 px-4 pt-2 w-full border border-blue-500"
+          />
+          <Form.Row>
+            <Form.Text
+              hideLabel
+              type="text"
+              placeholder="Address"
+              className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            />
+            <Form.Text
+              hideLabel
+              type="text"
+              placeholder="City"
+              className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            />
+          </Form.Row>
+          <Form.Row>
+            <Form.Select placeholder="State" options={states} />
+            <Form.Text
+              hideLabel
+              type="text"
+              placeholder="Zip Code"
+              className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            />
+          </Form.Row>
+          <Form.Row>
+            <Button
+              type="submit"
+              color="secondary"
+              disabled={Object.keys(formik.errors).length > 0}
+            >
+              Submit
+            </Button>
+          </Form.Row>
+        </Form>
       </Modal>
     </div>
   );
