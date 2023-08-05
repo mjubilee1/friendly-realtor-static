@@ -16,7 +16,6 @@ const DefaultHero = (props: HeroProps) => {
   const { title, subTitle, src, showRegister } = props;
   const { user } = useAuthContext();
 
-	console.log("here", user)
   return (
     <div className="relative w-full h-[32rem]">
       <Image
@@ -31,10 +30,15 @@ const DefaultHero = (props: HeroProps) => {
         </Header>
         <p className="text-lg text-black leading-tight max-w-sm pt-2 py-6">{subTitle}</p>
         {showRegister && user ? (
-          <AddLink to="/house-hunter" className="w-fit rounded-full leading-5 tracking-tight border-sm text-center  bg-blue-500 py-1 px-4 gap-2 text-sm true hover:bg-blue-400 cursor-pointer focus:outline-none bg-center items-center shadow-xs">
+          <AddLink
+            to="/house-hunter"
+            className="w-fit rounded-full leading-5 tracking-tight border-sm text-center  bg-blue-500 py-1 px-4 gap-2 text-sm true hover:bg-blue-400 cursor-pointer focus:outline-none bg-center items-center shadow-xs"
+          >
             Click Here For Report
           </AddLink>
-        ) : <RegisterModal />}
+        ) : (
+          <RegisterModal />
+        )}
       </div>
     </div>
   );

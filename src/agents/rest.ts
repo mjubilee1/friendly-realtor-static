@@ -147,3 +147,13 @@ export const auth = {
   logout: () => requests.post(`${serverApiBaseURL}/v1/logout`),
   submitCreditReport: (data) => requests.post(`${serverApiBaseURL}/credit-report`, data),
 };
+
+export const user = {
+  newSubscriber: (data: any) => {
+    const { emailAddress, firstName, lastName } = data;
+    const queryParams = `?emailAddress=${encodeURIComponent(
+      emailAddress,
+    )}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
+    return requests.post(`${serverApiBaseURL}/new-subscriber${queryParams}`);
+  },
+};

@@ -13,6 +13,11 @@ export default function Document() {
             src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
           />
         </noscript>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1673135175963452"
+          crossOrigin="anonymous"
+        />
         <script src="https://kestrel.idxhome.com/ihf-kestrel.js" />
         <script
           dangerouslySetInnerHTML={{
