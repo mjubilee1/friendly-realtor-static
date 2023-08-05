@@ -38,7 +38,7 @@ const HouseHunter = () => {
 
   return (
     <div>
-      <div>Welcome {user.name}</div>
+      <div className="mb-6">Welcome {`${user.firstName} ${user.lastName}`}</div>
       <Modal
         open={open}
         id="get-credit-modal"

@@ -104,14 +104,14 @@ export default function App({ Component, pageProps }: AppProps) {
         />
       </noscript>
       <AuthContextProvider>
-        <div
-          className={`flex min-h-screen flex-col items-center justify-between p-12 ${ubuntu.className}`}
-        >
+        <div className={`flex flex-col items-center justify-between p-12 ${ubuntu.className}`}>
           <div className={`${styles.boxWidth}`}>
             <Navbar />
           </div>
-          <DefaultSeo {...SEO} />
-          <Component {...pageProps} />
+          <div className="w-full min-h-screen">
+            <DefaultSeo {...SEO} />
+            <Component {...pageProps} />
+          </div>
           <Footer />
         </div>
       </AuthContextProvider>

@@ -55,7 +55,7 @@ const NavBar = () => {
                 key={el.id}
                 className={`font-ubuntu font-normal cursor-pointer text-[16px] ${
                   router.pathname === el.id ? 'text-blue-500' : 'text-white'
-                } ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'}`}
+                } ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'} hover:bg-blue-500 hover:p-2`}
               >
                 {el.dropdown ? (
                   <DropdownMenu dropdownItems={el.dropdown} title={el.title} />
@@ -76,7 +76,7 @@ const NavBar = () => {
           {user && (
             <li
               onClick={() => (window.location.href = '/house-hunter')}
-              className={`font-ubuntu font-normal cursor-pointer text-[16px] ml-10`}
+              className={`font-ubuntu font-normal cursor-pointer text-[16px] ml-10 hover:bg-blue-500 hover:p-2`}
             >
               House Hunter
             </li>
