@@ -19,7 +19,12 @@ const HouseHunter = () => {
       middleName: '',
       dob: '',
       ssn: '',
-      address: '',
+      address: {
+        line1: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      },
     },
     validationSchema: houseHunterValidationSchema,
     onSubmit: async (values) => {
@@ -44,6 +49,7 @@ const HouseHunter = () => {
   const score = !!creditProfile?.riskModel?.length ? creditProfile.riskModel[0].score : undefined;
   const formattedScore = Number(score).toString();
 
+  console.log(formik.values);
   return (
     <div>
       <div className="mb-6">Welcome {`${user.firstName} ${user.lastName}`}</div>
@@ -78,28 +84,32 @@ const HouseHunter = () => {
               type="text"
               placeholder="First Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
+              {...formik.getFieldProps('firstName')}
             />
             <Form.Text
               label="Middle Name"
               type="text"
               placeholder="Middle Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
+              {...formik.getFieldProps('middleName')}
             />
             <Form.Text
               label="Last Name"
               type="text"
               placeholder="Last Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
+              {...formik.getFieldProps('lastName')}
             />
           </Form.Row>
           <Form.Row>
-            <Form.Date label="DOB" placeholder="Date Of Birth" />
+            <Form.Date label="DOB" placeholder="Date Of Birth" {...formik.getFieldProps('dob')} />
           </Form.Row>
           <Form.Text
             label="Social Security Number"
             type="text"
             placeholder="Social Security Number"
             className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            {...formik.getFieldProps('ssn')}
           />
           <Form.Row>
             <Form.Text
@@ -107,21 +117,29 @@ const HouseHunter = () => {
               type="text"
               placeholder="Address"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
+              {...formik.getFieldProps('address.line1')}
             />
             <Form.Text
               label="City"
               type="text"
               placeholder="City"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
+              {...formik.getFieldProps('address.city')}
             />
           </Form.Row>
           <Form.Row>
-            <Form.Select label="State" placeholder="State" options={states} />
+            <Form.Select
+              label="State"
+              placeholder="State"
+              options={states}
+              {...formik.getFieldProps('address.state')}
+            />
             <Form.Text
               label="Zip Code"
               type="text"
               placeholder="Zip Code"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
+              {...formik.getFieldProps('address.zipCode')}
             />
           </Form.Row>
           <Form.Row>
