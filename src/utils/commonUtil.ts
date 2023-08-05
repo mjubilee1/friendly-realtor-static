@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import Cookies from 'js-cookie';
 
 export const setRefreshTokenCookies = (refreshToken: string): void => {
@@ -47,6 +48,37 @@ export const splitName = (name: string) => {
   };
 };
 
+export const useYupValidationResolver = (validationSchema) =>
+  useCallback(
+    async (data) => {
+      try {
+        const values = await validationSchema.validate(data, {
+          abortEarly: false,
+        });
+
+        return {
+          values,
+          errors: {},
+        };
+      } catch (errors) {
+        return {
+          values: {},
+          errors: errors.inner.reduce(
+            (allErrors, currentError) => ({
+              ...allErrors,
+              [currentError.path]: {
+                type: currentError.type ?? 'validation',
+                message: currentError.message,
+              },
+            }),
+            {},
+          ),
+        };
+      }
+    },
+    [validationSchema],
+  );
+
 // Export the utility functions as an object
 const CommonUtil = {
   setTokenCookies,
@@ -55,6 +87,7 @@ const CommonUtil = {
   userLoggedIn,
   clearSession,
   emailRegex,
+  useYupValidationResolver,
   splitName,
 };
 

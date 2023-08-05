@@ -2,18 +2,26 @@ import { useState } from 'react';
 import { useAuthContext } from '../../context';
 import { Modal, Bar, Button, Header } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
-import { useFormik } from 'formik';
 import axios from 'axios';
 import { user as apiUser } from '../../agents';
 import { houseHunterValidationSchema, testRequestBody, states } from './houseHunterTypes';
+import { Controller, useForm } from 'react-hook-form';
+import { useYupValidationResolver } from '../../utils/commonUtil';
 
 const HouseHunter = () => {
   const { user } = useAuthContext();
   const [open, setOpen] = useState(false);
   const [creditProfile, setCreditProfile] = useState([]);
+  const resolver = useYupValidationResolver(houseHunterValidationSchema);
 
-  const formik = useFormik({
-    initialValues: {
+  const {
+    handleSubmit,
+    control,
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
       firstName: '',
       lastName: '',
       middleName: '',
@@ -26,22 +34,10 @@ const HouseHunter = () => {
         zipCode: '',
       },
     },
-    validationSchema: houseHunterValidationSchema,
-    onSubmit: async (values) => {
-      console.log('values', values);
-      try {
-        const response = await apiUser.submitCreditReport(user.id, testRequestBody);
-        // Handle the response as needed
-        setCreditProfile(response?.creditProfile[0]);
-      } catch (error) {
-        // Handle the error
-        console.error(error);
-      } finally {
-        setOpen(false);
-      }
-    },
+    resolver: resolver,
   });
 
+  console.log(getValues());
   if (!user) {
     return <div>You must be logged in to view this page.</div>;
   }
@@ -49,7 +45,20 @@ const HouseHunter = () => {
   const score = !!creditProfile?.riskModel?.length ? creditProfile.riskModel[0].score : undefined;
   const formattedScore = Number(score).toString();
 
-  console.log(formik.values);
+  const onSubmit = async (values) => {
+    console.log('values', values);
+    try {
+      const response = await apiUser.submitCreditReport(user.id, testRequestBody);
+      // Handle the response as needed
+      setCreditProfile(response?.creditProfile[0]);
+    } catch (error) {
+      // Handle the error
+      console.error(error);
+    } finally {
+      setOpen(false);
+    }
+  };
+
   return (
     <div>
       <div className="mb-6">Welcome {`${user.firstName} ${user.lastName}`}</div>
@@ -77,39 +86,50 @@ const HouseHunter = () => {
         <Header as="h2" className="mb-4">
           Get Free Credit Report
         </Header>
-        <Form onSubmit={formik.handleSubmit}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Row>
             <Form.Text
               label="First Name"
               type="text"
               placeholder="First Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
-              {...formik.getFieldProps('firstName')}
+              {...register('firstName')}
             />
             <Form.Text
               label="Middle Name"
               type="text"
               placeholder="Middle Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
-              {...formik.getFieldProps('middleName')}
+              {...register('middleName')}
             />
             <Form.Text
               label="Last Name"
               type="text"
               placeholder="Last Name"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
-              {...formik.getFieldProps('lastName')}
+              {...register('lastName')}
             />
           </Form.Row>
           <Form.Row>
-            <Form.Date label="DOB" placeholder="Date Of Birth" {...formik.getFieldProps('dob')} />
+            <Controller
+              control={control}
+              name="dob"
+              render={({ field }) => (
+                <Form.Date
+                  label="Date Of Birth"
+                  placeholder="Date Of Birth"
+                  labelClassName="text-left"
+                  {...field}
+                />
+              )}
+            />
           </Form.Row>
           <Form.Text
             label="Social Security Number"
             type="text"
             placeholder="Social Security Number"
             className="mb-3 px-4 pt-2 w-full border border-blue-500"
-            {...formik.getFieldProps('ssn')}
+            {...register('ssn')}
           />
           <Form.Row>
             <Form.Text
@@ -117,37 +137,40 @@ const HouseHunter = () => {
               type="text"
               placeholder="Address"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
-              {...formik.getFieldProps('address.line1')}
+              {...register('address.line1')}
             />
             <Form.Text
               label="City"
               type="text"
               placeholder="City"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
-              {...formik.getFieldProps('address.city')}
+              {...register('address.city')}
             />
           </Form.Row>
           <Form.Row>
-            <Form.Select
-              label="State"
-              placeholder="State"
-              options={states}
-              {...formik.getFieldProps('address.state')}
+            <Controller
+              control={control}
+              name="address.state"
+              render={({ field }) => (
+                <Form.Select
+                  options={states}
+                  label="State"
+                  labelClassName="text-left"
+                  placeholder="State"
+                  {...field}
+                />
+              )}
             />
             <Form.Text
               label="Zip Code"
               type="text"
               placeholder="Zip Code"
               className="mb-3 px-4 pt-2 w-full border border-blue-500"
-              {...formik.getFieldProps('address.zipCode')}
+              {...register('address.zipCode')}
             />
           </Form.Row>
           <Form.Row>
-            <Button
-              type="submit"
-              color="secondary"
-              disabled={Object.keys(formik.errors).length > 0}
-            >
+            <Button type="submit" color="secondary" disabled={Object.keys(errors).length > 0}>
               Submit
             </Button>
           </Form.Row>
