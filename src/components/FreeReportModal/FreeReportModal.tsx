@@ -21,6 +21,7 @@ export const FreeReportModal = () => {
     getValues,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -43,6 +44,7 @@ export const FreeReportModal = () => {
   const { dob } = watch();
 
   const onSubmit = async (values) => {
+    console.log(values);
     const requestBodyData = {
       consumerPii: {
         primaryApplicant: {
@@ -130,6 +132,7 @@ export const FreeReportModal = () => {
       // Handle the error
       console.error(error);
     } finally {
+      reset();
       setOpen(false);
     }
   };
@@ -161,8 +164,9 @@ export const FreeReportModal = () => {
             label="First Name"
             type="text"
             placeholder="First Name"
+            error={errors.firstName}
             className="mb-3 w-full border border-blue-500"
-            {...register('firstName')}
+            {...register('firstName', { required: 'First Name is Required.' })}
           />
           <Form.Text
             label="Middle Name"
@@ -174,9 +178,10 @@ export const FreeReportModal = () => {
           <Form.Text
             label="Last Name"
             type="text"
+            error={errors.lastName}
             placeholder="Last Name"
             className="mb-3 w-full border border-blue-500"
-            {...register('lastName')}
+            {...register('lastName', { required: 'Last Name is Required.' })}
           />
         </Form.Row>
         <Form.Row>
@@ -189,8 +194,10 @@ export const FreeReportModal = () => {
                   label="Date Of Birth"
                   placeholder="Date Of Birth"
                   labelClassName="text-left"
+                  error={errors.dob}
                   {...field}
                   selected={dob}
+                  required={true}
                   onChange={(date) => setValue('dob', date)}
                 />
               </div>
@@ -200,17 +207,19 @@ export const FreeReportModal = () => {
         <Form.Text
           label="Social Security Number"
           type="text"
+          error={errors.ssn}
           placeholder="Social Security Number"
           className="mb-3 w-full border border-blue-500"
-          {...register('ssn')}
+          {...register('ssn', { required: 'SSN is Required.' })}
         />
         <Form.Row>
           <Form.Text
             label="Address"
             type="text"
             placeholder="Address"
+            error={errors.address?.line1}
             className="mb-3 w-full border border-blue-500"
-            {...register('address.line1')}
+            {...register('address.line1', { required: 'Address is Required.' })}
           />
           <Form.Text
             label="Address 2"
@@ -225,8 +234,9 @@ export const FreeReportModal = () => {
             label="City"
             type="text"
             placeholder="City"
+            error={errors.address?.city}
             className="mb-3 w-full border border-blue-500"
-            {...register('address.city')}
+            {...register('address.city', { required: 'City is Required.' })}
           />
           <Controller
             control={control}
@@ -236,8 +246,10 @@ export const FreeReportModal = () => {
                 <Form.Select
                   options={states}
                   label="State"
+                  error={errors.address?.state}
                   className="text-left"
                   placeholder="State"
+                  required={true}
                   {...field}
                 />
               </div>
@@ -247,12 +259,18 @@ export const FreeReportModal = () => {
             label="Zip Code"
             type="text"
             placeholder="Zip Code"
+            error={errors.address?.zipCode}
             className="mb-3 w-full border border-blue-500"
-            {...register('address.zipCode')}
+            {...register('address.zipCode', { required: 'Zip Code is Required.' })}
           />
         </Form.Row>
         <Form.Row>
-          <Button type="submit" color="secondary">
+          <Button
+            type="submit"
+            color="secondary"
+            className="text-white"
+            disabled={Object.keys(errors).length > 0}
+          >
             Submit
           </Button>
         </Form.Row>

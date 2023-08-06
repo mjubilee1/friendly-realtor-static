@@ -10,7 +10,7 @@ export const Select = React.forwardRef<
   SelectInstance<OptionType, IsSingleSelect>,
   SingleSelectProps
 >((props: SingleSelectProps, ref) => {
-  const { components, styles, onChange, value, ...restProps } = props;
+  const { components, styles, onChange, error, value, ...restProps } = props;
   const combinedComponents: Partial<SelectComponents<OptionType, false, GroupBase<OptionType>>> = {
     // This library's custom components go here,
     Option,
@@ -19,18 +19,21 @@ export const Select = React.forwardRef<
   };
 
   return (
-    <ReactSelect
-      {...restProps}
-      components={combinedComponents}
-      isClearable={false}
-      maxMenuHeight={200}
-      menuPlacement="auto"
-      menuShouldScrollIntoView
-      minMenuHeight={32}
-      onChange={onChange}
-      value={value}
-      ref={ref}
-      styles={styles}
-    />
+    <>
+      <ReactSelect
+        {...restProps}
+        components={combinedComponents}
+        isClearable={false}
+        maxMenuHeight={200}
+        menuPlacement="auto"
+        menuShouldScrollIntoView
+        minMenuHeight={32}
+        onChange={onChange}
+        value={value}
+        ref={ref}
+        styles={styles}
+      />
+      {error && <span className="text-red-500">{error.message || 'This is Required'}</span>}
+    </>
   );
 });

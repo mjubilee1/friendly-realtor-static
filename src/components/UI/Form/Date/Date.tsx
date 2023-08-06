@@ -19,6 +19,7 @@ export function Date(props: DateProps) {
     id,
     label,
     selected,
+    error,
     validationText,
     onChange,
     ...restProps
@@ -46,6 +47,7 @@ export function Date(props: DateProps) {
             )}
           </div>
         )}
+        {error && <span className="text-red-500">{error.message || 'This is Required'}</span>}
       </div>
     </Group>
   );

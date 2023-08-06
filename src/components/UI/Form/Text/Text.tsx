@@ -21,6 +21,7 @@ export const FormText = React.forwardRef<HTMLInputElement, FormTextProps>(
       label,
       type = 'text',
       validationText,
+      error,
       ...restProps
     } = props;
     // If an id is not provided, generate one to explicitly bind the label to the input
@@ -67,6 +68,7 @@ export const FormText = React.forwardRef<HTMLInputElement, FormTextProps>(
               )}
             </div>
           )}
+          {error && <span className="text-red-500">{error.message || 'This is Required'}</span>}
         </div>
       </Group>
     );
