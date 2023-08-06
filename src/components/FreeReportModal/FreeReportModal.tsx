@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { Modal, Bar, Button, Header, Spacer } from '../../components/UI';
+import { Modal, Bar, Button, Header } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
-import { Radio } from '../../components/UI/Form/Radio';
-import { FileInput } from '../../components/UI/Form/FileInput';
-import axios from 'axios';
 import { user as apiUser } from '../../agents';
 import { houseHunterValidationSchema, states } from './FreeReportModalTypes';
 import { Controller, useForm } from 'react-hook-form';
 import { useYupValidationResolver } from '../../utils/commonUtil';
 import moment from 'moment';
+import { doc, getDoc, updateDoc, collection } from 'firebase/firestore';
+import { firestore } from '../../context';
 
 export const FreeReportModal = ({ user, setCreditProfile }) => {
   const [open, setOpen] = useState(false);
@@ -128,7 +127,16 @@ export const FreeReportModal = ({ user, setCreditProfile }) => {
     try {
       const response = await apiUser.submitCreditReport(user.id, requestBodyData);
       // Handle the response as needed
-      setCreditProfile(response?.creditProfile[0]);
+      const score = response?.creditProfile[0]?.riskModel[0]?.score;
+      if (score !== undefined) {
+        const parsedScore = parseInt(score.toString(), 10);
+        setCreditProfile(parsedScore);
+        const userDocRef = doc(collection(firestore, 'buyers'), user.id);
+
+        await updateDoc(userDocRef, {
+          creditScore: parsedScore,
+        });
+      }
       setOpen(false);
       reset();
     } catch (error) {
@@ -156,7 +164,7 @@ export const FreeReportModal = ({ user, setCreditProfile }) => {
           onClick={() => setOpen((prev) => !prev)}
           className="rounded-sm"
         >
-          Get Free Credit Report
+          Check Your Credit Health
         </Button>
       }
       onClose={() => setOpen(false)}
@@ -164,7 +172,7 @@ export const FreeReportModal = ({ user, setCreditProfile }) => {
       closeXClassName="text-black"
     >
       <Header as="h2" className="mb-4">
-        Get Free Credit Report
+        Check Your Credit Health
       </Header>
       {errorMessage && <div className="text-red-500">{errorMessage}</div>}
       <Form onSubmit={handleSubmit(onSubmit)}>

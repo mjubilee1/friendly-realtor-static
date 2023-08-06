@@ -22,7 +22,13 @@ const HouseHunter = () => {
   const { user } = useAuthContext();
   const { preapproval } = watch();
   const [saving, setSaving] = useState<boolean>(false);
-  const [creditProfile, setCreditProfile] = useState([]);
+  const [creditProfile, setCreditProfile] = useState(null);
+
+  useEffect(() => {
+    if (user?.creditScore) {
+      setCreditProfile(user.creditScore);
+    }
+  }, [user]);
 
   useEffect(() => {
     const retrieveAgentQuestions = async () => {
@@ -108,12 +114,12 @@ const HouseHunter = () => {
   };
 
   const formattedScore = 'NaN';
-
   if (!user) {
     return <div>You must be logged in to view this page.</div>;
   }
 
   const preapprovalText = preapproval && !!preapproval[0]?.name ? 'preapproval_document' : null;
+
   return (
     <div>
       <div className="flex justify-between">
@@ -164,13 +170,13 @@ const HouseHunter = () => {
         </Form.Row>
       </Form>
       <Spacer className="mb-6" />
-      {formattedScore !== 'NaN' ? (
-        <Bar number={Number(formattedScore)} />
+      {!!creditProfile ? (
+        <Bar number={creditProfile} />
       ) : (
         <div>Fill out the credit report to see credit score.</div>
       )}
       <div className="mt-8" />
-      {formattedScore !== 'NaN' && <p>{`You score is ${formattedScore}`}</p>}
+      {!!creditProfile && <p>{`You score is ${creditProfile}`}</p>}
       <div className="mt-16" />
     </div>
   );
