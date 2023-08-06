@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Icon from '../../Icon';
 import { FormTextProps } from './TextTypes';
@@ -21,13 +21,26 @@ export const FormText = React.forwardRef<HTMLInputElement, FormTextProps>(
       label,
       type = 'text',
       validationText,
+      value,
       error,
+      maskSSN = false,
       ...restProps
     } = props;
+
     // If an id is not provided, generate one to explicitly bind the label to the input
     const fieldId = uuidv4() || id;
     const [showPassword, setShowPassword] = useState(false);
+
     const toggleShowPassword = () => setShowPassword((prev) => !prev);
+
+    const formatSsn = (ssn: string | null | undefined) => {
+      return !ssn
+        ? ''
+        : ssn
+            .replace(/[^\d\*]/g, '')
+            .replace(/(?=\d{6})\d/, '*')
+            .slice(0, 9);
+    };
 
     return (
       <Group noGutter={hideLabel}>
@@ -38,13 +51,22 @@ export const FormText = React.forwardRef<HTMLInputElement, FormTextProps>(
           <div>{labelIcon}</div>
         </div>
         <div className={`${className} flex justify-end relative`}>
-          <input
-            {...restProps}
-            className="block w-full rounded-lg text-black px-4 outline-0"
-            id={fieldId}
-            ref={ref}
-            type={type !== 'password' ? type : showPassword ? 'text' : 'password'}
-          />
+          {maskSSN ? (
+            <input
+              {...restProps}
+              value={formatSsn(value)}
+              type="text"
+              className="block w-full rounded-lg text-black px-4 outline-0"
+            />
+          ) : (
+            <input
+              {...restProps}
+              className="block w-full rounded-lg text-black px-4 outline-0"
+              id={fieldId}
+              ref={ref}
+              type={type !== 'password' ? type : showPassword ? 'text' : 'password'}
+            />
+          )}
           {type === 'password' && (
             <button
               className="absolute pr-4 top-2 bg-transparent"

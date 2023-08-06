@@ -41,7 +41,7 @@ export const FreeReportModal = () => {
     //resolver: resolver,
   });
 
-  const { dob } = watch();
+  const { ssn, dob } = watch();
 
   const onSubmit = async (values) => {
     console.log(values);
@@ -210,7 +210,15 @@ export const FreeReportModal = () => {
           error={errors.ssn}
           placeholder="Social Security Number"
           className="mb-3 w-full border border-blue-500"
-          {...register('ssn', { required: 'SSN is Required.' })}
+          maskSSN
+          value={ssn}
+          {...register('ssn', {
+            required: 'SSN is Required.',
+            onChange: (event) => {
+              console.log('con', event.target.value);
+              setValue('ssn', event.target.value);
+            },
+          })}
         />
         <Form.Row>
           <Form.Text
@@ -265,12 +273,7 @@ export const FreeReportModal = () => {
           />
         </Form.Row>
         <Form.Row>
-          <Button
-            type="submit"
-            color="secondary"
-            className="text-white"
-            disabled={Object.keys(errors).length > 0}
-          >
+          <Button type="submit" color="secondary" className="text-white">
             Submit
           </Button>
         </Form.Row>
