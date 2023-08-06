@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthContext, firestore, fireStorage } from '../../context';
 import { FreeReportModal } from '../../components';
 import { Bar, Button, Header, Spacer } from '../../components/UI';
@@ -8,23 +8,53 @@ import { FileInput } from '../../components/UI/Form/FileInput';
 import { useForm } from 'react-hook-form';
 import { doc, getDoc, updateDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import Image from 'next/image';
 
 const HouseHunter = () => {
-  const {
-    handleSubmit,
-    control,
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm({
+  const { handleSubmit, register, reset, watch, setValue } = useForm({
     defaultValues: {
       hasAgent: '',
       preapproval: '',
       salary: '',
     },
   });
+
   const { user } = useAuthContext();
+  const { preapproval } = watch();
   const [saving, setSaving] = useState<boolean>(false);
+
+  useEffect(() => {
+    const retrieveAgentQuestions = async () => {
+      if (user?.id) {
+        const userDocRef = doc(collection(firestore, 'buyers'), user.id);
+
+        const docSnapshot = await getDoc(userDocRef);
+
+        if (docSnapshot.exists()) {
+          const data = docSnapshot.data();
+
+          if (data.agentQuestions) {
+            const agentQuestions = data.agentQuestions;
+            reset({
+              hasAgent: agentQuestions?.hasAgent,
+              salary: agentQuestions?.salary,
+            });
+
+            if (agentQuestions?.preapprovalDownloadURL) {
+              // Convert the preapprovalDownloadURL to a File object
+              const response = await fetch(agentQuestions.preapprovalDownloadURL);
+              const blob = await response.blob();
+              const file = new File([blob], 'preapproval_document'); // Provide a filename for the file
+              // Set the File object as the value of the "preapproval" field in the form
+              setValue('preapproval', file);
+            }
+          }
+        }
+      }
+    };
+
+    retrieveAgentQuestions();
+  }, [user]);
 
   const uploadAndSaveFile = async (data) => {
     const file = data.preapproval?.length ? data.preapproval[0] : undefined;
@@ -93,22 +123,30 @@ const HouseHunter = () => {
         To help us better understand please fill out the form below if applicable.
       </div>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Radio
-          label="Are you working with agent?"
-          options={[
-            {
-              name: 'Yes',
-              value: 'yes',
-            },
-            {
-              name: 'No',
-              value: 'no',
-            },
-          ]}
-          {...register('hasAgent')}
-        />
+        <Form.Row>
+          <Radio
+            label="Are you working with agent?"
+            options={[
+              {
+                name: 'Yes',
+                value: 'yes',
+              },
+              {
+                name: 'No',
+                value: 'no',
+              },
+            ]}
+            {...register('hasAgent')}
+          />
+        </Form.Row>
         <Spacer />
-        <FileInput label="Upload Preapproval" {...register('preapproval')} />
+        <Form.Row>
+          <FileInput
+            label="Upload Preapproval"
+            {...register('preapproval')}
+            text={preapproval?.name}
+          />
+        </Form.Row>
         <Spacer />
         <Form.Text
           type="number"
@@ -117,9 +155,11 @@ const HouseHunter = () => {
           {...register('salary')}
         />
         <Spacer className="mt-4" />
-        <Button type="submit" color="secondary" loading={saving}>
-          Save
-        </Button>
+        <Form.Row>
+          <Button type="submit" color="secondary" loading={saving}>
+            Save
+          </Button>
+        </Form.Row>
       </Form>
       <Spacer className="mb-6" />
       {formattedScore !== 'NaN' ? (

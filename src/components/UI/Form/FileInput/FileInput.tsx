@@ -22,6 +22,7 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       validationText,
       onChange = () => undefined,
       text,
+      ...restProps
     } = props;
 
     const [, setFiles] = useState<File[]>([]);
@@ -52,16 +53,16 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
     return (
       <>
-        <div className="text-white">
-          <Label htmlFor={fieldId} hidden={hideLabel}>
-            {label}
-          </Label>
-        </div>
         <Group
-          className={`${className} flex flex-wrap items-center rounded-lg gap-2 w-full bg-white`}
+          className={`${className} flex flex-wrap items-center rounded-lg gap-2 w-full`}
           noGutter={hideLabel}
         >
-          <div className="flex items-center gap-4 flex-row justify-start w-full text-black">
+          <div className="text-white">
+            <Label htmlFor={fieldId} hidden={hideLabel}>
+              {label}
+            </Label>
+          </div>
+          <div className="flex items-center gap-4 flex-row justify-start w-full text-black bg-white">
             <div className="flex flex-row items-center cursor-pointer h-8 m-0 p-0 border-none relative w-full transition-all duration-300 ease-in border-[1px] box-border hover:shadow-lg">
               <input
                 // Assign both the local and any forwarded refs
@@ -76,8 +77,9 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 }}
                 className="cursor-pointer absolute w-full opacity-0 border-none"
                 type="file"
+                {...restProps}
               />
-              <span className="cursor-pointer">{fileNameText}</span>
+              <span className="cursor-pointer px-4">{fileNameText}</span>
             </div>
             <Button
               onClick={() => {
