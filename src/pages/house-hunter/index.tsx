@@ -1,21 +1,15 @@
-import { useState } from 'react';
-import { useAuthContext } from '../../context';
-import { Modal, Bar, Button, Header, Spacer } from '../../components/UI';
+import React, { useState } from 'react';
+import { useAuthContext, firestore, fireStorage } from '../../context';
+import { FreeReportModal } from '../../components';
+import { Bar, Button, Header, Spacer } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
 import { Radio } from '../../components/UI/Form/Radio';
 import { FileInput } from '../../components/UI/Form/FileInput';
-import axios from 'axios';
-import { user as apiUser } from '../../agents';
-import { houseHunterValidationSchema, testRequestBody, states } from './houseHunterTypes';
-import { Controller, useForm } from 'react-hook-form';
-import { useYupValidationResolver } from '../../utils/commonUtil';
+import { useForm } from 'react-hook-form';
+import { doc, getDoc, updateDoc, collection } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const HouseHunter = () => {
-  const { user } = useAuthContext();
-  const [open, setOpen] = useState(false);
-  const [creditProfile, setCreditProfile] = useState([]);
-  const resolver = useYupValidationResolver(houseHunterValidationSchema);
-
   const {
     handleSubmit,
     control,
@@ -24,266 +18,109 @@ const HouseHunter = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      middleName: '',
-      dob: '',
-      ssn: '',
-      address: {
-        line1: '',
-        line2: '',
-        city: '',
-        state: '',
-        zipCode: '',
-      },
+      hasAgent: '',
+      preapproval: '',
+      salary: '',
     },
-    //resolver: resolver,
   });
+  const { user } = useAuthContext();
+  const [saving, setSaving] = useState<boolean>(false);
+
+  const uploadAndSaveFile = async (data) => {
+    const file = data.preapproval?.length ? data.preapproval[0] : undefined;
+    try {
+      const userDocRef = doc(collection(firestore, 'buyers'), user.id);
+      if (!!file) {
+        // Upload the file to Firebase Storage
+        const storageRef = ref(fireStorage, `preapproval/${user.id}/${file.name}`);
+        await uploadBytes(storageRef, file);
+
+        // Get the download URL of the uploaded file
+        const downloadURL = await getDownloadURL(storageRef);
+        await updateDoc(userDocRef, {
+          agentQuestions: {
+            hasAgent: data.hasAgent || '',
+            salary: data.salary || '',
+            preapprovalDownloadURL: downloadURL,
+          },
+        });
+      } else {
+        await updateDoc(userDocRef, {
+          agentQuestions: {
+            hasAgent: data.hasAgent || '',
+            salary: data.salary || '',
+            preapprovalDownloadURL: '',
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Error uploading and saving file:', error);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    setSaving(true);
+    try {
+      const userDocRef = doc(collection(firestore, 'buyers'), user.id);
+
+      const docSnapshot = await getDoc(userDocRef);
+
+      if (docSnapshot.exists()) {
+        uploadAndSaveFile(data);
+      } else {
+        console.log('Document does not exist');
+      }
+    } catch (error) {
+      console.error('Error fetching document:', error);
+    }
+    setSaving(false);
+  };
+
+  const formattedScore = 'NaN';
 
   if (!user) {
     return <div>You must be logged in to view this page.</div>;
   }
 
-  const score = !!creditProfile?.riskModel?.length ? creditProfile.riskModel[0].score : undefined;
-  const formattedScore = Number(score).toString();
-
-  const onSubmit = async (values) => {
-    const requestBodyData = {
-      consumerPii: {
-        primaryApplicant: {
-          name: {
-            lastName: values.lastName,
-            firstName: values.firstName,
-            middleName: values.middleName,
-          },
-          dob: values.dob.getFullYear(),
-          ssn: {
-            ssn: values.ssn,
-          },
-          currentAddress: {
-            line1: values.address.line1,
-            line2: values.address.line2,
-            city: values.address.city,
-            state: values.address.state?.value,
-            zipCode: values.address.zipCode,
-          },
-        },
-        requestor: {
-          subscriberCode: '2222222',
-        },
-        permissiblePurpose: {
-          type: '08',
-        },
-        resellerInfo: {
-          endUserName: 'CPAPIV2TC21',
-        },
-        vendorData: {
-          vendorNumber: '072',
-          vendorVersion: 'V1.29',
-        },
-        addOns: {
-          directCheck: '',
-          demographics: 'Only Phone',
-          clarityEarlyRiskScore: 'Y',
-          liftPremium: 'Y',
-          clarityData: {
-            clarityAccountId: '0000000',
-            clarityLocationId: '000000',
-            clarityControlFileName: 'test_file',
-            clarityControlFileVersion: '0000000',
-          },
-          renterRiskScore: 'N',
-          rentBureauData: {
-            primaryApplRentBureauFreezePin: '1234',
-            secondaryApplRentBureauFreezePin: '112233',
-          },
-          riskModels: {
-            modelIndicator: [''],
-            scorePercentile: '',
-          },
-          summaries: {
-            summaryType: [''],
-          },
-          fraudShield: 'Y',
-          mla: '',
-          ofacmsg: '',
-          consumerIdentCheck: {
-            getUniqueConsumerIdentifier: '',
-          },
-          joint: '',
-          paymentHistory84: '',
-          syntheticId: 'N',
-          taxRefundLoan: 'Y',
-          sureProfile: 'Y',
-          incomeAndEmploymentReport: 'Y',
-          incomeAndEmploymentReportData: {
-            verifierName: 'Experian',
-            reportType: 'ExpVerify-Plus',
-          },
-        },
-        customOptions: {
-          optionId: ['COADEX'],
-        },
-      },
-    };
-    try {
-      console.log(requestBodyData);
-      //const response = await apiUser.submitCreditReport(user.id, requestBodyData);
-      // Handle the response as needed
-      //setCreditProfile(response?.creditProfile[0]);
-    } catch (error) {
-      // Handle the error
-      console.error(error);
-    } finally {
-      setOpen(false);
-    }
-  };
-
   return (
     <div>
       <div className="flex justify-between">
         <Header as="h2">Welcome {`${user.firstName} ${user.lastName}`}</Header>
-        <Modal
-          open={open}
-          id="get-credit-modal"
-          trigger={
-            <Button
-              type="button"
-              color="secondary"
-              onClick={() => setOpen((prev) => !prev)}
-              className="rounded-sm"
-            >
-              Get Free Credit Report
-            </Button>
-          }
-          onClose={() => setOpen(false)}
-          className="bg-white text-black p-4"
-          closeXClassName="text-black"
-        >
-          <Header as="h2" className="mb-4">
-            Get Free Credit Report
-          </Header>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Row>
-              <Form.Text
-                label="First Name"
-                type="text"
-                placeholder="First Name"
-                className="mb-3 px-4 pt-2 w-full border border-blue-500"
-                {...register('firstName')}
-              />
-              <Form.Text
-                label="Middle Name"
-                type="text"
-                placeholder="Middle Name"
-                className="mb-3 px-4 pt-2 w-full border border-blue-500"
-                {...register('middleName')}
-              />
-              <Form.Text
-                label="Last Name"
-                type="text"
-                placeholder="Last Name"
-                className="mb-3 px-4 pt-2 w-full border border-blue-500"
-                {...register('lastName')}
-              />
-            </Form.Row>
-            <Form.Row>
-              <Controller
-                control={control}
-                name="dob"
-                render={({ field }) => (
-                  <Form.Date
-                    label="Date Of Birth"
-                    placeholder="Date Of Birth"
-                    labelClassName="text-left"
-                    {...field}
-                  />
-                )}
-              />
-            </Form.Row>
-            <Form.Text
-              label="Social Security Number"
-              type="text"
-              placeholder="Social Security Number"
-              className="mb-3 px-4 pt-2 w-full border border-blue-500"
-              {...register('ssn')}
-            />
-            <Form.Row>
-              <Form.Text
-                label="Address"
-                type="text"
-                placeholder="Address"
-                className="mb-3 px-4 pt-2 w-full border border-blue-500"
-                {...register('address.line1')}
-              />
-              <Form.Text
-                label="Address 2"
-                type="text"
-                placeholder="Address 2"
-                className="mb-3 px-4 pt-2 w-full border border-blue-500"
-                {...register('address.line2')}
-              />
-            </Form.Row>
-            <Form.Row>
-              <Form.Text
-                label="City"
-                type="text"
-                placeholder="City"
-                className="mb-3 px-4 pt-2 w-full border border-blue-500"
-                {...register('address.city')}
-              />
-              <Controller
-                control={control}
-                name="address.state"
-                render={({ field }) => (
-                  <Form.Select
-                    options={states}
-                    label="State"
-                    labelClassName="text-left"
-                    placeholder="State"
-                    {...field}
-                  />
-                )}
-              />
-              <Form.Text
-                label="Zip Code"
-                type="text"
-                placeholder="Zip Code"
-                className="mb-3 px-4 pt-2 w-full border border-blue-500"
-                {...register('address.zipCode')}
-              />
-            </Form.Row>
-            <Form.Row>
-              <Button type="submit" color="secondary">
-                Submit
-              </Button>
-            </Form.Row>
-          </Form>
-        </Modal>
+        <FreeReportModal />
       </div>
       <Spacer />
       <div className="my-4">
         To help us better understand please fill out the form below if applicable.
       </div>
-      <Radio
-        label="Are you working with agent?"
-        options={[
-          {
-            name: 'Yes',
-            value: 'yes',
-          },
-          {
-            name: 'No',
-            value: 'no',
-          },
-        ]}
-      />
-      <Spacer />
-      <FileInput label="Upload Preapproval" />
-      <Spacer />
-      <Form.Text label="What is your salary?" placeholder="Salary" />
-      <Spacer className="mt-4" />
-      <Button color="secondary">Save</Button>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Radio
+          label="Are you working with agent?"
+          options={[
+            {
+              name: 'Yes',
+              value: 'yes',
+            },
+            {
+              name: 'No',
+              value: 'no',
+            },
+          ]}
+          {...register('hasAgent')}
+        />
+        <Spacer />
+        <FileInput label="Upload Preapproval" {...register('preapproval')} />
+        <Spacer />
+        <Form.Text
+          type="number"
+          label="What is your salary?"
+          placeholder="Salary"
+          {...register('salary')}
+        />
+        <Spacer className="mt-4" />
+        <Button type="submit" color="secondary" loading={saving}>
+          Save
+        </Button>
+      </Form>
       <Spacer className="mb-6" />
       {formattedScore !== 'NaN' ? (
         <Bar number={Number(formattedScore)} />

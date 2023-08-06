@@ -112,17 +112,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             className={`${icon.className || ''}`}
           />
         )}
-
-        {!loading && children}
-        {icon && !loading && icon.position === 'right' && (
-          <Icon
-            name={icon.name}
-            color={icon.color}
-            solid={icon.solid}
-            size={icon.size}
-            className={`${icon.className || ''}`}
-          />
-        )}
+        <div className="flex items-center mx-auto gap-2">
+          {loading && <Icon name="spinner" color="white" size="large" />}
+          {children}
+        </div>
       </button>
     );
   },

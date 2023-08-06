@@ -24,8 +24,15 @@ body {
   );
 }
 
-.react-datetime-picker__wrapper {
-  width: 100%;
-  height: 25px;
+.spinner {
+  animation: spin 0.75s linear infinite; /* Apply the "spin" animation to the "spinner" class */
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start rotation from 0 degrees */
+  }
+  100% {
+    transform: rotate(360deg); /* Rotate 360 degrees (full circle) */
+  }
+}

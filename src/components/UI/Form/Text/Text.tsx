@@ -39,7 +39,7 @@ export const FormText = React.forwardRef<HTMLInputElement, FormTextProps>(
         <div className={`${className} flex justify-end relative`}>
           <input
             {...restProps}
-            className="block w-full rounded-lg"
+            className="block w-full rounded-lg text-black px-4"
             id={fieldId}
             ref={ref}
             type={type !== 'password' ? type : showPassword ? 'text' : 'password'}
