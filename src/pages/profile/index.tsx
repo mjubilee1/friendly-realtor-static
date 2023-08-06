@@ -112,6 +112,7 @@ const HouseHunter = () => {
     return <div>You must be logged in to view this page.</div>;
   }
 
+  const preapprovalText = preapproval && !!preapproval[0]?.name ? 'preapproval_document' : null;
   return (
     <div>
       <div className="flex justify-between">
@@ -144,7 +145,7 @@ const HouseHunter = () => {
           <FileInput
             label="Upload Preapproval"
             {...register('preapproval')}
-            text={preapproval?.name}
+            text={preapproval?.name || preapprovalText}
           />
         </Form.Row>
         <Spacer />

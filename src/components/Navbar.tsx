@@ -75,10 +75,10 @@ const NavBar = () => {
           })}
           {user && (
             <li
-              onClick={() => (window.location.href = '/house-hunter')}
+              onClick={() => (window.location.href = '/profile')}
               className={`font-ubuntu font-normal cursor-pointer text-[16px] ml-10 hover:bg-blue-500 hover:p-2`}
             >
-              House Hunter
+              Profile
             </li>
           )}
         </ul>
@@ -149,10 +149,10 @@ const NavBar = () => {
             })}
             {user && (
               <li
-                onClick={() => (window.location.href = '/house-hunter')}
+                onClick={() => (window.location.href = '/profile')}
                 className={`font-ubuntu font-normal cursor-pointer text-[16px] mt-4`}
               >
-                House Hunter
+                Profile
               </li>
             )}
           </ul>

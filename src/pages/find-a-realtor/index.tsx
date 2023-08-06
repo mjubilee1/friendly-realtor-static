@@ -42,7 +42,7 @@ const FindARealtorPage = ({ users }) => {
         {currentRealtors.map((realtor) => (
           <Link
             id={realtor.id}
-            href={`/profile/${realtor.data.username || realtor.data.userName}`}
+            href={`/agent/${realtor.data.username || realtor.data.userName}`}
             className="text-center"
           >
             <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden">
