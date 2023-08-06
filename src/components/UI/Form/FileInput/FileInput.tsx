@@ -88,7 +88,7 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
               }}
               type="button"
               color="secondary"
-              className="rounded"
+              className="text-white rounded-sm mr-2"
             >
               Browse
             </Button>

@@ -86,7 +86,7 @@ const HouseHunter = () => {
           agentQuestions: {
             hasAgent: data.hasAgent || '',
             salary: data.salary || '',
-            preapprovalDownloadURL: '',
+            preapprovalDownloadURL: data.preapproval || '',
           },
         });
       }
