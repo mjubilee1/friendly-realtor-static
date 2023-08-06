@@ -7,7 +7,6 @@ import { Label } from '../Shared/Label';
 import { ValidationMessage } from '../Shared/ValidationMessage';
 import { HelperMessage } from '../Shared/HelperMessage/HelperMessage';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
 
 export function Date(props: DateProps) {
   const {
@@ -19,13 +18,14 @@ export function Date(props: DateProps) {
     hideLabel,
     id,
     label,
+    selected,
     validationText,
+    onChange,
     ...restProps
   } = props;
 
   // If an id is not provided, generate one to explicitly bind the label to the input
   const fieldId = uuidv4() || id;
-  const [startDate, setStartDate] = useState(moment().toDate());
 
   return (
     <Group noGutter={hideLabel} className="w-full">
@@ -33,7 +33,7 @@ export function Date(props: DateProps) {
         {label}
       </Label>
       <div className={`${className} border border-blue-500`}>
-        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+        <DatePicker {...restProps} selected={selected} onChange={onChange} />
       </div>
       <div className="relative flex-grow">
         {(helperText || validationText) && (

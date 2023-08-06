@@ -8,22 +8,26 @@ import { user as apiUser } from '../../agents';
 import { houseHunterValidationSchema, states } from './FreeReportModalTypes';
 import { Controller, useForm } from 'react-hook-form';
 import { useYupValidationResolver } from '../../utils/commonUtil';
+import moment from 'moment';
 
 export const FreeReportModal = () => {
   const [open, setOpen] = useState(false);
+  const resolver = useYupValidationResolver(houseHunterValidationSchema);
 
   const {
     handleSubmit,
     control,
     register,
     getValues,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       firstName: '',
       lastName: '',
       middleName: '',
-      dob: '',
+      dob: moment().toDate(),
       ssn: '',
       address: {
         line1: '',
@@ -35,7 +39,9 @@ export const FreeReportModal = () => {
     },
     //resolver: resolver,
   });
-  const resolver = useYupValidationResolver(houseHunterValidationSchema);
+
+  const { dob } = watch();
+
   const onSubmit = async (values) => {
     const requestBodyData = {
       consumerPii: {
@@ -155,21 +161,21 @@ export const FreeReportModal = () => {
             label="First Name"
             type="text"
             placeholder="First Name"
-            className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            className="mb-3 w-full border border-blue-500"
             {...register('firstName')}
           />
           <Form.Text
             label="Middle Name"
             type="text"
             placeholder="Middle Name"
-            className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            className="mb-3 w-full border border-blue-500"
             {...register('middleName')}
           />
           <Form.Text
             label="Last Name"
             type="text"
             placeholder="Last Name"
-            className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            className="mb-3 w-full border border-blue-500"
             {...register('lastName')}
           />
         </Form.Row>
@@ -177,13 +183,15 @@ export const FreeReportModal = () => {
           <Controller
             control={control}
             name="dob"
-            render={({ field }) => (
+            render={({ field, onChange }) => (
               <div className="text-left">
                 <Form.Date
                   label="Date Of Birth"
                   placeholder="Date Of Birth"
                   labelClassName="text-left"
                   {...field}
+                  selected={dob}
+                  onChange={(date) => setValue('dob', date)}
                 />
               </div>
             )}
@@ -193,7 +201,7 @@ export const FreeReportModal = () => {
           label="Social Security Number"
           type="text"
           placeholder="Social Security Number"
-          className="mb-3 px-4 pt-2 w-full border border-blue-500"
+          className="mb-3 w-full border border-blue-500"
           {...register('ssn')}
         />
         <Form.Row>
@@ -201,14 +209,14 @@ export const FreeReportModal = () => {
             label="Address"
             type="text"
             placeholder="Address"
-            className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            className="mb-3 w-full border border-blue-500"
             {...register('address.line1')}
           />
           <Form.Text
             label="Address 2"
             type="text"
             placeholder="Address 2"
-            className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            className="mb-3 w-full border border-blue-500"
             {...register('address.line2')}
           />
         </Form.Row>
@@ -217,7 +225,7 @@ export const FreeReportModal = () => {
             label="City"
             type="text"
             placeholder="City"
-            className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            className="mb-3 w-full border border-blue-500"
             {...register('address.city')}
           />
           <Controller
@@ -239,7 +247,7 @@ export const FreeReportModal = () => {
             label="Zip Code"
             type="text"
             placeholder="Zip Code"
-            className="mb-3 px-4 pt-2 w-full border border-blue-500"
+            className="mb-3 w-full border border-blue-500"
             {...register('address.zipCode')}
           />
         </Form.Row>
