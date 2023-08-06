@@ -11,3 +11,4 @@ export { default as Popup } from './Popup';
 export { default as Modal } from './Modal';
 // export { default as MenuItem } from './MenuItem';
 export { default as Image } from './Image';
+export { default as Spacer } from './Spacer';

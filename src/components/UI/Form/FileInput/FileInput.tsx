@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import mergeRefs from 'react-merge-refs';
+import { mergeRefs } from 'react-merge-refs';
 import { v4 as uuidv4 } from 'uuid';
 import { FileInputProps } from './FileInputTypes';
 import Button from '../../Button';
@@ -48,23 +48,24 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
     const fileNameText = text || placeholder || 'Drop or select file';
     const localInputRef = useRef<HTMLInputElement>(null);
+    const combinedRef = mergeRefs([localInputRef, ref]);
 
     return (
       <>
+        <div className="text-white">
+          <Label htmlFor={fieldId} hidden={hideLabel}>
+            {label}
+          </Label>
+        </div>
         <Group
           className={`${className} flex flex-wrap items-center rounded-lg gap-2 w-full bg-white`}
           noGutter={hideLabel}
         >
-          <div>
-            <Label htmlFor={fieldId} hidden={hideLabel}>
-              {label}
-            </Label>
-          </div>
-          <div className="flex items-center gap-4 flex-row justify-start w-full">
+          <div className="flex items-center gap-4 flex-row justify-start w-full text-black">
             <div className="flex flex-row items-center cursor-pointer h-8 m-0 p-0 border-none relative w-full transition-all duration-300 ease-in border-[1px] box-border hover:shadow-lg">
               <input
                 // Assign both the local and any forwarded refs
-                ref={mergeRefs([localInputRef, ref])}
+                ref={combinedRef}
                 accept={accept}
                 name={name}
                 id={fieldId}
@@ -84,7 +85,7 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                 inputEl?.click();
               }}
               type="button"
-              color="blue"
+              color="secondary"
               className="rounded"
             >
               Browse
