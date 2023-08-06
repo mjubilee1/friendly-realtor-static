@@ -30,16 +30,58 @@ export const FormText = React.forwardRef<HTMLInputElement, FormTextProps>(
     // If an id is not provided, generate one to explicitly bind the label to the input
     const fieldId = uuidv4() || id;
     const [showPassword, setShowPassword] = useState(false);
+    const [rawSSN, setRawSSN] = useState('');
+    const [ssn, setSSN] = useState('');
 
     const toggleShowPassword = () => setShowPassword((prev) => !prev);
+    const handleChange = (e) => {
+      let { name, value } = e.target;
 
-    const formatSsn = (ssn: string | null | undefined) => {
-      return !ssn
-        ? ''
-        : ssn
-            .replace(/[^\d\*]/g, '')
-            .replace(/(?=\d{6})\d/, '*')
-            .slice(0, 9);
+      if (value.replace(/-/g, '').length < rawSSN.length) {
+        const last = rawSSN.length - 1;
+        setRawSSN(rawSSN.slice(0, last));
+        return;
+      }
+
+      let numValue = value.replace(/\D/g, '');
+
+      let newSSN = '';
+      if (rawSSN.length > 5) {
+        // Limit numValue to at most 4 digits when rawSSN.length > 5
+        numValue = numValue.slice(0, 4);
+        newSSN = rawSSN.slice(0, 5) + numValue;
+      } else {
+        newSSN = rawSSN + numValue;
+      }
+
+      if (newSSN.length > 9) {
+        return;
+      }
+
+      if (props.onRawSSNChange) {
+        props.onRawSSNChange(newSSN);
+      }
+      setSSN(newSSN);
+      setRawSSN(newSSN);
+    };
+
+    const format = (v) => {
+      v = v.slice(0, 11).replace(/-/g, '');
+      if (v.length <= 3) {
+        return v;
+      }
+      if (v.length > 3 && v.length <= 5) {
+        return `${v.slice(0, 3)}-${v.slice(3)}`;
+      }
+      if (v.length > 5) {
+        return `${v.slice(0, 3)}-${v.slice(3, 5)}-${v.slice(5)}`;
+      }
+    };
+
+    const mask = (v) => {
+      const masked = v.slice(0, 7).replace(/[0-9]/g, '*');
+      const final = masked + v.slice(7);
+      return final;
     };
 
     return (
@@ -54,8 +96,10 @@ export const FormText = React.forwardRef<HTMLInputElement, FormTextProps>(
           {maskSSN ? (
             <input
               {...restProps}
-              value={formatSsn(value)}
               type="text"
+              value={mask(format(rawSSN))}
+              onChange={handleChange}
+              autoComplete="off"
               className="block w-full rounded-lg text-black px-4 outline-0"
             />
           ) : (

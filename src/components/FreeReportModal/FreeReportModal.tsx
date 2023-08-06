@@ -137,6 +137,10 @@ export const FreeReportModal = () => {
     }
   };
 
+  const handleRawSSNChange = (newRawSSN) => {
+    setValue('ssn', newRawSSN);
+  };
+
   return (
     <Modal
       open={open}
@@ -211,13 +215,9 @@ export const FreeReportModal = () => {
           placeholder="Social Security Number"
           className="mb-3 w-full border border-blue-500"
           maskSSN
-          value={ssn}
+          onRawSSNChange={handleRawSSNChange}
           {...register('ssn', {
             required: 'SSN is Required.',
-            onChange: (event) => {
-              console.log('con', event.target.value);
-              setValue('ssn', event.target.value);
-            },
           })}
         />
         <Form.Row>
