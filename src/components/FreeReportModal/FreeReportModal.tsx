@@ -178,12 +178,14 @@ export const FreeReportModal = () => {
             control={control}
             name="dob"
             render={({ field }) => (
-              <Form.Date
-                label="Date Of Birth"
-                placeholder="Date Of Birth"
-                labelClassName="text-left"
-                {...field}
-              />
+              <div className="text-left">
+                <Form.Date
+                  label="Date Of Birth"
+                  placeholder="Date Of Birth"
+                  labelClassName="text-left"
+                  {...field}
+                />
+              </div>
             )}
           />
         </Form.Row>
@@ -222,13 +224,15 @@ export const FreeReportModal = () => {
             control={control}
             name="address.state"
             render={({ field }) => (
-              <Form.Select
-                options={states}
-                label="State"
-                labelClassName="text-left"
-                placeholder="State"
-                {...field}
-              />
+              <div className="text-left">
+                <Form.Select
+                  options={states}
+                  label="State"
+                  className="text-left"
+                  placeholder="State"
+                  {...field}
+                />
+              </div>
             )}
           />
           <Form.Text
