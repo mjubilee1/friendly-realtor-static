@@ -10,8 +10,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { useYupValidationResolver } from '../../utils/commonUtil';
 import moment from 'moment';
 
-export const FreeReportModal = () => {
+export const FreeReportModal = ({ user, setCreditProfile }) => {
   const [open, setOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const resolver = useYupValidationResolver(houseHunterValidationSchema);
 
   const {
@@ -44,7 +46,7 @@ export const FreeReportModal = () => {
   const { ssn, dob } = watch();
 
   const onSubmit = async (values) => {
-    console.log(values);
+    setSaving(true);
     const requestBodyData = {
       consumerPii: {
         primaryApplicant: {
@@ -124,16 +126,18 @@ export const FreeReportModal = () => {
       },
     };
     try {
-      console.log(requestBodyData);
-      //const response = await apiUser.submitCreditReport(user.id, requestBodyData);
+      const response = await apiUser.submitCreditReport(user.id, requestBodyData);
       // Handle the response as needed
-      //setCreditProfile(response?.creditProfile[0]);
+      setCreditProfile(response?.creditProfile[0]);
+      setOpen(false);
+      reset();
     } catch (error) {
       // Handle the error
-      console.error(error);
+      setErrorMessage(
+        `${error.message} Contact support contact@friendlyrealtor.app if error persists`,
+      );
     } finally {
-      reset();
-      setOpen(false);
+      setSaving(false);
     }
   };
 
@@ -162,6 +166,7 @@ export const FreeReportModal = () => {
       <Header as="h2" className="mb-4">
         Get Free Credit Report
       </Header>
+      {errorMessage && <div className="text-red-500">{errorMessage}</div>}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Row>
           <Form.Text
@@ -215,6 +220,7 @@ export const FreeReportModal = () => {
           placeholder="Social Security Number"
           className="mb-3 w-full border border-blue-500"
           maskSSN
+          value={ssn}
           onRawSSNChange={handleRawSSNChange}
           {...register('ssn', {
             required: 'SSN is Required.',
@@ -273,7 +279,13 @@ export const FreeReportModal = () => {
           />
         </Form.Row>
         <Form.Row>
-          <Button type="submit" color="secondary" className="text-white">
+          <Button
+            type="submit"
+            color="secondary"
+            className="text-white"
+            loading={saving}
+            disabled={Object.keys(errors).length > 0}
+          >
             Submit
           </Button>
         </Form.Row>

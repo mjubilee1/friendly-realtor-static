@@ -22,6 +22,7 @@ const HouseHunter = () => {
   const { user } = useAuthContext();
   const { preapproval } = watch();
   const [saving, setSaving] = useState<boolean>(false);
+  const [creditProfile, setCreditProfile] = useState([]);
 
   useEffect(() => {
     const retrieveAgentQuestions = async () => {
@@ -117,7 +118,7 @@ const HouseHunter = () => {
     <div>
       <div className="flex justify-between">
         <Header as="h2">Welcome {`${user.firstName} ${user.lastName}`}</Header>
-        <FreeReportModal />
+        <FreeReportModal user={user} setCreditProfile={setCreditProfile} />
       </div>
       <Spacer />
       <div className="my-4">
