@@ -11,7 +11,6 @@ import { Radio } from './Radio';
 import { FormSwitch } from './FormSwitch';
 import { FormRow } from './FormRow';
 import { FormSelect } from './FormSelect';
-import { FormNumber } from './Number';
 import { Date } from './Date';
 
 function getAligmentClass(pos): string {
@@ -44,5 +43,4 @@ export default Object.assign(Form, {
   Switch: FormSwitch,
   Text: FormText,
   TextArea: FormTextArea,
-  Number: FormNumber,
 });
