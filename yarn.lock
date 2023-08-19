@@ -3838,7 +3838,6 @@ __metadata:
     react-hook-form: ^7.45.3
     react-markdown: ^8.0.7
     react-merge-refs: ^2.0.2
-    react-number-format: ^5.2.2
     react-select: ^5.7.4
     react-social-icons: ^5.15.0
     tailwindcss: 3.3.1
@@ -7080,18 +7079,6 @@ __metadata:
   version: 2.0.2
   resolution: "react-merge-refs@npm:2.0.2"
   checksum: 64758870d79ad52e6666d1d30cdecd5a72722edfd5c89808b41acdbd81a039f0c78b8b576f7ae247010468fc45cb57dd31f402693c64224439dbe0127f4389f3
-  languageName: node
-  linkType: hard
-
-"react-number-format@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "react-number-format@npm:5.2.2"
-  dependencies:
-    prop-types: ^15.7.2
-  peerDependencies:
-    react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: ae788b550b759f3f3e475e5805f7c650472f3d06fe633a046288f62cf5deedbfa597cb8fea08f29538b04931d7453ffbbe653bdd50cfca6ac43e12397502fec3
   languageName: node
   linkType: hard
 
