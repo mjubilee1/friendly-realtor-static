@@ -172,7 +172,7 @@ export const FreeReportModal = ({ user, setCreditProfile }) => {
       closeXClassName="text-black"
     >
       <Header as="h2" className="mb-4">
-        Check Your Credit Health
+        Free Credit Score Check
       </Header>
       {errorMessage && <div className="text-red-500">{errorMessage}</div>}
       <Form onSubmit={handleSubmit(onSubmit)}>
