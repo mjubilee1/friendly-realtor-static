@@ -124,7 +124,7 @@ const HouseHunter = () => {
     <div>
       <div className="flex justify-between">
         <Header as="h2">Welcome {`${user.firstName} ${user.lastName}`}</Header>
-        <FreeReportModal user={user} setCreditProfile={setCreditProfile} />
+        {/*<FreeReportModal user={user} setCreditProfile={setCreditProfile} />*/}
       </div>
       <Spacer />
       <div className="my-4">
