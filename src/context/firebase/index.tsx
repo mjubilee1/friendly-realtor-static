@@ -1,2 +1,2 @@
-export * from './firebaseContext';
+export * from './authContext';
 export * from './firebase';

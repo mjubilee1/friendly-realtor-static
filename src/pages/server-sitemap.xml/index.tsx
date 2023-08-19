@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let profilesSitemaps = [];
   querySnapshot.forEach((doc) => {
     profilesSitemaps.push({
-      loc: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/users/${
+      loc: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/agent/${
         doc.data().username || doc.data().userName
       }`,
       lastmod: new Date().toISOString(),

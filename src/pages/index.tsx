@@ -26,7 +26,11 @@ const HomePage = () => {
       <Head>
         <meta name="description" content="" />
       </Head>
-      <DefaultHero />
+      <DefaultHero
+        title="Starting your home buying journey?"
+        subTitle="Be sure to check your credit shore to see what you can qualify for."
+        showRegister
+      />
       <div className="mt-6">
         <Header as="h2" className="text-white">
           Featured Markets

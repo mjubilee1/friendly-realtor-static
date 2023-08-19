@@ -155,4 +155,5 @@ export const user = {
     )}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
     return requests.post(`${serverApiBaseURL}/new-subscriber${queryParams}`);
   },
+  submitCreditReport: (id, data) => requests.post(`${serverApiBaseURL}/credit-report/${id}`, data),
 };

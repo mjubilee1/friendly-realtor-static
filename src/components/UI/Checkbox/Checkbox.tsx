@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, forwardRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { CheckboxProps } from './CheckboxTypes';
-import Icon from '../../UI copy/Icon/Icon';
+import Icon from '../Icon';
 
 function getLabelPosClass(pos): string {
   switch (pos) {

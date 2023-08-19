@@ -4,8 +4,6 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,4 +22,17 @@ body {
     #6d6d6d -78.47%,
     #11101d 91.61%
   );
+}
+
+.spinner {
+  animation: spin 0.75s linear infinite; /* Apply the "spin" animation to the "spinner" class */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start rotation from 0 degrees */
+  }
+  100% {
+    transform: rotate(360deg); /* Rotate 360 degrees (full circle) */
+  }
 }

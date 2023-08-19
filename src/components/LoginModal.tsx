@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AddLink, Button, Modal, Popup } from './UI';
-import { splitName } from '../utils/commonUtil';
 import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { collection, getDoc, doc, setDoc } from 'firebase/firestore';
+import { splitName } from '../utils/commonUtil';
 import { SocialIcon } from 'react-social-icons';
 import { signInWithPopup } from 'firebase/auth';
 import { firestore, auth, facebookProvider, googleProvider } from '../context';
@@ -10,6 +10,7 @@ import { ForgotPasswordModal } from './ForgotPasswordModal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { usePopup } from './UI/Popup';
+import { setTokenCookies, setRefreshTokenCookies } from '../utils/commonUtil';
 import { user } from '../agents';
 
 export const LoginModal = ({ mobile = false }) => {
@@ -32,8 +33,22 @@ export const LoginModal = ({ mobile = false }) => {
       try {
         const res = await signInWithEmailAndPassword(auth, values.email, values.password);
 
+        const usersCollectionRef = collection(firestore, 'users');
+        const userDocRef = doc(usersCollectionRef, res.user.uid);
+        getDoc(userDocRef).then((docSnapshot) => {
+          if (docSnapshot.exists()) {
+            const foundUser = docSnapshot.data();
+
+            if (!!foundUser) {
+              setLoginError(
+                'Error: User account found. You created an account as an agent. Try another email address.',
+              );
+            }
+          }
+        });
         if (res.user.emailVerified) {
-          window.location.reload();
+          setTokenCookies(res.user.accessToken);
+          setRefreshTokenCookies(res._tokenResponse.refreshToken);
         } else {
           await sendEmailVerification(res.user);
           openPopup('Email verification sent!');
@@ -48,10 +63,10 @@ export const LoginModal = ({ mobile = false }) => {
   const handleGoogleSignIn = async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
-
       // Check if a document exists for the user
       const userDocRef = doc(firestore, 'buyers', res.user.uid);
       const userDocSnap = await getDoc(userDocRef);
+
       if (!userDocSnap.exists()) {
         const { firstName, lastName } = splitName(res.user.displayName || '');
         const subscriberObj = {
@@ -62,6 +77,8 @@ export const LoginModal = ({ mobile = false }) => {
         await setDoc(doc(firestore, 'buyers', res.user.uid), subscriberObj);
         await user.newSubscriber(subscriberObj);
       }
+      setTokenCookies(res.user.accessToken);
+      setRefreshTokenCookies(res._tokenResponse.refreshToken);
       setOpen(false);
     } catch (error) {
       switch (error.code) {
@@ -100,6 +117,8 @@ export const LoginModal = ({ mobile = false }) => {
         await setDoc(doc(firestore, 'buyers', res.user.uid), subscriberObj);
         await user.newSubscriber(subscriberObj);
       }
+      setTokenCookies(res.user.accessToken);
+      setRefreshTokenCookies(res._tokenResponse.refreshToken);
       setOpen(false);
     } catch (error) {
       switch (error.code) {

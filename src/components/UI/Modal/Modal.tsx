@@ -144,7 +144,7 @@ export const Modal = ({
   const margin = omitMargin ? '' : 'mb-16 mx-auto';
   const rounded = omitRounded ? '' : 'rounded-lg';
   const defaultWithoutPosition = !positionStyles ? 'md:mt-10 mt-5' : '';
-  const modalContentClassName = `z-30 overflow-auto w-full h-auto ${sizeStyles} ${defaultWithoutPosition} ${margin} ${rounded} ${className}`;
+  const modalContentClassName = `z-30 w-full h-auto ${sizeStyles} ${defaultWithoutPosition} ${margin} ${rounded} ${className}`;
   const el = useRef(typeof document !== 'undefined' ? document.createElement('div') : undefined);
 
   return (

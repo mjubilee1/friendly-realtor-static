@@ -9,6 +9,7 @@ import { Ubuntu } from 'next/font/google';
 import Head from 'next/head';
 import { FB_PIXEL_ID, GA_TRACKING_ID } from '../utils/analyticsUtil';
 import '../pages/blogs/blog.css';
+import { AuthContextProvider } from '@/context';
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -102,16 +103,18 @@ export default function App({ Component, pageProps }: AppProps) {
           style={{ display: 'none', visibility: 'hidden' }}
         />
       </noscript>
-      <div
-        className={`flex min-h-screen flex-col items-center justify-between p-12 ${ubuntu.className}`}
-      >
-        <div className={`${styles.boxWidth}`}>
-          <Navbar />
+      <AuthContextProvider>
+        <div className={`flex flex-col items-center justify-between p-12 ${ubuntu.className}`}>
+          <div className={`${styles.boxWidth}`}>
+            <Navbar />
+          </div>
+          <div className="w-full min-h-screen">
+            <DefaultSeo {...SEO} />
+            <Component {...pageProps} />
+          </div>
+          <Footer />
         </div>
-        <DefaultSeo {...SEO} />
-        <Component {...pageProps} />
-        <Footer />
-      </div>
+      </AuthContextProvider>
     </div>
   );
 }
