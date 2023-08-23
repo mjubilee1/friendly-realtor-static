@@ -19,7 +19,7 @@
     "contentful": "^10.2.1",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
-    "firebase": "9.18.0",
+    "firebase": "10.3.0",
     "firebase-admin": "^11.7.0",
     "firebase-functions": "^4.3.1",
     "formik": "^2.4.2",
