@@ -1,5 +1,4 @@
-import styles from '../styles/styles';
-import { DefaultHero } from '../components';
+import { DefaultHero, MortgageCalculator } from '../components';
 import { Checklist, Header, Container } from '../components/UI';
 import Head from 'next/head';
 
@@ -32,6 +31,10 @@ const HomePage = () => {
         showRegister
       />
       <div className="mt-6">
+        <Header as="h2" className="text-white">
+          Calculate Buying Power
+        </Header>
+        <MortgageCalculator />
         <Header as="h2" className="text-white">
           Featured Markets
         </Header>
