@@ -113,8 +113,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           />
         )}
         <div className="flex items-center mx-auto gap-2">
-          {loading && <Icon name="spinner" color="white" size="large" />}
           {children}
+          {loading && <Icon name="spinner" color="white" size="large" />}
         </div>
       </button>
     );

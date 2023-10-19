@@ -55,6 +55,23 @@ export const navLinks = [
     title: 'Find A Realtor',
   },
   {
+    id: '/tools',
+    title: 'AI Tools',
+  },
+  {
+    id: '/investors',
+    title: 'Property Investments',
+  },
+  {
+    id: '/blogs',
+    title: 'Blogs',
+  },
+  {
+    id: '/communities',
+    title: 'Communities',
+    dropdown: communities,
+  },
+  {
     id: '/resources',
     title: 'Resources',
     dropdown: [
@@ -71,19 +88,6 @@ export const navLinks = [
         title: 'Take Survey',
       },
     ],
-  },
-  {
-    id: '/investors',
-    title: 'Property Investments',
-  },
-  {
-    id: '/blogs',
-    title: 'Blogs',
-  },
-  {
-    id: '/communities',
-    title: 'Communities',
-    dropdown: communities,
   },
 ];
 

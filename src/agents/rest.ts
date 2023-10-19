@@ -130,6 +130,7 @@ export const makeRequest = (config: AxiosRequestConfig): AxiosPromise => {
 
   // Call the function to ensure that we have a recently refreshed token
   debouncedIsValidToken();
+
   return axios(config);
 };
 
@@ -156,4 +157,5 @@ export const user = {
     return requests.post(`${serverApiBaseURL}/new-subscriber${queryParams}`);
   },
   submitCreditReport: (id, data) => requests.post(`${serverApiBaseURL}/credit-report/${id}`, data),
+  prompt: (data) => requests.post(`${serverApiBaseURL}/prompt`, data),
 };
