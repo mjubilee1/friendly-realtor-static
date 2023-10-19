@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { user } from '../../agents';
 import { Button } from '../../components/UI';
+import { FinanceTable } from '../../components';
 
 const Tools = () => {
   const [selectedTool, setSelectedTool] = useState(null);
@@ -166,6 +167,9 @@ const Tools = () => {
           )}
         </div>
       )}
+      <div className="pt-8">
+        <FinanceTable />
+      </div>
     </div>
   );
 };
