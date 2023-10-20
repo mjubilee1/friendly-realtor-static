@@ -9,6 +9,8 @@ import { LoginModal } from './LoginModal';
 import { ForgotPasswordModal } from './ForgotPasswordModal';
 import { FreeReportModal } from './FreeReportModal/FreeReportModal';
 import { MortgageCalculator } from './MortgageCalculator';
+import { FinanceTable } from './FinanceTable';
+
 export {
   DefaultHero,
   Business,
@@ -17,6 +19,7 @@ export {
   ForgotPasswordModal,
   FreeReportModal,
   MortgageCalculator,
+  FinanceTable,
   Navbar,
   Hero,
   GetStarted,
