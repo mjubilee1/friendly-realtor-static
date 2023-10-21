@@ -8,6 +8,7 @@ import { usePopup } from './UI/Popup';
 import { splitName } from '../utils/commonUtil';
 import * as Yup from 'yup';
 import { user } from '../agents';
+import { useAppStore } from '../stores';
 
 export const RegisterModal = ({ mobile = false }) => {
   const validationSchema = Yup.object().shape({
@@ -25,10 +26,10 @@ export const RegisterModal = ({ mobile = false }) => {
       .required('Confirm Password is required'),
   });
   const { isOpen, message, openPopup, closePopup } = usePopup();
+  const { openLoginModal, isRegisterModalOpen, openRegisterModal, closeRegisterModal } =
+    useAppStore();
 
-  const [open, setOpen] = useState<boolean>(false);
-  const [errorState, setErrorState] = useState<string>('');
-
+  const [errorState, setErrorState] = useState('');
   const handleSignUp = async (values) => {
     try {
       const { firstName, lastName } = splitName(values.name);
@@ -78,22 +79,22 @@ export const RegisterModal = ({ mobile = false }) => {
 
   return (
     <Modal
-      open={open}
+      open={isRegisterModalOpen} // Use Zustand store 'open' state
       trigger={
         mobile ? (
           <AddLink
-            onClick={() => setOpen((prev) => !prev)}
+            onClick={() => openRegisterModal()} // Use Zustand store function to open modal
             className="font-ubuntu my-2 font-normal cursor-pointer text-[16px] text-white"
           >
             Register
           </AddLink>
         ) : (
-          <Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
+          <Button type="button" color="secondary" onClick={() => openRegisterModal()}>
             Register
           </Button>
         )
       }
-      onClose={() => setOpen(false)}
+      onClose={() => closeRegisterModal()} // Use Zustand store function to close modal
       className="bg-white text-black p-4"
       closeXClassName="text-black"
     >
@@ -174,6 +175,7 @@ export const RegisterModal = ({ mobile = false }) => {
             >
               Register
             </button>
+            <AddLink onClick={openLoginModal}>Already a member?</AddLink>
           </Form>
         )}
       </Formik>
@@ -182,7 +184,7 @@ export const RegisterModal = ({ mobile = false }) => {
           message={message}
           onClose={() => {
             closePopup();
-            setOpen(false);
+            closeRegisterModal();
           }}
         />
       )}

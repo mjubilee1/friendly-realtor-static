@@ -12,13 +12,14 @@ import * as Yup from 'yup';
 import { usePopup } from './UI/Popup';
 import { setTokenCookies, setRefreshTokenCookies } from '../utils/commonUtil';
 import { user } from '../agents';
+import { useAppStore } from '../stores';
 
 export const LoginModal = ({ mobile = false }) => {
-  const [open, setOpen] = useState<boolean>(false);
   const [loginError, setLoginError] = useState('');
   const [errorState, setErrorState] = useState<string>('');
 
   const { isOpen, message, openPopup, closePopup } = usePopup();
+  const { openLoginModal, isLoginModalOpen, openRegisterModal, closeLoginModal } = useAppStore();
 
   const formik = useFormik({
     initialValues: {
@@ -53,7 +54,7 @@ export const LoginModal = ({ mobile = false }) => {
           await sendEmailVerification(res.user);
           openPopup('Email verification sent!');
         }
-        setOpen(false);
+        closeLoginModal();
       } catch (error) {
         setLoginError('Error logging in. Please check your credentials and try again.');
       }
@@ -79,7 +80,7 @@ export const LoginModal = ({ mobile = false }) => {
       }
       setTokenCookies(res.user.accessToken);
       setRefreshTokenCookies(res._tokenResponse.refreshToken);
-      setOpen(false);
+      closeLoginModal();
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -119,7 +120,7 @@ export const LoginModal = ({ mobile = false }) => {
       }
       setTokenCookies(res.user.accessToken);
       setRefreshTokenCookies(res._tokenResponse.refreshToken);
-      setOpen(false);
+      closeLoginModal();
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -143,23 +144,23 @@ export const LoginModal = ({ mobile = false }) => {
   return (
     <>
       <Modal
-        open={open}
+        open={isLoginModalOpen}
         id="login-modal"
         trigger={
           mobile ? (
             <AddLink
-              onClick={() => setOpen((prev) => !prev)}
+              onClick={() => openLoginModal()}
               className="font-ubuntu font-normal cursor-pointer text-[16px] text-white"
             >
               Login
             </AddLink>
           ) : (
-            <Button type="button" color="secondary" onClick={() => setOpen((prev) => !prev)}>
+            <Button type="button" color="secondary" onClick={() => openLoginModal()}>
               Login
             </Button>
           )
         }
-        onClose={() => setOpen(false)}
+        onClose={() => closeLoginModal()}
         className="bg-white text-black p-4"
         closeXClassName="text-black"
       >
@@ -205,6 +206,7 @@ export const LoginModal = ({ mobile = false }) => {
           >
             Login
           </button>
+          <AddLink onClick={openRegisterModal}>Create Account</AddLink>
           <ForgotPasswordModal />
         </form>
         <div className="flex flex-col items-end">
@@ -223,7 +225,7 @@ export const LoginModal = ({ mobile = false }) => {
             message={message}
             onClose={() => {
               closePopup();
-              setOpen(false);
+              closeLoginModal();
             }}
           />
         )}

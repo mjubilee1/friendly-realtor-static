@@ -3689,6 +3689,7 @@ __metadata:
     uuid: ^9.0.0
     yup: ^1.2.0
     zipcodes: ^8.0.0
+    zustand: ^4.4.4
   languageName: unknown
   linkType: soft
 
@@ -8119,6 +8120,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-sync-external-store@npm:1.2.0":
+  version: 1.2.0
+  resolution: "use-sync-external-store@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 5c639e0f8da3521d605f59ce5be9e094ca772bd44a4ce7322b055a6f58eeed8dda3c94cabd90c7a41fb6fa852210092008afe48f7038792fd47501f33299116a
+  languageName: node
+  linkType: hard
+
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -8454,5 +8464,25 @@ __metadata:
   version: 8.0.0
   resolution: "zipcodes@npm:8.0.0"
   checksum: 4d6512115943b5b97a1ffdb2720146e8ab2c94f235cf31bf78aecf0e2621c32dfe3bc9fdb152d1ab7d59eb3c71200b8a1f7419f60d63cfa46566dc254ccd9a77
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^4.4.4":
+  version: 4.4.4
+  resolution: "zustand@npm:4.4.4"
+  dependencies:
+    use-sync-external-store: 1.2.0
+  peerDependencies:
+    "@types/react": ">=16.8"
+    immer: ">=9.0"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+  checksum: 371fd842dc704ed5983c6d64a77994c9c91867338c742d162ac95c4252b5f98fc38aeb2d5a07f48311babed5ca7dbff2d2258301db0ae143d32897bcf3ae651b
   languageName: node
   linkType: hard
