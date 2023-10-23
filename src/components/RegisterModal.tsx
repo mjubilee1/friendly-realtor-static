@@ -6,6 +6,7 @@ import { firestore, auth } from '../context';
 import { Formik, Form, Field } from 'formik';
 import { usePopup } from './UI/Popup';
 import { splitName } from '../utils/commonUtil';
+import { gtagEvent } from '../utils/analyticsUtil';
 import * as Yup from 'yup';
 import { user } from '../agents';
 import { useAppStore } from '../stores';
@@ -56,6 +57,12 @@ export const RegisterModal = ({ mobile = false }) => {
       await setDoc(doc(firestore, 'buyers', res.user.uid), subscriberObj);
       await user.newSubscriber(subscriberObj);
       openPopup('Email verification sent!');
+      gtagEvent({
+        action: 'sign_up',
+        category: 'user_registration',
+        label: 'new_user',
+        value: 0,
+      });
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { gtagEvent } from '../utils/analyticsUtil';
 
 export const MortgageCalculator = () => {
   const [income, setIncome] = useState('');
@@ -41,6 +42,12 @@ export const MortgageCalculator = () => {
 
     // Update the state with the calculated buying power
     setBuyingPower(buyingPowerValue);
+    gtagEvent({
+      action: 'calculate_buying_power',
+      category: 'financial_calculations',
+      label: 'user_buying_power',
+      value: 0,
+    });
   };
 
   return (
