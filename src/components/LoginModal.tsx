@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddLink, Button, Modal, Popup } from './UI';
 import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { collection, getDoc, doc, setDoc } from 'firebase/firestore';
@@ -13,13 +13,26 @@ import { usePopup } from './UI/Popup';
 import { setTokenCookies, setRefreshTokenCookies } from '../utils/commonUtil';
 import { user } from '../agents';
 import { useAppStore } from '../stores';
+import { useRouter } from 'next/router';
 
 export const LoginModal = ({ mobile = false }) => {
+  const router = useRouter();
+
   const [loginError, setLoginError] = useState('');
   const [errorState, setErrorState] = useState<string>('');
 
   const { isOpen, message, openPopup, closePopup } = usePopup();
   const { openLoginModal, isLoginModalOpen, openRegisterModal, closeLoginModal } = useAppStore();
+
+  useEffect(() => {
+    if (isLoginModalOpen) {
+      const queryParameters = { login: true };
+      const updatedQuery = { ...router.query, ...queryParameters };
+      router.push({ pathname: router.pathname, query: updatedQuery });
+    } else {
+      router.push({ pathname: router.pathname, query: '' });
+    }
+  }, [isLoginModalOpen]);
 
   const formik = useFormik({
     initialValues: {
