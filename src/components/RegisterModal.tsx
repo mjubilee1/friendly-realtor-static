@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddLink, Button, Modal, Popup } from './UI';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -9,8 +9,11 @@ import { splitName } from '../utils/commonUtil';
 import * as Yup from 'yup';
 import { user } from '../agents';
 import { useAppStore } from '../stores';
+import { useRouter } from 'next/router';
 
 export const RegisterModal = ({ mobile = false }) => {
+  const router = useRouter();
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Full Name is required'),
     email: Yup.string().email('Invalid email').required('Email Address is required'),
@@ -30,6 +33,16 @@ export const RegisterModal = ({ mobile = false }) => {
     useAppStore();
 
   const [errorState, setErrorState] = useState('');
+
+  useEffect(() => {
+    if (isRegisterModalOpen) {
+      const queryParameters = { registration: true };
+      const updatedQuery = { ...router.query, ...queryParameters };
+      router.push({ pathname: router.pathname, query: updatedQuery });
+    } else {
+      router.push({ pathname: router.pathname, query: '' });
+    }
+  }, [isRegisterModalOpen]);
   const handleSignUp = async (values) => {
     try {
       const { firstName, lastName } = splitName(values.name);
