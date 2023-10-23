@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { user } from '../../agents';
 import { Button } from '../../components/UI';
 import { FinanceTable } from '../../components';
+import { gtagEvent } from '../../utils/analyticsUtil';
 
 const Tools = () => {
   const [selectedTool, setSelectedTool] = useState(null);
@@ -45,6 +46,12 @@ const Tools = () => {
 
         if (response.message && response.message.content) {
           setResponse(response.message.content);
+          gtagEvent({
+            action: 'credit_assistance_submit',
+            category: 'ai_assistance',
+            label: 'credit_prompt_submission',
+            value: 0,
+          });
         }
       } else if (selectedTool === 'buyerAssistance') {
         const response = await user.prompt({
@@ -52,6 +59,12 @@ const Tools = () => {
         });
         if (response.message && response.message.content) {
           setResponse(response.message.content);
+          gtagEvent({
+            action: 'buyer_assistance_submit',
+            category: 'ai_assistance',
+            label: 'buyer_prompt_submission',
+            value: 0,
+          });
         }
       } else if (selectedTool === 'customAssistance') {
         const response = await user.prompt({
@@ -59,6 +72,12 @@ const Tools = () => {
         });
         if (response.message && response.message.content) {
           setResponse(response.message.content);
+          gtagEvent({
+            action: 'custom_assistance_submit',
+            category: 'ai_assistance',
+            label: 'custom_prompt_submission',
+            value: 0,
+          });
         }
       }
     } catch (error) {
