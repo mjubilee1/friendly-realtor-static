@@ -13,6 +13,7 @@ import send from './Send.svg';
 import shield from './Shield.svg';
 import star from './Star.svg';
 import menu from './menu.svg';
+import montrell from './montrell.jpg';
 import close from './close.svg';
 import google from './google.svg';
 import apple from './apple.svg';
@@ -41,6 +42,7 @@ export {
   robot,
   send,
   shield,
+  montrell,
   star,
   menu,
   close,

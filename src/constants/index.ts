@@ -89,6 +89,10 @@ export const navLinks = [
       },
     ],
   },
+  {
+    id: '/mission',
+    title: 'Mission Statement',
+  },
 ];
 
 export const features = [
