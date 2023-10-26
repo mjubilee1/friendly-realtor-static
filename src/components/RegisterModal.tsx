@@ -34,6 +34,7 @@ export const RegisterModal = ({ mobile = false }) => {
     useAppStore();
 
   const [errorState, setErrorState] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isRegisterModalOpen) {
@@ -45,6 +46,7 @@ export const RegisterModal = ({ mobile = false }) => {
     }
   }, [isRegisterModalOpen]);
   const handleSignUp = async (values) => {
+    setLoading(true);
     try {
       const { firstName, lastName } = splitName(values.name);
       const res = await createUserWithEmailAndPassword(auth, values.email, values.password);
@@ -80,6 +82,8 @@ export const RegisterModal = ({ mobile = false }) => {
         default:
           setErrorState(`Contact Support contact@friendlyrealtor.app ${error.message}`);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -186,15 +190,15 @@ export const RegisterModal = ({ mobile = false }) => {
                 <div className="text-red-500 mt-2">{errors.confirmPassword}</div>
               )}
             </div>
-            <button
+            <Button
               type="submit"
+              color="secondary"
+              loading={loading}
+              className="text-white"
               disabled={Object.keys(errors).length > 0}
-              className={`w-full py-2 px-4 bg-blue-500 ${
-                Object.keys(errors).length > 0 && 'opacity-30'
-              } text-white rounded hover:bg-blue-600`}
             >
               Register
-            </button>
+            </Button>
             <AddLink onClick={openLoginModal}>Already a member?</AddLink>
           </Form>
         )}
