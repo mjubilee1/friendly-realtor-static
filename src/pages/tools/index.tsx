@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { user } from '../../agents';
-import { Button } from '../../components/UI';
-import { FinanceTable } from '../../components';
+import { Button, Header } from '../../components/UI';
+import MortageCalculator from '../../components/MortgageCalculator';
 import { gtagEvent } from '../../utils/analyticsUtil';
 
 const Tools = () => {
@@ -89,34 +89,38 @@ const Tools = () => {
 
   return (
     <div className="min-h-screen">
+      <Header as="h2" className="text-white">
+        Calculate Buying Power
+      </Header>
+      <MortageCalculator />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         <div
-          className={`bg-white p-6 rounded-md cursor-pointer transition transform hover:scale-105 ${
+          className={`bg-blue-500 p-6 rounded-md cursor-pointer transition transform hover:scale-105 ${
             selectedTool === 'creditRepair' ? 'shadow-lg' : ''
           }`}
           onClick={() => handleCardClick('creditRepair')}
         >
           <h3 className="text-2xl font-semibold">Credit Repair</h3>
-          <p className="text-gray-600">Click here for credit repair tool(s)</p>
+          <p className="text-white">Click here for credit repair tool(s)</p>
         </div>
 
         <div
-          className={`bg-white p-6 rounded-md cursor-pointer transition transform hover:scale-105 ${
+          className={`bg-blue-500 p-6 rounded-md cursor-pointer transition transform hover:scale-105 ${
             selectedTool === 'buyerAssistance' ? 'shadow-lg' : ''
           }`}
           onClick={() => handleCardClick('buyerAssistance')}
         >
           <h3 className="text-2xl font-semibold">Buyer Assistance</h3>
-          <p className="text-gray-600">Click here for buyer assistance tool(s)</p>
+          <p className="text-white">Click here for buyer assistance tool(s)</p>
         </div>
         <div
-          className={`bg-white p-6 rounded-md cursor-pointer transition transform hover:scale-105 ${
+          className={`bg-blue-500 p-6 rounded-md cursor-pointer transition transform hover:scale-105 ${
             selectedTool === 'customAssistance' ? 'shadow-lg' : ''
           }`}
           onClick={() => handleCardClick('customAssistance')}
         >
           <h3 className="text-2xl font-semibold">Custom Prompt For Home Buying Assistance</h3>
-          <p className="text-gray-600">Click here for custom prompt</p>
+          <p className="text-white">Click here for custom prompt</p>
         </div>
       </div>
 
@@ -129,7 +133,7 @@ const Tools = () => {
                 I'm looking to boost my credit score, which is currently at{' '}
                 <input
                   type="number"
-                  className="border p-2 text-black"
+                  className="border text-black mx-2 pl-2"
                   placeholder="your credit score"
                   value={inputText}
                   onChange={handleInputChange}
@@ -146,7 +150,7 @@ const Tools = () => {
                 I have $
                 <input
                   type="text"
-                  className="border p-2 text-black"
+                  className="border text-black mx-2 pl-2"
                   placeholder="amount"
                   value={downPayment}
                   onChange={handleDownPaymentChange}
@@ -154,7 +158,7 @@ const Tools = () => {
                 for a down payment, and I am buying a home in{' '}
                 <input
                   type="text"
-                  className="border p-2 text-black"
+                  className="border text-black mx-2 pl-2"
                   placeholder="area"
                   value={areaText}
                   onChange={handleAreaChange}
@@ -181,14 +185,20 @@ const Tools = () => {
           {response && (
             <div className="mt-4">
               <h3 className="text-2xl font-semibold">Response</h3>
-              <p className="text-white">{response}</p>
+              <ul className="text-white">
+                {response.split('\n').map((item, index) => {
+                  const formattedItem = item.trim().replace(/^- /, '• ');
+                  return (
+                    <li key={index} className="mt-2">
+                      {formattedItem}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           )}
         </div>
       )}
-      <div className="pt-8">
-        <FinanceTable />
-      </div>
     </div>
   );
 };
