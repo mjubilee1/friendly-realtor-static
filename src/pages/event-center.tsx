@@ -3,11 +3,20 @@ import { Button } from '../components/UI';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { useAuthContext, firestore } from '../context';
 import { useAppStore } from '../stores';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+
+const truncateDescription = (description, maxLength) => {
+  if (description.length > maxLength) {
+    return `${description.substring(0, maxLength)}...`;
+  }
+  return description;
+};
 
 const EventCenterPage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [duplicateMsg, setDuplicateMsg] = useState<string>('');
+  const [tooltipId, setTooltipId] = useState('');
   const { user } = useAuthContext();
   const { openLoginModal } = useAppStore();
 
@@ -59,12 +68,13 @@ const EventCenterPage = () => {
 
     openLoginModal();
   };
+
   return (
     <div className="min-h-screen bg-gray-100 py-6 px-4">
       <div className="max-w-4xl">
         <h1 className="text-3xl font-extrabold text-gray-900 mb-6">Event Center</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {events.map((event) => (
+          {events?.map((event) => (
             <div key={event.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
               {duplicateMsg && <div className="text-red-600">{duplicateMsg}</div>}
               <div className="bg-gradient-to-b from-indigo-500 to-blue-600 p-4">
@@ -74,7 +84,15 @@ const EventCenterPage = () => {
               <div className="p-4 text-black">
                 <div key={event.id} className="event">
                   <p>Organizer: {event.organizer}</p>
-                  <p>Description: {event.description}</p>
+                  <p data-tooltip-id="my-tooltip-1">
+                    Description: {truncateDescription(event.description, 15)}{' '}
+                  </p>
+                  <ReactTooltip
+                    id="my-tooltip-1"
+                    place="right"
+                    content={event.description}
+                    className="max-w-sm"
+                  />
                   <p>
                     Total Participants: {event.participants.length} | {event.totalParticipants}
                   </p>
