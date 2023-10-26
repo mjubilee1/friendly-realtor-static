@@ -22,7 +22,7 @@ const DefaultHero = (props: HeroProps) => {
         src={src || homeBuyers}
         alt="Friendly Realtor Home Buyers"
         fill
-        className="z-0 object-cover"
+        className="z-0 object-cover opacity-75"
       />
       <div className="absolute w-full inset-0 flex flex-col justify-center text-white z-10 ml-4">
         <Header as="h3" className="font-bol leading-tight mt-4 text-black">
