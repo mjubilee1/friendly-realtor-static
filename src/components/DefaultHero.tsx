@@ -22,11 +22,11 @@ const DefaultHero = (props: HeroProps) => {
         src={src || homeBuyers}
         alt="Friendly Realtor Home Buyers"
         fill
-        className="object-cover opacity-40"
+        className="object-cover opacity-20"
       />
       <div className="flex flex-row">
         <div className="flex flex-col w-full justify-center text-white z-10 ml-4 px-8">
-          <Header as="h3" className="font-bol leading-tight mt-4">
+          <Header as="h3" className="font-bold leading-tight mt-4">
             {title}
           </Header>
           <p className="text-lg leading-tight max-w-sm pt-2 py-6">{subTitle}</p>
@@ -42,14 +42,14 @@ const DefaultHero = (props: HeroProps) => {
           )}
         </div>
         <div className="w-full text-white z-10">
-          <Header as="h3" className="font-bol leading-tight mt-4 text-black">
+          <Header as="h3" className="font-bold leading-tight mt-4 text-blue-500">
             Assisting Buyers in Discovering Their Dream Home
           </Header>
           <p className="text-lg leading-tight max-w-sm pt-2 py-6">
             Our platform simplifies the path to homeownership for first-time buyers with expert
             guidance, comprehensive listings, and transparent financial assistance.
           </p>
-          <Header as="h3" className="font-bol leading-tight mt-4 text-black">
+          <Header as="h3" className="font-bold leading-tight mt-4 text-blue-500">
             Connecting Home Buyers with Top-Producing Agents in Your Area
           </Header>
           <p className="text-lg leading-tight max-w-sm pt-2 py-6">
