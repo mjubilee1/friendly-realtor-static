@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { user } from '../../agents';
-import { Button, Header } from '../../components/UI';
+import { Button, Header, Container } from '../../components/UI';
 import MortageCalculator from '../../components/MortgageCalculator';
 import { gtagEvent } from '../../utils/analyticsUtil';
 
@@ -88,7 +88,12 @@ const Tools = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - AI-Powered Home Buying Guidance',
+      }}
+      className="min-h-screen"
+    >
       <Header as="h2" className="text-white">
         Calculate Buying Power
       </Header>
@@ -199,7 +204,7 @@ const Tools = () => {
           )}
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 
