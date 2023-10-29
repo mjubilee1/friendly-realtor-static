@@ -1,10 +1,16 @@
 import React from 'react';
 import { montrell } from '../assets';
 import Image from 'next/image';
+import { Container } from '../components/UI';
 
 const MissionPage = () => {
   return (
-    <div className="bg-gray-100 p-8">
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Mission Statement',
+      }}
+      className="bg-gray-100 p-8"
+    >
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-semibold text-gray-900 mb-2">Our Mission</h1>
@@ -52,7 +58,7 @@ const MissionPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

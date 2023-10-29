@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '../components/UI';
+import { Button, Container } from '../components/UI';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { useAuthContext, firestore } from '../context';
 import { useAppStore } from '../stores';
@@ -70,7 +70,12 @@ const EventCenterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-6 px-4">
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Find Nearby Events In your area',
+      }}
+      className="min-h-screen bg-gray-100 py-6 px-4"
+    >
       <div className="max-w-4xl">
         <h1 className="text-3xl font-extrabold text-gray-900 mb-6">Event Center</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -113,7 +118,7 @@ const EventCenterPage = () => {
           ))}
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

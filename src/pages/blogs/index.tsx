@@ -34,7 +34,7 @@ const AllBlogPage = () => {
   return (
     <Container
       seoProps={{
-        title: 'Discover Friendly Realtors Blog Post',
+        title: 'FriendlyRealtor - Discover Friendly Realtors Blog Post',
         description:
           'Explore our latest blog post to discover valuable insights and tips from friendly realtors.',
       }}

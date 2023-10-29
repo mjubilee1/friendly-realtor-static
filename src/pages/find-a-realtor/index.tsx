@@ -30,7 +30,7 @@ const FindARealtorPage = ({ users }) => {
   return (
     <Container
       seoProps={{
-        title: ' Discover a Friendly Realtor in your area',
+        title: 'FriendlyRealtor - Discover a Friendly Realtor in your area',
         description:
           'Discover your ideal real estate agent to navigate the home buying process with confidence. Explore options and find expert guidance today!',
       }}

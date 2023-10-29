@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppStore } from '../stores';
-import { AddLink, Button } from '../components/UI';
+import { AddLink, Button, Container } from '../components/UI';
 
 export const LandingPage = () => {
   const { openRegisterModal } = useAppStore();
@@ -12,7 +12,12 @@ export const LandingPage = () => {
   }, []);
 
   return (
-    <div className="bg-white">
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Dream Home Awaits',
+      }}
+      className="bg-white"
+    >
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div className="mx-auto max-w-2xl pt-12 pb-72">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
@@ -105,7 +110,7 @@ export const LandingPage = () => {
           />
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

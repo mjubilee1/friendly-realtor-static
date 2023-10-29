@@ -67,11 +67,6 @@ export const navLinks = [
     title: 'Property Investments',
   },
   {
-    id: '/communities',
-    title: 'Communities',
-    dropdown: communities,
-  },
-  {
     id: '/resources',
     title: 'Resources',
     dropdown: [

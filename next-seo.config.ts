@@ -20,14 +20,14 @@ const config: DefaultSeoProps = {
       },
     ],
   },
-	twitter: {
-		handle: '@FRealtorApp',
-		site: '@FRealtorApp',
-		cardType: 'summary_large_image',
-	},
-	facebook: {
-		appId: '1339976196848860',
-	},
+  twitter: {
+    handle: '@FRealtorApp',
+    site: '@FRealtorApp',
+    cardType: 'summary_large_image',
+  },
+  facebook: {
+    appId: '1339976196848860',
+  },
 };
 
 export default config;
