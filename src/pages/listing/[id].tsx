@@ -1,9 +1,18 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '../../context';
 import type { GetStaticPaths } from 'next';
+import { Container } from '../../components/UI';
 
 const ListingPage = () => {
-  return <div id="content-container" />;
+  return (
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Listing(s)',
+      }}
+    >
+      <div id="content-container" />
+    </Container>
+  );
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

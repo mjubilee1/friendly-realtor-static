@@ -55,16 +55,16 @@ export const navLinks = [
     title: 'Find A Realtor',
   },
   {
+    id: '/find-homes',
+    title: 'Search Homes',
+  },
+  {
     id: '/event-center',
     title: 'Find Nearby Events',
   },
   {
     id: '/tools',
     title: 'AI Tools',
-  },
-  {
-    id: '/investors',
-    title: 'Property Investments',
   },
   {
     id: '/resources',

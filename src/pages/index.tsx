@@ -21,7 +21,11 @@ const QuickSearch = () => {
 };
 const HomePage = () => {
   return (
-    <>
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Home',
+      }}
+    >
       <Head>
         <meta name="description" content="" />
       </Head>
@@ -30,15 +34,14 @@ const HomePage = () => {
         subTitle="Be sure to check your credit shore to see what you can qualify for."
         showRegister
       />
-      {/*<div className="mt-6">
+      <div className="mt-6">
         <Header as="h2" className="text-white">
           Featured Markets
         </Header>
         <QuickSearch />
-	</div>*/}
+      </div>
       {/*<Checklist />*/}
-      <div id="content-container" className="mt-8" />
-    </>
+    </Container>
   );
 };
 

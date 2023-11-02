@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container } from '../components/UI';
 
-const PropertyOrganizerPage = () => {
+const FindHomesPage = () => {
   return (
     <Container
       seoProps={{
-        title: 'FriendlyRealtor - Property Organizer',
+        title: 'FriendlyRealtor - Search Homes',
       }}
     >
       <div id="content-container" />
@@ -13,4 +13,4 @@ const PropertyOrganizerPage = () => {
   );
 };
 
-export default PropertyOrganizerPage;
+export default FindHomesPage;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthContext, firestore, fireStorage } from '../../context';
 import { FreeReportModal } from '../../components';
-import { Bar, Button, Header, Spacer } from '../../components/UI';
+import { Bar, Button, Header, Spacer, Container } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
 import { Radio } from '../../components/UI/Form/Radio';
 import { FileInput } from '../../components/UI/Form/FileInput';
@@ -121,7 +121,11 @@ const HouseHunter = () => {
   const preapprovalText = preapproval && !!preapproval[0]?.name ? 'preapproval_document' : null;
 
   return (
-    <div>
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - My Profile',
+      }}
+    >
       <div className="flex justify-between">
         <Header as="h2">Welcome {`${user.firstName} ${user.lastName}`}</Header>
         {/*<FreeReportModal user={user} setCreditProfile={setCreditProfile} />*/}
@@ -178,7 +182,7 @@ const HouseHunter = () => {
       <div className="mt-8" />
       {!!creditProfile && <p>{`You score is ${creditProfile}`}</p>}
       <div className="mt-16" />
-    </div>
+    </Container>
   );
 };
 
