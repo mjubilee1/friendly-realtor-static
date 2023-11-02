@@ -40,7 +40,11 @@ const InternalPage = () => {
   }, []);
 
   return (
-    <Container>
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Idx',
+      }}
+    >
       <div id="content-container" />
     </Container>
   );

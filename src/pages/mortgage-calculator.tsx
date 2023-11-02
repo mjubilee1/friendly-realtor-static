@@ -1,7 +1,16 @@
 import React from 'react';
+import { Container } from '../components/UI';
 
 const MortgageCalculatorPage = () => {
-  return <div id="content-container" />;
+  return (
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Mortgage Calculator',
+      }}
+    >
+      <div id="content-container" />
+    </Container>
+  );
 };
 
 export default MortgageCalculatorPage;

@@ -16,7 +16,11 @@ const ListingPage = () => {
   }, []);
 
   return (
-    <Container>
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Listing(s)',
+      }}
+    >
       <div id="content-container" />
     </Container>
   );

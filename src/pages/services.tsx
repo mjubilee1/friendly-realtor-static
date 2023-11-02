@@ -6,6 +6,7 @@ const ServicesPage = () => {
   return (
     <Container
       seoProps={{
+        title: 'FriendlyRealtor - Realtor Services',
         description:
           "Designed specifically for realtors, this comprehensive realtor toolkit is a valuable resource that offers a wide range of resources and information to assist you in making informed decisions throughout your clients' home buying journey.",
       }}

@@ -1,7 +1,16 @@
 import React from 'react';
+import { Container } from '../components/UI';
 
 const HomeValuationPage = () => {
-  return <div id="content-container" />;
+  return (
+    <Container
+      seoProps={{
+        title: 'FriendlyRealtor - Home Valuation',
+      }}
+    >
+      <div id="content-container" />
+    </Container>
+  );
 };
 
 export default HomeValuationPage;
