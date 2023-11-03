@@ -3,6 +3,7 @@ import { Container, Header, AddLink, Icon } from '../../components/UI';
 import { collection, getDocs, where, query } from 'firebase/firestore';
 import Image from 'next/image';
 import { firestore } from '../../context';
+import moment from 'moment';
 
 const ProfilePage = ({ data }) => {
   if (!data || !data.name) {
@@ -24,7 +25,7 @@ const ProfilePage = ({ data }) => {
     <Container
       seoProps={{ title: `${data.name} - My Profile`, description: `${data.bio || defaultSeoBio}` }}
     >
-      <div className="h-[32rem] flex">
+      <div className="flex">
         <div className="bg-white overflow-auto rounded-lg w-full">
           <div className="p-10">
             <Header as="h3" className="uppercase text-gray-500">
@@ -53,6 +54,19 @@ const ProfilePage = ({ data }) => {
               <Header as="h3" className="text-black text-center mt-5">
                 {data.name}
               </Header>
+              {data.video && (
+                <div className="flex flex-col items-center mt-6">
+                  <iframe
+                    width="560"
+                    height="315"
+                    src={data.video}
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              )}
               {data.serviceZipCodes && data.serviceZipCodes.length > 0 ? (
                 <div className="text-gray-500 text-center text-md mt-4">
                   Serving the following locations: {data.serviceZipCodes.join(', ')}
@@ -68,8 +82,29 @@ const ProfilePage = ({ data }) => {
                 {data.bio || defaultBio}
               </div>
             </div>
-            <Image src={data.photo} width={300} height={300} alt="" className="p-4" />
+            <div>
+              <Image src={data.photo} width={300} height={300} alt="" className="pb-4" />
+              {data.phone && <div className="text-gray-500">{`Phone number: ${data.phone}`}</div>}
+            </div>
           </div>
+          {data.deals && (
+            <div className="text-gray-500 px-4 pb-6">
+              <Header as="h3" className="pb-4">
+                Previous Deals
+              </Header>
+              {data.deals.map((deal) => {
+                console.log('deal', deal);
+                const closingDate = moment.unix(deal.closingDate.seconds);
+                const formattedDate = closingDate.format('MMMM D, YYYY');
+                return (
+                  <div>
+                    <div className="font-md">Address - {deal.address}</div>
+                    <div className="font-md">Closing Date - {formattedDate}</div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </Container>
