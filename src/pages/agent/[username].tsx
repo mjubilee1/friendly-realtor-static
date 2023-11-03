@@ -93,7 +93,6 @@ const ProfilePage = ({ data }) => {
                 Previous Deals
               </Header>
               {data.deals.map((deal) => {
-                console.log('deal', deal);
                 const closingDate = moment.unix(deal.closingDate.seconds);
                 const formattedDate = closingDate.format('MMMM D, YYYY');
                 return (
