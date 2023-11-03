@@ -312,7 +312,7 @@ const HouseHunter = () => {
               <div className="space-y-6">
                 {filter(messages, (message) => message.key === selectedUser.id).map((message) => {
                   return (
-                    <div key={message.key} className="bg-gray-500 rounded p-4 text-white">
+                    <div className="bg-gray-500 rounded p-4 text-white">
                       <p className="text-lg font-semibold">{message.name}</p>
                       <p className="text-white">{message.content}</p>
                       <p className="text-white italic text-xs">{message.formattedTimestamp}</p>
