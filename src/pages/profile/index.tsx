@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useAuthContext, firestore, fireStorage } from '../../context';
-import { FreeReportModal } from '../../components';
+import { useAuthContext, firestore, fireStorage, realtimeDb } from '../../context';
 import { Bar, Button, Header, Spacer, Container } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
 import { Radio } from '../../components/UI/Form/Radio';
 import { FileInput } from '../../components/UI/Form/FileInput';
 import { useForm } from 'react-hook-form';
-import { doc, getDoc, updateDoc, collection } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, collection, Timestamp } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import Image from 'next/image';
+import { ref as databaseRef, push, set, onValue } from 'firebase/database';
+import moment from 'moment'; // Import moment.js for timestamp formatting
+import { filter } from 'lodash';
 
 const HouseHunter = () => {
   const { handleSubmit, register, reset, watch, setValue } = useForm({
@@ -23,6 +25,11 @@ const HouseHunter = () => {
   const { preapproval } = watch();
   const [saving, setSaving] = useState<boolean>(false);
   const [creditProfile, setCreditProfile] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [messageText, setMessageText] = useState('');
+  const [userMessages, setUserMessages] = useState([]);
+  const [saving2, setSaving2] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     if (user?.creditScore) {
@@ -62,6 +69,98 @@ const HouseHunter = () => {
 
     retrieveAgentQuestions();
   }, [user]);
+
+  useEffect(() => {
+    if (user?.id) {
+      const realtimeDbRef = databaseRef(realtimeDb, `users/${user.id}/messages`);
+
+      // Fetch messages for the current user and listen for changes
+      onValue(realtimeDbRef, async (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const messageKeys = Object.keys(data);
+          const messagesData = [];
+          const dataMessages = [];
+          for (const key of messageKeys) {
+            const usersCollection = collection(firestore, 'users');
+            const userDocRef = doc(usersCollection, key);
+
+            // Use getDoc to fetch the document by its reference
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (userDocSnapshot.exists()) {
+              dataMessages.push({
+                id: key,
+                ...userDocSnapshot.data(),
+              });
+            }
+            const message = data[key];
+            const innerMessageKeys = Object.keys(message);
+            for (const innerKey of innerMessageKeys) {
+              const refMessage = message[innerKey];
+              const { content, senderId, timestamp } = refMessage;
+              const formattedTimestamp = moment
+                .unix(timestamp.seconds)
+                .format('MMMM D, YYYY HH:mm:ss');
+
+              // Use Firestore to fetch the user's username based on senderId
+              if (senderId) {
+                messagesData.push({
+                  key,
+                  content,
+                  senderId,
+                  formattedTimestamp,
+                  userName: userDocSnapshot.exists()
+                    ? userDocSnapshot.data().userName
+                    : 'Unknown User',
+                  name: userDocSnapshot.exists() ? userDocSnapshot.data().name : 'Unknown Name',
+                });
+              }
+            }
+          }
+          setUserMessages(dataMessages);
+          setMessages(messagesData);
+        }
+      });
+    }
+  }, [user]);
+
+  const handleUserClick = (user) => {
+    setSelectedUser(user);
+  };
+
+  const handleSendMessage = async (selectedUserId: string) => {
+    setSaving2(true);
+    try {
+      const senderMessagesRef = databaseRef(
+        realtimeDb,
+        `users/${user.id}/messages/${selectedUserId}`,
+      );
+      const recipientMessagesRef = databaseRef(
+        realtimeDb,
+        `users/${selectedUserId}/messages/${user.id}`,
+      );
+
+      const newMessageRef = push(senderMessagesRef);
+      const newMessageRecipientMessageRef = push(recipientMessagesRef);
+
+      const timestamp = Timestamp.now();
+
+      const messageData = {
+        senderId: user.id,
+        content: messageText,
+        timestamp: timestamp,
+      };
+
+      await set(newMessageRef, messageData);
+      await set(newMessageRecipientMessageRef, messageData);
+
+      setMessageText('');
+    } catch (error) {
+      console.log('Error sending message to user.', error);
+    } finally {
+      setSaving2(false);
+    }
+  };
 
   const uploadAndSaveFile = async (data) => {
     const file = data.preapproval?.length ? data.preapproval[0] : undefined;
@@ -182,6 +281,68 @@ const HouseHunter = () => {
       <div className="mt-8" />
       {!!creditProfile && <p>{`You score is ${creditProfile}`}</p>}
       <div className="mt-16" />
+      <Header as="h3" className="mb-4">
+        Messages
+      </Header>
+
+      <div className="flex flex-col lg:flex-row">
+        <div className="lg:w-1/4 p-4">
+          {userMessages?.length > 0 && (
+            <div className="flex flex-col space-y-6">
+              {userMessages.map((message) => (
+                <div
+                  key={message.key}
+                  onClick={() => handleUserClick(message)}
+                  className="bg-white text-black rounded-lg shadow-md p-4 flex justify-between cursor-pointer transform transition hover:scale-105"
+                >
+                  <p className="text-lg font-semibold">{message.name}</p>
+                  <Button
+                    color="transparent"
+                    iconOnly
+                    icon={{ name: 'mail', color: 'secondary', size: 'large' }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="lg:w-3/4 p-4">
+          {selectedUser?.id && (
+            <>
+              <div className="space-y-6">
+                {filter(messages, (message) => message.key === selectedUser.id).map((message) => {
+                  return (
+                    <div className="bg-gray-500 rounded p-4 text-white">
+                      <p className="text-lg font-semibold">{message.name}</p>
+                      <p className="text-white">{message.content}</p>
+                      <p className="text-white italic text-xs">{message.formattedTimestamp}</p>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="mt-4">
+                <textarea
+                  className="w-full h-20 p-4 mb-4 text-black rounded border-black border-2"
+                  placeholder="Type your message..."
+                  value={messageText}
+                  onChange={(event) => {
+                    setMessageText(event?.target.value);
+                  }}
+                />
+                <Button
+                  color="secondary"
+                  onClick={() => {
+                    handleSendMessage(selectedUser.id);
+                  }}
+                  loading={saving2}
+                >
+                  Send Message
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </Container>
   );
 };

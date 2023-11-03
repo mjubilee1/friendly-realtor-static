@@ -1,9 +1,10 @@
 import React from 'react';
 import Image, { StaticImageData } from 'next/image';
 import { homeBuyers } from '../assets';
-import { Header, AddLink } from './UI';
+import { Header, AddLink, Button } from './UI';
 import { RegisterModal } from './RegisterModal';
 import { useAuthContext } from '../context';
+import { useRouter } from 'next/router';
 
 export type HeroProps = {
   src?: StaticImageData;
@@ -15,6 +16,7 @@ export type HeroProps = {
 const DefaultHero = (props: HeroProps) => {
   const { title, subTitle, src, showRegister } = props;
   const { user } = useAuthContext();
+  const router = useRouter();
 
   return (
     <div className="relative w-full h-[32rem]">
@@ -38,7 +40,18 @@ const DefaultHero = (props: HeroProps) => {
               Get Free Credit Report
             </AddLink>
           ) : (
-            <RegisterModal />
+            <div className="flex gap-2">
+              <RegisterModal />
+              <Button
+                color="primary"
+                className="!text-black"
+                onClick={() => {
+                  router.push({ pathname: `${router.pathname}/find-a-realtor` });
+                }}
+              >
+                Talk To Live Realtor
+              </Button>
+            </div>
           )}
         </div>
         <div className="w-full text-white z-10">
