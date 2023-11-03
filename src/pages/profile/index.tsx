@@ -128,11 +128,17 @@ const HouseHunter = () => {
     setSelectedUser(user);
   };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (selectedUserId: string) => {
     setSaving2(true);
     try {
-      const senderMessagesRef = databaseRef(realtimeDb, `users/${user.id}/messages/${userID}`);
-      const recipientMessagesRef = databaseRef(realtimeDb, `users/${userID}/messages/${user.id}`);
+      const senderMessagesRef = databaseRef(
+        realtimeDb,
+        `users/${user.id}/messages/${selectedUserId}`,
+      );
+      const recipientMessagesRef = databaseRef(
+        realtimeDb,
+        `users/${selectedUserId}/messages/${user.id}`,
+      );
 
       const newMessageRef = push(senderMessagesRef);
       const newMessageRecipientMessageRef = push(recipientMessagesRef);
@@ -302,17 +308,38 @@ const HouseHunter = () => {
         </div>
         <div className="lg:w-3/4 p-4">
           {selectedUser?.id && (
-            <div className="space-y-6">
-              {filter(messages, (message) => message.key === selectedUser.id).map((message) => {
-                return (
-                  <div key={message.key} className="bg-gray-500 rounded p-4 text-white">
-                    <p className="text-lg font-semibold">{message.name}</p>
-                    <p className="text-white">{message.content}</p>
-                    <p className="text-white italic text-xs">{message.formattedTimestamp}</p>
-                  </div>
-                );
-              })}
-            </div>
+            <>
+              <div className="space-y-6">
+                {filter(messages, (message) => message.key === selectedUser.id).map((message) => {
+                  return (
+                    <div key={message.key} className="bg-gray-500 rounded p-4 text-white">
+                      <p className="text-lg font-semibold">{message.name}</p>
+                      <p className="text-white">{message.content}</p>
+                      <p className="text-white italic text-xs">{message.formattedTimestamp}</p>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="mt-4">
+                <textarea
+                  className="w-full h-20 p-4 mb-4 text-black rounded border-black border-2"
+                  placeholder="Type your message..."
+                  value={messageText}
+                  onChange={(event) => {
+                    setMessageText(event?.target.value);
+                  }}
+                />
+                <Button
+                  color="secondary"
+                  onClick={() => {
+                    handleSendMessage(selectedUser.id);
+                  }}
+                  loading={saving2}
+                >
+                  Send Message
+                </Button>
+              </div>
+            </>
           )}
         </div>
       </div>
