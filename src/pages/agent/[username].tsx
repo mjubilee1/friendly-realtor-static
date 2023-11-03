@@ -28,6 +28,40 @@ const ProfilePage = ({ data }) => {
     return <p className="text-white text-4xl flex justify-center">No Profile Found!</p>;
   }
 
+  useEffect(() => {
+    if (data.userName) {
+      // Function to fetch reviews for this user from Firestore
+      const fetchReviews = async () => {
+        try {
+          // Query the 'users' collection to get the user's document
+          const usersCollection = collection(firestore, 'users');
+          const userQuery = query(usersCollection, where('userName', '==', data.userName));
+          const userQuerySnapshot = await getDocs(userQuery);
+
+          if (userQuerySnapshot.docs.length > 0) {
+            // Get the user's document ID
+            const userId = userQuerySnapshot.docs[0].id;
+
+            // Query the 'reviews' collection to get reviews for this user using userId as the document ID
+            const reviewsCollection = collection(firestore, 'reviews');
+            const userReviewsQuery = doc(reviewsCollection, userId);
+            const userReviewsDoc = await getDoc(userReviewsQuery);
+
+            if (userReviewsDoc.exists()) {
+              // The user's reviews data is in userReviewsDoc.data().reviews
+              const reviewsData = userReviewsDoc.data().reviews || [];
+              setReviews(reviewsData);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching reviews:', error);
+        }
+      };
+
+      fetchReviews();
+    }
+  }, [data.userName]);
+
   // Function to add a new review to Firestore
   const addReview = async () => {
     setSaving(true);
@@ -109,6 +143,7 @@ const ProfilePage = ({ data }) => {
       : ''
   }. Trustworthy guidance and exceptional service for a seamless home buying experience. Let's make your homeownership dreams a reality.`;
 
+  console.log(reviews);
   return (
     <Container
       seoProps={{ title: `${data.name} - My Profile`, description: `${data.bio || defaultSeoBio}` }}
@@ -207,6 +242,22 @@ const ProfilePage = ({ data }) => {
             <Button color="secondary" className="mt-2" onClick={addReview} loading={saving}>
               Add Review
             </Button>
+          </div>
+          {/* Display the reviews */}
+          <div className="px-4 pb-6">
+            {reviews?.length > 0 ? (
+              <div className="text-gray-500">
+                <h3 className="font-bold mb-2 text-lg">User Reviews:</h3>
+                {reviews.map((review, index) => (
+                  <div key={index} className="border p-4 rounded-lg mb-4">
+                    <StarRating rating={review.rating} />
+                    <p className="text-gray-500 mt-2">Review: {review.text}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">No reviews available for this user.</p>
+            )}
           </div>
         </div>
       </div>
