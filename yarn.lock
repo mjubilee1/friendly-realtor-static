@@ -2294,7 +2294,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.6, classnames@npm:^2.3.0":
+"classnames@npm:^2.2.1, classnames@npm:^2.2.6, classnames@npm:^2.3.0":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -3724,7 +3724,9 @@ __metadata:
     react-markdown: ^8.0.7
     react-merge-refs: ^2.0.2
     react-select: ^5.7.4
+    react-simple-star-rating: ^5.1.7
     react-social-icons: ^5.15.0
+    react-star-ratings: ^2.3.0
     react-tooltip: ^5.21.6
     tailwindcss: 3.3.1
     typescript: 5.0.4
@@ -6892,6 +6894,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-simple-star-rating@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "react-simple-star-rating@npm:5.1.7"
+  peerDependencies:
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
+  checksum: e7b3f75dc2c86d46ba684ba1fe3364e005bdaf7e438b6c857613c9920d3a60a547751dc80a9223caec8098d9996de36b042f9c91cc045e25f5200122576f6c06
+  languageName: node
+  linkType: hard
+
 "react-social-icons@npm:^5.15.0":
   version: 5.15.0
   resolution: "react-social-icons@npm:5.15.0"
@@ -6900,6 +6912,17 @@ __metadata:
   peerDependencies:
     react: 15.x.x || 16.x.x || 17.x.x || 18.x.x
   checksum: b93d2ca603f24825424a44a996215af261868247897bfced1ca37f8ab9dbceb14f73ed399e49b18c9f3d77faf7aad6b5f577553dc13e435d4c3bbb21bc08c278
+  languageName: node
+  linkType: hard
+
+"react-star-ratings@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "react-star-ratings@npm:2.3.0"
+  dependencies:
+    classnames: ^2.2.1
+    prop-types: ^15.6.0
+    react: ^16.1.0
+  checksum: 8664f0e2c4e687a0cff38fef496e6854dbacd599fa17101663960b424f3e8a0d2ec8301096db65fd075420597ce1e8861c62c90bac31c92109b0214abe203419
   languageName: node
   linkType: hard
 
@@ -6960,6 +6983,17 @@ __metadata:
   dependencies:
     loose-envify: ^1.1.0
   checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
+  languageName: node
+  linkType: hard
+
+"react@npm:^16.1.0":
+  version: 16.14.0
+  resolution: "react@npm:16.14.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+    prop-types: ^15.6.2
+  checksum: 8484f3ecb13414526f2a7412190575fc134da785c02695eb92bb6028c930bfe1c238d7be2a125088fec663cc7cda0a3623373c46807cf2c281f49c34b79881ac
   languageName: node
   linkType: hard
 

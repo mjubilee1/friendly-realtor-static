@@ -1,14 +1,102 @@
-import React from 'react';
-import { Container, Header, AddLink, Icon } from '../../components/UI';
-import { collection, getDocs, where, query } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { Container, Header, AddLink, Icon, Button } from '../../components/UI';
+import { StarRating } from '../../components';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  arrayUnion,
+  collection,
+  getDocs,
+  where,
+  query,
+  serverTimestamp,
+  updateDoc,
+} from 'firebase/firestore';
 import Image from 'next/image';
-import { firestore } from '../../context';
+import { firestore, auth } from '../../context';
 import moment from 'moment';
 
 const ProfilePage = ({ data }) => {
+  const [saving, setSaving] = useState<boolean>(false);
+  const [reviews, setReviews] = useState([]);
+  const [userDoc, setUserDoc] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState('');
+
   if (!data || !data.name) {
     return <p className="text-white text-4xl flex justify-center">No Profile Found!</p>;
   }
+
+  // Function to add a new review to Firestore
+  const addReview = async () => {
+    setSaving(true);
+    try {
+      const usersCollection = collection(firestore, 'users');
+      const userQuery = query(usersCollection, where('userName', '==', data.userName));
+      const userQuerySnapshot = await getDocs(userQuery);
+
+      if (userQuerySnapshot.docs.length > 0) {
+        // Get the user's document ID
+        const userId = userQuerySnapshot.docs[0].id; // Assuming you have the ID here
+        const reviewsCollection = collection(firestore, 'reviews');
+        const reviewDocRef = doc(reviewsCollection, userId);
+        const reviewDocSnapshot = await getDoc(reviewDocRef);
+
+        if (reviewDocSnapshot.exists()) {
+          // Create a new review object
+          const newReview = {
+            rating: rating, // The rating value you want to add
+            text: reviewText, // The review text you want to add
+            reviewerId: auth.currentUser?.uid || '',
+          };
+
+          // Use updateDoc to add the new review to the "reviews" array field
+          await updateDoc(reviewDocRef, {
+            reviews: arrayUnion(newReview),
+          });
+        } else {
+          const newReview = {
+            rating: rating, // The rating value you want to add
+            text: reviewText, // The review text you want to add
+            reviewerId: auth.currentUser?.uid || '',
+          };
+
+          // Create a new review document with the userId as the document name and the initial review
+          await setDoc(reviewDocRef, {
+            reviews: [newReview],
+          });
+        }
+
+        setRating(0);
+        setReviewText('');
+      } else {
+        // If the user's document doesn't exist, create a new document using setDoc
+        const newUserId = userQuerySnapshot.docs[0].data().userId;
+        const newReviewsCollection = collection(firestore, 'reviews');
+        const newReviewDocRef = doc(newReviewsCollection, newUserId);
+
+        // Create a new review object
+        const newReview = {
+          rating: rating, // The rating value you want to add
+          text: reviewText, // The review text you want to add
+          reviewerId: auth.currentUser?.uid || '',
+        };
+
+        // Set the data for the new review document
+        await setDoc(newReviewDocRef, {
+          reviews: [newReview],
+        });
+
+        setRating(0);
+        setReviewText('');
+      }
+    } catch (error) {
+      console.error('Error adding review:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const defaultBio = `Experienced realtor ${data.name} dedicated to helping home buyers find their dream homes. Trustworthy guidance and exceptional service for a seamless home buying experience. Let's make your homeownership dreams a reality.`;
   const defaultSeoBio = `Experienced realtor ${
@@ -104,6 +192,22 @@ const ProfilePage = ({ data }) => {
               })}
             </div>
           )}
+          <div className="px-4 pb-6">
+            <StarRating
+              rating={rating}
+              reviewText={reviewText}
+              showAddReview
+              onRatingChange={(val) => {
+                setRating(val);
+              }}
+              onReviewTextChange={(val) => {
+                setReviewText(val);
+              }}
+            />
+            <Button color="secondary" className="mt-2" onClick={addReview} loading={saving}>
+              Add Review
+            </Button>
+          </div>
         </div>
       </div>
     </Container>

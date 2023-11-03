@@ -4,6 +4,7 @@ import GetStarted from './GetStarted';
 import Footer from './Footer';
 import Business from './Business';
 import DefaultHero from './DefaultHero';
+import { StarRating } from './StarRating';
 import { RegisterModal } from './RegisterModal';
 import { LoginModal } from './LoginModal';
 import { ForgotPasswordModal } from './ForgotPasswordModal';
@@ -12,6 +13,7 @@ import { MortgageCalculator } from './MortgageCalculator';
 import { FinanceTable } from './FinanceTable';
 
 export {
+  StarRating,
   DefaultHero,
   Business,
   LoginModal,
