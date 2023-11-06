@@ -84,6 +84,9 @@ const HouseHunter = () => {
           for (const key of messageKeys) {
             const usersCollection = collection(firestore, 'users');
             const userDocRef = doc(usersCollection, key);
+            const buyerCollection = collection(firestore, 'buyers');
+            const buyerDocRef = doc(buyerCollection, user.id);
+            const buyerDocSnapshot = await getDoc(buyerDocRef);
 
             // Use getDoc to fetch the document by its reference
             const userDocSnapshot = await getDoc(userDocRef);
@@ -93,14 +96,13 @@ const HouseHunter = () => {
                 ...userDocSnapshot.data(),
               });
             }
+
             const message = data[key];
             const innerMessageKeys = Object.keys(message);
             for (const innerKey of innerMessageKeys) {
               const refMessage = message[innerKey];
               const { content, senderId, timestamp } = refMessage;
-              const formattedTimestamp = moment
-                .unix(timestamp.seconds)
-                .format('MMMM D, YYYY HH:mm:ss');
+              const formattedTimestamp = moment.unix(timestamp.seconds).format('MMM, Do, h:mm a');
 
               // Use Firestore to fetch the user's username based on senderId
               if (senderId) {
@@ -109,10 +111,8 @@ const HouseHunter = () => {
                   content,
                   senderId,
                   formattedTimestamp,
-                  userName: userDocSnapshot.exists()
-                    ? userDocSnapshot.data().userName
-                    : 'Unknown User',
-                  name: userDocSnapshot.exists() ? userDocSnapshot.data().name : 'Unknown Name',
+                  user: userDocSnapshot.data(),
+                  buyer: buyerDocSnapshot.data(),
                 });
               }
             }
@@ -311,9 +311,18 @@ const HouseHunter = () => {
             <>
               <div className="space-y-6">
                 {filter(messages, (message) => message.key === selectedUser.id).map((message) => {
+                  const isProfileUser = message.senderId === user.id;
                   return (
-                    <div className="bg-gray-500 rounded p-4 text-white">
-                      <p className="text-lg font-semibold">{message.name}</p>
+                    <div
+                      className={`${
+                        isProfileUser ? 'bg-gray-800' : 'bg-gray-500'
+                      } rounded p-4 text-white`}
+                    >
+                      <p className="text-lg font-semibold">
+                        {isProfileUser
+                          ? message.buyer?.firstName + ' ' + message.buyer?.lastName
+                          : message.user?.name}
+                      </p>
                       <p className="text-white">{message.content}</p>
                       <p className="text-white italic text-xs">{message.formattedTimestamp}</p>
                     </div>
