@@ -11,8 +11,10 @@ import { ForgotPasswordModal } from './ForgotPasswordModal';
 import { FreeReportModal } from './FreeReportModal/FreeReportModal';
 import { MortgageCalculator } from './MortgageCalculator';
 import { FinanceTable } from './FinanceTable';
+import { SendMessageModal } from './SendMessageModal';
 
 export {
+  SendMessageModal,
   StarRating,
   DefaultHero,
   Business,

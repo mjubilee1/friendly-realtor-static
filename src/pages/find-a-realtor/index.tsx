@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Header, Container } from '../../components/UI';
+import { SendMessageModal } from '../../components';
 import Link from 'next/link';
 import { firestore } from '../../context';
-import { collection, getDocs, where, query } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
 const FindARealtorPage = ({ users }) => {
   const [realtors, setRealtors] = useState([]);
@@ -27,6 +28,7 @@ const FindARealtorPage = ({ users }) => {
     }
   }, [users]);
 
+  console.log(currentRealtors);
   return (
     <Container
       seoProps={{
@@ -40,27 +42,30 @@ const FindARealtorPage = ({ users }) => {
       </Header>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentRealtors.map((realtor) => (
-          <Link
-            id={realtor.id}
-            href={`/agent/${realtor.data.username || realtor.data.userName}`}
-            className="text-center"
-          >
+          <div id={realtor.id} className="text-center">
             <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden">
-              <Image src={realtor.data.photo || ''} size="w-full h-64" />
-              <div className="p-4">
-                <Header as="h4" className="font-semibold mb-2">
-                  {realtor.data.name}
-                </Header>
-                {realtor.data.serviceZipCodes && realtor.data.serviceZipCodes.length > 0 ? (
-                  <p className="mt-2">Service Areas: {realtor.data.serviceZipCodes.join(', ')}</p>
-                ) : (
-                  realtor.data.location && (
-                    <p className="mt-2">{`Service Areas: ${realtor.data.location}`}</p>
-                  )
-                )}
+              <Link href={`/agent/${realtor.data.username || realtor.data.userName}`}>
+                {' '}
+                <Image src={realtor.data.photo || ''} size="w-full h-64" />
+                <div className="p-4">
+                  <Header as="h4" className="font-semibold mb-2">
+                    {realtor.data.name}
+                  </Header>
+                  {realtor.data.serviceZipCodes && realtor.data.serviceZipCodes.length > 0 ? (
+                    <p className="mt-2">Service Areas: {realtor.data.serviceZipCodes.join(', ')}</p>
+                  ) : (
+                    realtor.data.location && (
+                      <p className="mt-2">{`Service Areas: ${realtor.data.location}`}</p>
+                    )
+                  )}
+                </div>
+              </Link>
+
+              <div className="mb-4">
+                <SendMessageModal userID={realtor.id} />
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
       <div className="flex justify-center mt-4">
