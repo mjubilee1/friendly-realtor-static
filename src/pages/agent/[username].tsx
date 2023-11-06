@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Header, AddLink, Icon, Button, Modal } from '../../components/UI';
-import { StarRating } from '../../components';
+import { StarRating, SendMessageModal } from '../../components';
 import {
   doc,
   setDoc,
@@ -10,14 +10,11 @@ import {
   getDocs,
   where,
   query,
-  Timestamp,
   updateDoc,
 } from 'firebase/firestore';
 import Image from 'next/image';
-import { firestore, realtimeDb, auth, useAuthContext } from '../../context';
+import { firestore, auth } from '../../context';
 import moment from 'moment';
-import { useAppStore } from '../../stores';
-import { ref, push, set } from 'firebase/database';
 
 const ProfilePage = ({ data }) => {
   const [saving, setSaving] = useState<boolean>(false);
@@ -29,8 +26,6 @@ const ProfilePage = ({ data }) => {
   const [userDoc, setUserDoc] = useState(null);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
-  const { user } = useAuthContext();
-  const { openLoginModal } = useAppStore();
 
   if (!data || !data.name) {
     return <p className="text-white text-4xl flex justify-center">No Profile Found!</p>;
@@ -156,35 +151,6 @@ const ProfilePage = ({ data }) => {
     }
   };
 
-  const handleSendMessage = async () => {
-    setSaving2(true);
-    try {
-      const senderMessagesRef = ref(realtimeDb, `users/${user.id}/messages/${userID}`);
-      const recipientMessagesRef = ref(realtimeDb, `users/${userID}/messages/${user.id}`);
-
-      const newMessageRef = push(senderMessagesRef);
-      const newMessageRecipientMessageRef = push(recipientMessagesRef);
-
-      const timestamp = Timestamp.now();
-
-      const messageData = {
-        senderId: user.id,
-        content: messageText,
-        timestamp: timestamp,
-      };
-
-      await set(newMessageRef, messageData);
-      await set(newMessageRecipientMessageRef, messageData);
-
-      setMessageText('');
-      setOpen(false);
-    } catch (error) {
-      console.log('Error sending message to user.', error);
-    } finally {
-      setSaving2(false);
-    }
-  };
-
   const defaultBio = `Experienced realtor ${data.name} dedicated to helping home buyers find their dream homes. Trustworthy guidance and exceptional service for a seamless home buying experience. Let's make your homeownership dreams a reality.`;
   const defaultSeoBio = `Experienced realtor ${
     data.name
@@ -260,20 +226,7 @@ const ProfilePage = ({ data }) => {
             <div>
               <Image src={data.photo} width={300} height={300} alt="" className="pb-4" />
               {data.phone && <div className="text-gray-500">{`Phone number: ${data.phone}`}</div>}
-              <Button
-                color="secondary"
-                className="mt-2 "
-                onClick={() => {
-                  if (user) {
-                    setOpen(true);
-                  }
-                  {
-                    openLoginModal();
-                  }
-                }}
-              >
-                Send Message
-              </Button>
+              <SendMessageModal userID={userID} />
             </div>
           </div>
           {data.deals && (
@@ -327,30 +280,6 @@ const ProfilePage = ({ data }) => {
           </div>
         </div>
       </div>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        className="bg-white text-black p-4 "
-        closeXClassName="text-black"
-      >
-        <div className="text-center mb-4">
-          <h2 className="text-2xl font-bold mb-4">Send A Message</h2>
-          <textarea
-            className="w-full h-32 p-4 border-black border-2"
-            onChange={(event) => {
-              setMessageText(event.target.value);
-            }}
-          />
-          <Button
-            color="secondary"
-            className="text-white"
-            loading={saving2}
-            onClick={handleSendMessage}
-          >
-            Send Message
-          </Button>
-        </div>
-      </Modal>
     </Container>
   );
 };
