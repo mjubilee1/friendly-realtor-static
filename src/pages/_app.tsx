@@ -10,6 +10,9 @@ import Head from 'next/head';
 import { FB_PIXEL_ID, GA_TRACKING_ID } from '../utils/analyticsUtil';
 import '../pages/blogs/blog.css';
 import { AuthContextProvider } from '@/context';
+import { useAppStore } from '../stores';
+import { parse } from 'querystring';
+import { useRouter } from 'next/router';
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -17,6 +20,9 @@ const ubuntu = Ubuntu({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const { openLoginModal, openRegisterModal } = useAppStore();
+
   useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
@@ -26,6 +32,16 @@ export default function App({ Component, pageProps }: AppProps) {
     const contentContainer = document.querySelector('#content-container');
     if (contentContainer) {
       contentContainer.appendChild(script);
+    }
+  }, []);
+
+  useEffect(() => {
+    const queryParams = parse(router.asPath.split('?')[1]);
+    if (queryParams.registration) {
+      openRegisterModal();
+    }
+    if (queryParams.login) {
+      openLoginModal();
     }
   }, []);
 
