@@ -41,8 +41,6 @@ export const RegisterModal = ({ mobile = false }) => {
       const queryParameters = { registration: true };
       const updatedQuery = { ...router.query, ...queryParameters };
       router.push({ pathname: router.pathname, query: updatedQuery });
-    } else {
-      router.push({ pathname: router.pathname, query: '' });
     }
   }, [isRegisterModalOpen]);
   const handleSignUp = async (values) => {
@@ -118,7 +116,11 @@ export const RegisterModal = ({ mobile = false }) => {
           </Button>
         )
       }
-      onClose={() => closeRegisterModal()} // Use Zustand store function to close modal
+      onClose={() => {
+        closeRegisterModal();
+        const { registration, ...restQuery } = router.query;
+        router.push({ pathname: router.pathname, query: restQuery });
+      }}
       className="bg-white text-black p-4"
       closeXClassName="text-black"
     >

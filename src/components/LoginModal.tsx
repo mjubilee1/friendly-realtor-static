@@ -30,8 +30,6 @@ export const LoginModal = ({ mobile = false }) => {
       const queryParameters = { login: true };
       const updatedQuery = { ...router.query, ...queryParameters };
       router.push({ pathname: router.pathname, query: updatedQuery });
-    } else {
-      router.push({ pathname: router.pathname, query: '' });
     }
   }, [isLoginModalOpen]);
 
@@ -167,7 +165,11 @@ export const LoginModal = ({ mobile = false }) => {
             </Button>
           )
         }
-        onClose={() => closeLoginModal()}
+        onClose={() => {
+          closeLoginModal();
+          const { login, ...restQuery } = router.query;
+          router.push({ pathname: router.pathname, query: restQuery });
+        }}
         className="bg-white text-black p-4"
         closeXClassName="text-black"
       >
