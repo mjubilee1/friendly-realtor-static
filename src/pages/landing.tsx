@@ -8,7 +8,7 @@ const LandingPage = () => {
   useEffect(() => {
     setTimeout(() => {
       openRegisterModal();
-    }, 3000);
+    }, 9000);
   }, []);
 
   return (
