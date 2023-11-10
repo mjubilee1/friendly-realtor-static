@@ -8,7 +8,6 @@ import styles from '../styles/styles';
 import { Ubuntu } from 'next/font/google';
 import Head from 'next/head';
 import { FB_PIXEL_ID, GA_TRACKING_ID } from '../utils/analyticsUtil';
-import '../pages/blogs/blog.css';
 import { AuthContextProvider } from '@/context';
 import { useAppStore } from '../stores';
 import { parse } from 'querystring';

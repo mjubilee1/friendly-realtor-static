@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { fetchEntries } from '../../utils/contentfulUtil';
 import ReactMarkdown from 'react-markdown';
 
-const BlogPage = ({ data }) => {
-  const [blogPost, setBlogPost] = useState();
+const GrantPage = ({ data }) => {
+  const [grant, setGrant] = useState();
 
   useEffect(() => {
-    setBlogPost(data);
+    setGrant(data);
   }, [data]);
 
-  if (!blogPost) {
+  if (!grant) {
     return (
       <div className="container mx-auto px-4">
         <p>Loading...</p>
@@ -19,18 +19,16 @@ const BlogPage = ({ data }) => {
     );
   }
 
-  const imgUrl = blogPost.fields.featureImage
-    ? blogPost.fields.featureImage.fields.file.url
-    : '/logo.png';
-  const imgAlt = blogPost.fields.featureImage
-    ? blogPost.fields.featureImage.fields.title
-    : 'Friendly Realtor Photo';
+  const imgUrl = grant.fields.mediaOfGrant
+    ? grant.fields.mediaOfGrant.fields.file.url
+    : '/default-image.png'; // Replace with your default image
+  const imgAlt = grant.fields.mediaOfGrant ? grant.fields.mediaOfGrant.fields.title : 'Grant Photo';
 
   return (
     <Container
       seoProps={{
-        title: `${blogPost.fields.title} - Blog` || '',
-        description: blogPost.fields.seoDescription || '',
+        title: `${grant.fields.nameOfGrant} - Grants` || '',
+        description: grant.fields.shortDesciption || '',
         openGraph: {
           images: [
             {
@@ -44,19 +42,19 @@ const BlogPage = ({ data }) => {
       }}
       className="markdown-container"
     >
-      <Link href="/blogs">
+      <Link href="/grants">
         <Icon name="arrow-left" color="white" size="large" />
       </Link>
-      <h1>{blogPost.fields.title}</h1>
-      <p>Author: {blogPost.fields.author.fields.name}</p>
+      <h1>{grant.fields.nameOfGrant}</h1>
+      <p>Location: {grant.fields.location}</p>
       <Image src={imgUrl} alt={imgAlt} size="h-96" className="w-full mt-12 mb-20" />
-      <ReactMarkdown>{blogPost.fields.excerpt}</ReactMarkdown>
+      <ReactMarkdown>{grant.fields.description}</ReactMarkdown>
     </Container>
   );
 };
 
 export async function getStaticPaths() {
-  const entries = await fetchEntries('blogPost');
+  const entries = await fetchEntries('grantModel');
 
   const paths = entries.map((data) => ({
     params: { title: data.fields.slug },
@@ -68,8 +66,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   const { params } = context;
   const slug = params.title; // Assuming the parameter is named 'title'
-
-  const entries = await fetchEntries('blogPost');
+  const entries = await fetchEntries('grantModel');
   const entry = entries.find((entry) => entry.fields.slug === slug);
 
   return {
@@ -79,4 +76,4 @@ export async function getStaticProps(context) {
   };
 }
 
-export default BlogPage;
+export default GrantPage;

@@ -59,6 +59,10 @@ export const navLinks = [
     title: 'Search Homes',
   },
   {
+    id: '/grants',
+    title: 'Find Loan Programs',
+  },
+  {
     id: '/event-center',
     title: 'Find Nearby Events',
   },
