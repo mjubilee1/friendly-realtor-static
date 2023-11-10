@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useAppStore } from '../stores';
-import { AddLink, Button, Container } from '../components/UI';
+import { AddLink, Container } from '../components/UI';
 
-export const LandingPage = () => {
+const LandingPage = () => {
   const { openRegisterModal } = useAppStore();
 
   useEffect(() => {
@@ -16,40 +16,29 @@ export const LandingPage = () => {
       seoProps={{
         title: 'FriendlyRealtor - Dream Home Awaits',
       }}
-      className="bg-white"
+      className="text-white"
     >
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div className="mx-auto max-w-2xl pt-12 pb-72">
+      <div className="relative px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl pb-20">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-            <div className="mt-10 flex items-center justify-center flex-col sm:flex-row gap-6">
-              <Button
-                onClick={() => openRegisterModal()}
-                color="secondary"
-                size="large"
-                className="rounded-md text-sm font-semibold shadow-sm"
-              >
-                Get Started
-              </Button>
+            <div className="flex items-center justify-center flex-col sm:flex-row gap-6">
               <AddLink
-                to="/blogs/our-20-fee-model-making-homeownership-attainable"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                to="/grants"
+                className="rounded-md text-sm font-semibold shadow-sm bg-blue-500 p-4"
               >
-                Learn More <span aria-hidden="true">→</span>
+                Find Home Buying Programs <span aria-hidden="true">→</span>
               </AddLink>
             </div>
           </div>
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Your Dream Home Awaits!
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+              Discover Your Dream Home with FriendlyRealtor!
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              We understand that finding your dream home is more than a transaction; it's about
-              finding a place where memories are made and dreams come true. Let us guide you on this
-              emotional journey while helping you measure your path to homeownership. Our
-              experienced team is here to provide you with the support and expertise you need to
-              turn your homeownership dreams into a reality. Together, we'll navigate every step of
-              the process, so you can confidently achieve your homeownership goals and create
-              lasting memories.
+            <p className="mt-6 text-lg leading-8">
+              Welcome to FriendlyRealtor, your gateway to homeownership dreams. Let us guide you
+              through the journey, offering resources, home listings, and personalized tools.
+              Register today to turn your dreams into reality with expert support every step of the
+              way!
             </p>
             {/* Testimonial Cards */}
             <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -63,6 +52,7 @@ export const LandingPage = () => {
                 </blockquote>
                 <p className="mt-4 text-gray-600">- Sarah and Mark D.</p>
               </div>
+
               {/* Testimonial Card 2 */}
               <div className="bg-white p-6 rounded-lg shadow-lg">
                 <blockquote className="text-lg font-medium text-gray-800">
@@ -73,6 +63,7 @@ export const LandingPage = () => {
                 </blockquote>
                 <p className="mt-4 text-gray-600">- Lisa and John S.</p>
               </div>
+
               {/* Testimonial Card 3 */}
               <div className="bg-white p-6 rounded-lg shadow-lg">
                 <blockquote className="text-lg font-medium text-gray-800">
@@ -85,29 +76,6 @@ export const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="relative rounded-full mt-8 px-3 py-1 text-sm leading-6 text-gray-600 ring-1 border-black border-2 ring-gray-900/10 hover:ring-gray-900/20">
-            Ready to find your dream home?{' '}
-            <AddLink
-              to="/blogs/our-20-fee-model-making-homeownership-attainable"
-              className="font-semibold text-blue-500"
-            >
-              <span className="absolute inset-0" aria-hidden="true" />
-              Learn More <span aria-hidden="true">&rarr;</span>
-            </AddLink>
-          </div>
-        </div>
-
-        <div
-          className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-          aria-hidden="true"
-        >
-          <div
-            className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
-            style={{
-              clipPath:
-                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-            }}
-          />
         </div>
       </div>
     </Container>
