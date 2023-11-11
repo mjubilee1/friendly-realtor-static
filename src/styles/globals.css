@@ -43,6 +43,11 @@ body {
   padding-bottom: 16px;
 }
 
+.markdown-container a {
+  color: #3498db;
+  text-decoration: underline;
+}
+
 .markdown-container h1 {
   font-size: 40px;
 }

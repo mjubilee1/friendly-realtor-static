@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppStore } from '../stores';
-import { AddLink, Container } from '../components/UI';
+import { AddLink, Container, Header } from '../components/UI';
+import Image from 'next/image';
 
 const LandingPage = () => {
   const { openRegisterModal } = useAppStore();
@@ -18,8 +19,8 @@ const LandingPage = () => {
       }}
       className="text-white"
     >
-      <div className="relative px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl pb-20">
+      <div className="flex flex-row gap-8 flew-wrap relative px-6 lg:px-8">
+        <div className="pb-20 flex-1">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="flex items-center justify-center flex-col sm:flex-row gap-6">
               <AddLink
@@ -77,6 +78,20 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
+        <AddLink
+          className="text-center transition-transform transform hover:-translate-y-2"
+          to="/grants/maryland-smartbuy-program"
+        >
+          <Header as="h3" className="mb-8">
+            Maryland SmartBuy Program
+          </Header>
+          <Image
+            width={500}
+            height={500}
+            src="https://images.ctfassets.net/v3wxyl8kvdve/3e4nrqrsn1ZinOk95n6dA9/2d72c227fd013b90d03babd869d83e41/Banner.png"
+            alt="Maryland SmartBuy Program"
+          />
+        </AddLink>
       </div>
     </Container>
   );
