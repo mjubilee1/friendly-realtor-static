@@ -295,10 +295,9 @@ export async function getStaticPaths() {
   const paths = data
     .filter((user) => user.userName)
     .map((user) => ({
-      params: { username: user.userName },
+      params: { username: user.userName.trim() },
     }));
 
-	console.log("get here", paths)
   return { paths, fallback: false };
 }
 
@@ -347,7 +346,7 @@ export async function getStaticProps(context) {
       };
     }
   } catch (error) {
-    console.log('error was caused', error);
+    console.log('Error was caused', error);
     return {
       props: {
         data: {},
