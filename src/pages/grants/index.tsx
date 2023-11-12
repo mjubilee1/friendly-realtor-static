@@ -1,10 +1,29 @@
 import { Container, Header } from '../../components/UI';
+import { Select } from '../../components/UI/Select';
 import Link from 'next/link';
 import { fetchEntries } from '../../utils/contentfulUtil';
 import Image from 'next/image';
+import { useState, useMemo } from 'react';
 
 const AllGrantsPage = ({ grants }) => {
   const grantFields = grants[0]?.fields;
+  const [selectedLocation, setSelectedLocation] = useState<string>('');
+
+  // Memoized filter grants based on selected location
+  const filteredGrants = useMemo(() => {
+    return selectedLocation
+      ? grantFields.allGrants.filter((grant) => grant.fields.location === selectedLocation)
+      : grantFields.allGrants;
+  }, [selectedLocation, grantFields.allGrants]);
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderRadius: '8px',
+      minHeight: 'unset',
+    }),
+  };
+
   return (
     <Container
       seoProps={{
@@ -14,10 +33,25 @@ const AllGrantsPage = ({ grants }) => {
       }}
     >
       <Header as="h1" className="pb-8 text-center">
-        {grantFields.grantName}
+        <div className="flex justify-between flex-wrap">
+          <div className="flex items-center">{grantFields.grantName}</div>
+          <div className="flex items-center">
+            <Select
+              id="buyer-program-select"
+              options={[
+                { value: 'Maryland', label: 'Maryland' },
+                { value: 'WashingtonDC', label: 'Washington DC' },
+                { value: 'Virginia', label: 'Virginia' },
+              ]}
+              placeholder="Select Location"
+              onChange={(selectedOption) => setSelectedLocation(selectedOption.value)}
+              styles={customStyles}
+            />
+          </div>
+        </div>
       </Header>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {grantFields.allGrants.map((grant) => {
+        {filteredGrants.map((grant) => {
           return (
             <Link href={`/grants/${grant.fields.slug}`} key={grant.sys.id}>
               <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden cursor-pointer">
