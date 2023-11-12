@@ -298,6 +298,7 @@ export async function getStaticPaths() {
       params: { username: user.userName },
     }));
 
+	console.log("get here", paths)
   return { paths, fallback: false };
 }
 
