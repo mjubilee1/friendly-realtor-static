@@ -86,10 +86,6 @@ export const navLinks = [
         id: '/mortgage-calculator',
         title: 'Mortgage Calculator',
       },
-      {
-        to: 'https://docs.google.com/forms/d/e/1FAIpQLSf2nr-xa4BDh6stpU9ySdPIyH_PSLN6H6HWcWwcw3Jp89NvKg/viewform',
-        title: 'Take Survey',
-      },
     ],
   },
   {

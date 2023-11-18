@@ -43,7 +43,7 @@ const HomePage = () => {
         className="my-8 transition-transform transform hover:-translate-y-2"
         to="/grants/maryland-smartbuy-program"
       >
-        <Header as="h3" className="mb-8">
+        <Header as="h3" className="my-8">
           Maryland SmartBuy Program
         </Header>
         <Image
