@@ -27,14 +27,16 @@ const AllGrantsPage = ({ grants }) => {
   return (
     <Container
       seoProps={{
-        title: `Explore ${grantFields.grantName} Programs - FriendlyRealtor`,
+        title: `${grantFields.grantName} - FriendlyRealtor`,
         description:
           'Discover a variety of home buying programs to suit your needs. Learn more about different grants and assistance available for homebuyers.',
       }}
     >
-      <Header as="h1" className="pb-8 text-center">
-        <div className="flex justify-between flex-wrap">
-          <div className="flex items-center">{grantFields.grantName}</div>
+      <div className="pb-8 text-center">
+        <div className="flex flex-col sm:flex-row justify-between items-center">
+          <div className="flex items-center mb-4 sm:mb-0">
+            {grantFields.grantName && <Header as="h3" className="text-2xl font-bold">{grantFields.grantName}</Header>}
+          </div>
           <div className="flex items-center">
             <Select
               id="buyer-program-select"
@@ -49,39 +51,37 @@ const AllGrantsPage = ({ grants }) => {
             />
           </div>
         </div>
-      </Header>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredGrants.map((grant) => {
-          return (
-            <Link href={`/grants/${grant.fields.slug}`} key={grant.sys.id}>
-              <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden cursor-pointer">
-                <Image
-                  src={grant.fields.mediaOfGrant.fields.file.url}
-                  alt={grant.fields.mediaOfGrant.fields.title}
-                  width={500}
-                  height={100}
-                  className="cursor-pointer"
-                />
-                <div className="p-4">
-                  <Header as="h4" className="font-semibold text-xl mb-2 text-white">
-                    {grant.fields.nameOfGrant}
-                  </Header>
-                  {grant.fields.location && (
-                    <p className="mt-2 text-gray-300">Location: {grant.fields.location}</p>
-                  )}
-                  {grant.fields.shortDesciption && (
-                    <p className="mt-2 text-gray-300">{grant.fields.shortDesciption}</p>
-                  )}
-                  <div className="mt-4 flex justify-end">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-                      Learn More
-                    </button>
-                  </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {filteredGrants.map((grant) => (
+          <Link href={`/grants/${grant.fields.slug}`} key={grant.sys.id}>
+            <div className="max-w-xs mx-auto h-full bg-gray-500 rounded-lg shadow-md overflow-hidden cursor-pointer">
+              <Image
+                src={grant.fields.mediaOfGrant.fields.file.url}
+                alt={grant.fields.mediaOfGrant.fields.title}
+                width={500}
+                height={100}
+                className="cursor-pointer"
+              />
+              <div className="p-4">
+                <Header as="h4" className="font-semibold text-xl mb-2 text-white">
+                  {grant.fields.nameOfGrant}
+                </Header>
+                {grant.fields.location && (
+                  <p className="mt-2 text-gray-300">Location: {grant.fields.location}</p>
+                )}
+                {grant.fields.shortDesciption && (
+                  <p className="mt-2 text-gray-300">{grant.fields.shortDesciption}</p>
+                )}
+                <div className="mt-4 flex justify-end">
+                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Learn More
+                  </button>
                 </div>
               </div>
-            </Link>
-          );
-        })}
+            </div>
+          </Link>
+        ))}
       </div>
     </Container>
   );

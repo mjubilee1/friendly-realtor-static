@@ -18,6 +18,26 @@ export const Select = React.forwardRef<
     ...components,
   };
 
+  // Custom styles to make it look better
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderRadius: '8px',
+      border: '1px solid #ccc',
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? '#3182CE' : 'white',
+      color: state.isSelected ? 'white' : 'black',
+      padding: '8px',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: 'black',
+    }),
+    // Add more styles as needed
+  };
+
   return (
     <>
       <ReactSelect
@@ -31,7 +51,7 @@ export const Select = React.forwardRef<
         onChange={onChange}
         value={value}
         ref={ref}
-        styles={styles}
+        styles={{ ...styles, ...customStyles }}
       />
       {error && <span className="text-red-500">{error.message || 'This is Required'}</span>}
     </>
