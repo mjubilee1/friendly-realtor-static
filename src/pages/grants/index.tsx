@@ -55,6 +55,12 @@ const AllGrantsPage = ({ grants }) => {
             />
           </div>
         </div>
+        <div className="my-4">
+          Are you considering purchasing your first home? Exciting times await, and you might be
+          eligible for various First-Time Home Buyer Programs tailored to make your homeownership
+          journey more accessible. These programs are designed to provide financial assistance,
+          making the dream of owning your first home a reality.
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {filteredGrants.map((grant) => (

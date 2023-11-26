@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Image, Icon, Container } from '../../components/UI';
+import { Header, Image, Icon, Container } from '../../components/UI';
 import { useEffect, useState } from 'react';
 import { fetchEntries } from '../../utils/contentfulUtil';
 import ReactMarkdown from 'react-markdown';
@@ -45,8 +45,9 @@ const GrantPage = ({ data }) => {
       <Link href="/grants">
         <Icon name="arrow-left" color="white" size="large" />
       </Link>
-      <h1>{grant.fields.nameOfGrant}</h1>
-      <p>Location: {grant.fields.location}</p>
+      <Header as="h1">{grant.fields.nameOfGrant}</Header>
+      <p className="mb-2 text-lg italic">Location - {grant.fields.location}</p>
+      {grant.fields.shortDesciption && <p>{grant.fields.shortDesciption}</p>}
       <Image src={imgUrl} alt={imgAlt} size="h-96" className="w-full mt-12 mb-20" />
       <ReactMarkdown>{grant.fields.description}</ReactMarkdown>
     </Container>
