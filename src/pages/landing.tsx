@@ -16,6 +16,8 @@ const LandingPage = () => {
     <Container
       seoProps={{
         title: 'FriendlyRealtor - Dream Home Awaits',
+        description:
+          'Explore first-time homebuyer programs, read informative blogs, and discover your dream home with FriendlyRealtor. Sign up for our newsletter for valuable tips and trends in home management.',
       }}
       className="text-white"
     >
@@ -34,9 +36,7 @@ const LandingPage = () => {
         </AddLink>
 
         <div className="text-center">
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight">
-            Discover Your Dream Home with FriendlyRealtor!
-          </h1>
+          <Header as="h1">Discover Your Dream Home with FriendlyRealtor!</Header>
           <p className="mt-4 text-sm sm:text-lg leading-6">
             Welcome to FriendlyRealtor, your gateway to homeownership dreams. Let us guide you
             through the journey, offering resources, home listings, and personalized tools. Register
@@ -44,6 +44,21 @@ const LandingPage = () => {
           </p>
 
           <div className="mt-8 space-y-6">
+            {/* Newsletter Section */}
+            <p className="text-lg font-semibold mb-2">Sign up for our Newsletter!</p>
+            <p className="text-sm leading-6">
+              Stay informed on home management tips, trends, and issues. From tax information to
+              mortgages, the newsletter covers it all for free. Unsubscribe anytime, and your
+              contact information is safe with us.
+            </p>
+            <div className="mb-6" />
+            <AddLink
+              className="bg-green-500 text-white py-2 px-4 rounded-md transition-transform transform hover:-translate-y-2"
+              to="https://join.homeactions.net/signup/MontrellJubilee"
+              target="_blank"
+            >
+              Subscribe Now <span aria-hidden="true">→</span>
+            </AddLink>
             {/* Testimonial Cards */}
             <div className="space-y-8">
               {/* Testimonial Card 1 */}

@@ -12,7 +12,7 @@ const Footer = () => {
           className="flex flex-col w-full mb-4 md:flex-row md:justify-between"
         >
           {footerlink.links.map((link, index) => {
-						const target = link.href.startsWith('/') ? '_self' : '_blank';
+            const target = link.href.startsWith('/') ? '_self' : '_blank';
             return (
               <li
                 key={link.name}
@@ -20,10 +20,7 @@ const Footer = () => {
                   index !== footerlink.links.length - 1 ? 'mb-2 md:mb-0 md:mr-4' : 'md:mb-0'
                 }`}
               >
-                <a
-                  href={link.href}
-                  target={target}
-                >
+                <a href={link.href} target={target}>
                   {link.name}
                 </a>
               </li>
