@@ -39,8 +39,8 @@ const LandingPage = () => {
           </h1>
           <p className="mt-4 text-sm sm:text-lg leading-6">
             Welcome to FriendlyRealtor, your gateway to homeownership dreams. Let us guide you
-            through the journey, offering resources, home listings, and personalized tools.
-            Register today to turn your dreams into reality with expert support every step of the way!
+            through the journey, offering resources, home listings, and personalized tools. Register
+            today to turn your dreams into reality with expert support every step of the way!
           </p>
 
           <div className="mt-8 space-y-6">

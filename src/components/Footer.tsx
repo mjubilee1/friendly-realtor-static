@@ -7,7 +7,10 @@ const Footer = () => {
   return (
     <section className={`${styles.flexCenter} ${styles.paddingY} flex-col w-full`}>
       {footerLinks.map((footerlink) => (
-        <ul key={footerlink.title} className="flex flex-col w-full mb-4 md:flex-row md:justify-between">
+        <ul
+          key={footerlink.title}
+          className="flex flex-col w-full mb-4 md:flex-row md:justify-between"
+        >
           {footerlink.links.map((link, index) => (
             <li
               key={link.name}

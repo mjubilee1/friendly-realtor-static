@@ -35,7 +35,11 @@ const AllGrantsPage = ({ grants }) => {
       <div className="pb-8 text-center">
         <div className="flex flex-col sm:flex-row justify-between items-center">
           <div className="flex items-center mb-4 sm:mb-0">
-            {grantFields.grantName && <Header as="h3" className="text-2xl font-bold">{grantFields.grantName}</Header>}
+            {grantFields.grantName && (
+              <Header as="h3" className="text-2xl font-bold">
+                {grantFields.grantName}
+              </Header>
+            )}
           </div>
           <div className="flex items-center">
             <Select

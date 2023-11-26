@@ -19,20 +19,23 @@ const DefaultHero = (props: HeroProps) => {
   const router = useRouter();
 
   return (
-    <div className="relative w-full p-8">
-      <Image
-        src={src || homeBuyers}
-        alt="Friendly Realtor Home Buyers"
-        fill
-        className="object-cover opacity-20"
-      />
+    <div
+      className="relative w-full p-8"
+      style={{
+        backgroundSize: 'cover',
+        backgroundImage: `url(${
+          src ||
+          'https://images.ctfassets.net/v3wxyl8kvdve/2EYGoz57XC6NwjTKGc0vly/2c7f80b8e6528154099618978ed059d3/happy-buyers01.jpg'
+        })`,
+      }}
+    >
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-1/2">
           <div className="flex flex-col justify-center text-white z-10 mx-4 my-8 md:ml-8 md:mr-4">
-            <Header as="h3" className="font-bold leading-tight mt-4">
+            <Header as="h3" className="font-bold leading-tight mt-4 text-black">
               {title}
             </Header>
-            <p className="text-lg leading-tight max-w-sm pt-2 pb-4 md:max-w-none md:pb-0 md:pl-4 md:pr-8">
+            <p className="text-lg leading-tight text-black max-w-sm mb-2 pt-2 pb-4 md:max-w-none md:pb-0 md:pl-4 md:pr-8">
               {subTitle}
             </p>
             {showRegister && user ? (
