@@ -65,14 +65,14 @@ const DefaultHero = (props: HeroProps) => {
           <Header as="h3" className="font-bold leading-tight mt-4 text-blue-500">
             Assisting Buyers in Discovering Their Dream Home
           </Header>
-          <p className="text-lg leading-tight max-w-sm pt-2 pb-4 md:max-w-none md:pb-0">
+          <p className="text-lg text-black leading-tight max-w-sm pt-2 pb-4 md:max-w-none md:pb-0">
             Our platform simplifies the path to homeownership for first-time buyers with expert
             guidance, comprehensive listings, and transparent financial assistance.
           </p>
           <Header as="h3" className="font-bold leading-tight mt-4 text-blue-500">
             Connecting Home Buyers with Top-Producing Agents in Your Area
           </Header>
-          <p className="text-lg leading-tight max-w-sm pt-2 md:max-w-none">
+          <p className="text-lg text-black leading-tight max-w-sm pt-2 md:max-w-none">
             Our platform streamlines the process of matching home buyers with top-producing agents,
             ensuring you find the best fit for your needs.
           </p>
