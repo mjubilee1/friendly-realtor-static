@@ -11,18 +11,24 @@ const Footer = () => {
           key={footerlink.title}
           className="flex flex-col w-full mb-4 md:flex-row md:justify-between"
         >
-          {footerlink.links.map((link, index) => (
-            <li
-              key={link.name}
-              className={`font-ubuntu font-normal text-[16px] leading-[24px] text-dimWhite hover:text-secondary ${
-                index !== footerlink.links.length - 1 ? 'mb-2 md:mb-0 md:mr-4' : 'md:mb-0'
-              }`}
-            >
-              <a href={link.href} target={link.name === 'Sitemap' || 'Blogs' ? '_self' : '_blank'}>
-                {link.name}
-              </a>
-            </li>
-          ))}
+          {footerlink.links.map((link, index) => {
+						const target = link.href.startsWith('/') ? '_self' : '_blank';
+            return (
+              <li
+                key={link.name}
+                className={`font-ubuntu font-normal text-[16px] leading-[24px] text-dimWhite hover:text-secondary ${
+                  index !== footerlink.links.length - 1 ? 'mb-2 md:mb-0 md:mr-4' : 'md:mb-0'
+                }`}
+              >
+                <a
+                  href={link.href}
+                  target={target}
+                >
+                  {link.name}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       ))}
 

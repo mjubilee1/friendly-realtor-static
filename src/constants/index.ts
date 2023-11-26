@@ -218,6 +218,10 @@ export const footerLinks = [
         href: '/services',
         name: 'For Realtors',
       },
+      {
+        href: 'https://join.homeactions.net/signup/MontrellJubilee',
+        name: 'Newsletter',
+      },
     ],
   },
 ];
