@@ -28,7 +28,6 @@ const FindARealtorPage = ({ users }) => {
     }
   }, [users]);
 
-  console.log(currentRealtors);
   return (
     <Container
       seoProps={{
@@ -37,9 +36,14 @@ const FindARealtorPage = ({ users }) => {
           'Discover your ideal real estate agent to navigate the home buying process with confidence. Explore options and find expert guidance today!',
       }}
     >
-      <Header as="h1" className="pb-8 text-center">
-        Discover a Friendly Realtor in your area
-      </Header>
+      <div className="text-center pb-8">
+        <Header as="h1">Discover Your Friendly Realtor in the Neighborhood</Header>
+        <div className="text-lg mt-2">
+          Welcome to FriendlyRealtor, your trusted platform for connecting with top-notch real
+          estate professionals in your area. Whether you're buying, selling, or just exploring,
+          we're here to make your real estate journey seamless and enjoyable.
+        </div>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentRealtors.map((realtor) => (
           <div id={realtor.id} className="text-center">
@@ -148,7 +152,6 @@ export async function getStaticProps() {
       }
     }
   } catch (error) {
-    console.log('Error fetching users:', error);
     return {
       props: {
         users: [],
