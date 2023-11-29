@@ -98,9 +98,8 @@ export const features = [
   {
     id: 'feature-0',
     icon: star,
-    title: 'Efficient Buyer Lead Generation for Realtors',
-    content:
-      'Effortlessly generate leads for top-selling properties within seconds, freeing up your time to prioritize relationship-building.',
+    title: 'Join our real estate referral program',
+    content: `Join our real estate referral program; it's free to use, allowing leads to message agents directly, and agents can acquire qualified/unqualified leads in real-time through our mobile app.`,
   },
   {
     id: 'feature-1',
