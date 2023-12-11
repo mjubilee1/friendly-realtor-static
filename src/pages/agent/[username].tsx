@@ -164,7 +164,10 @@ const ProfilePage = ({ data }) => {
 
   return (
     <Container
-      seoProps={{ title: `FriendlyRealtor - Agent ${data.name}`, description: `${data.bio || defaultSeoBio}` }}
+      seoProps={{
+        title: `FriendlyRealtor - Agent ${data.name}`,
+        description: `${data.bio || defaultSeoBio}`,
+      }}
     >
       <div className="flex">
         <div className="bg-white overflow-auto rounded-lg w-full">

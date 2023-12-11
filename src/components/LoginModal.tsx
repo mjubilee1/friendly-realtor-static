@@ -33,34 +33,37 @@ export const LoginModal = ({ mobile = false }) => {
     }
   }, [isLoginModalOpen]);
 
-	const handleSubmit = useCallback(async (values) => {
-		setLoading(true);
-    try {
-      const res = await signInWithEmailAndPassword(auth, values.email, values.password);
-      const usersCollectionRef = collection(firestore, 'users');
-      const userDocRef = doc(usersCollectionRef, res.user.uid);
-			const docSnapshot = await getDoc(userDocRef);
-      if (docSnapshot.exists()) {
-				const foundUser = docSnapshot.data();
-				if (Object.keys(foundUser).length > 0) {
-					setLoginError(
-						'Error: User account found. You created an account as an agent. Try another email address.',
-					);
-				}
-			}
-      if (res.user.emailVerified) {
-        setTokenCookies(res.user.accessToken);
-        setRefreshTokenCookies(res._tokenResponse.refreshToken);
-      } else {
-        await sendEmailVerification(res.user);
-        openPopup('Email verification sent!');
+  const handleSubmit = useCallback(
+    async (values) => {
+      setLoading(true);
+      try {
+        const res = await signInWithEmailAndPassword(auth, values.email, values.password);
+        const usersCollectionRef = collection(firestore, 'users');
+        const userDocRef = doc(usersCollectionRef, res.user.uid);
+        const docSnapshot = await getDoc(userDocRef);
+        if (docSnapshot.exists()) {
+          const foundUser = docSnapshot.data();
+          if (Object.keys(foundUser).length > 0) {
+            setLoginError(
+              'Error: User account found. You created an account as an agent. Try another email address.',
+            );
+          }
+        }
+        if (res.user.emailVerified) {
+          setTokenCookies(res.user.accessToken);
+          setRefreshTokenCookies(res._tokenResponse.refreshToken);
+        } else {
+          await sendEmailVerification(res.user);
+          openPopup('Email verification sent!');
+        }
+      } catch (error) {
+        setLoginError('Error logging in. Please check your credentials and try again.');
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      setLoginError('Error logging in. Please check your credentials and try again.');
-    } finally {
-      setLoading(false);
-    }
-	}, [loginError])
+    },
+    [loginError],
+  );
 
   const handleGoogleSignIn = async () => {
     try {
@@ -82,7 +85,7 @@ export const LoginModal = ({ mobile = false }) => {
       setTokenCookies(res.user.accessToken);
       setRefreshTokenCookies(res._tokenResponse.refreshToken);
       closeLoginModal();
-			setLoginError('');
+      setLoginError('');
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -123,7 +126,7 @@ export const LoginModal = ({ mobile = false }) => {
       setTokenCookies(res.user.accessToken);
       setRefreshTokenCookies(res._tokenResponse.refreshToken);
       closeLoginModal();
-			setLoginError('');
+      setLoginError('');
     } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -165,7 +168,7 @@ export const LoginModal = ({ mobile = false }) => {
         }
         onClose={() => {
           closeLoginModal();
-					setLoginError('');
+          setLoginError('');
           const { login, ...restQuery } = router.query;
           router.push({ pathname: router.pathname, query: restQuery });
         }}
@@ -243,7 +246,7 @@ export const LoginModal = ({ mobile = false }) => {
             onClose={() => {
               closePopup();
               closeLoginModal();
-							setLoginError('');
+              setLoginError('');
             }}
           />
         )}

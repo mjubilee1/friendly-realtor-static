@@ -94,9 +94,46 @@ const Tools = () => {
       }}
       className="min-h-screen"
     >
-      <Header as="h2" className="text-white">
-        Calculate Buying Power
+      <Header as="h1" className="text-white mb-12">
+        Discover the Essence of Home Buying: Uncover Your Buying Power and Navigate with Confidence
       </Header>
+
+      <Header as="h5" className="text-white mb-4">
+        As a home buyer, your journey begins with understanding your buying power. Explore the tools
+        below to gain insights and make informed decisions for a seamless home buying experience.
+      </Header>
+
+      <p className="text-white mb-4">
+        Embark on your home buying journey with our AI-powered tools designed to empower and guide
+        you through the process. At the core of a successful home purchase is a clear understanding
+        of your buying power. Begin by exploring our intuitive tools, meticulously crafted to
+        unravel the complexities of real estate transactions.
+      </p>
+
+      <p className="text-white mb-4">
+        Delve into the Credit Repair Tool, tailored to assist you in boosting your credit score.
+        Whether your credit stands at a specific number or you're seeking advice on enhancement, our
+        tool provides personalized insights and actionable strategies for credit improvement.
+      </p>
+
+      <p className="text-white mb-4">
+        Navigate the home buying landscape with the Buyer Assistance Tool. If you have a specific
+        down payment budget and a chosen area in mind, input the details and receive tailored
+        guidance on the steps involved in purchasing your dream home. Uncover the secrets to a
+        smooth home buying process.
+      </p>
+
+      <p className="text-white mb-4">
+        For a personalized touch, engage our Custom Home Buying Tool. Share your unique questions,
+        concerns, or messages related to home buying, and receive expert responses to guide you in
+        your decision-making journey.
+      </p>
+
+      <p className="text-white mb-4">
+        Your home buying experience should be informed, transparent, and stress-free. Explore these
+        tools, discover your buying power, and embark on the path to homeownership with confidence.
+      </p>
+
       <MortageCalculator />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         <div
