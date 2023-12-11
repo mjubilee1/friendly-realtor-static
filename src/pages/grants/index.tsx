@@ -55,11 +55,21 @@ const AllGrantsPage = ({ grants }) => {
             />
           </div>
         </div>
-        <div className="my-4">
-          Are you considering purchasing your first home? Exciting times await, and you might be
-          eligible for various First-Time Home Buyer Programs tailored to make your homeownership
-          journey more accessible. These programs are designed to provide financial assistance,
-          making the dream of owning your first home a reality.
+        <div className="my-4 text-left">
+          Embark on the journey to your first home with anticipation and excitement. As you navigate
+          the path to homeownership, discover the opportunities offered by First-Time Home Buyer
+          Programs. These specialized programs are crafted to enhance accessibility to
+          homeownership, providing crucial financial assistance along the way. The prospect of
+          owning your inaugural home becomes more tangible and real as these programs unfold.
+        </div>
+        <div className="my-4 text-left">
+          Picture a seamless journey guided by support and tailored solutions. Whether it's easing
+          financial constraints or facilitating key steps in the home buying process, these programs
+          exist to transform the dream of your first home into a fulfilling reality. Take advantage
+          of this pivotal moment, where the excitement of a new chapter aligns with the practical
+          assistance offered by First-Time Home Buyer Programs. Your pathway to homeownership is
+          paved with possibilities, making the prospect of owning your first home an achievable and
+          rewarding reality.
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">

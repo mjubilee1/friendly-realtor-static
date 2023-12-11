@@ -223,7 +223,7 @@ const HouseHunter = () => {
     <Container
       seoProps={{
         title: 'FriendlyRealtor - My Profile',
-				noindex: true,
+        noindex: true,
       }}
     >
       <div className="flex justify-between">
