@@ -1,6 +1,6 @@
-import styles from '../styles/styles';
-import { Hero, Business } from '../components';
-import { Container } from '../components/UI';
+import styles from '../../styles/styles';
+import { Hero, Business } from '../../components';
+import { Container } from '../../components/UI';
 
 const ServicesPage = () => {
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useAppStore } from '../stores';
-import { AddLink, Container, Header } from '../components/UI';
+import { useAppStore } from '../../stores';
+import { AddLink, Container, Header } from '../../components/UI';
 import Image from 'next/image';
 
 const LandingPage = () => {

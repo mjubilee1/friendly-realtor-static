@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '../components/UI';
+import { Container } from '../../components/UI';
 
 const MarketsPage = () => {
   return (

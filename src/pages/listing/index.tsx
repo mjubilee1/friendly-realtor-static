@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container } from '../components/UI';
+import { Container } from '../../components/UI';
 
 const ListingPage = () => {
   useEffect(() => {
