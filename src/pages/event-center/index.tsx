@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Header } from '../components/UI';
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
-import { useAuthContext, firestore } from '../context';
-import { useAppStore } from '../stores';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
+import { Button, Container, Header } from '../../components/UI';
+import { collection, getDocs } from 'firebase/firestore';
+import { firestore } from '../../context';
+import Link from 'next/link';
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -14,11 +13,6 @@ const truncateDescription = (description, maxLength) => {
 
 const EventCenterPage = () => {
   const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [duplicateMsg, setDuplicateMsg] = useState<string>('');
-  const [tooltipId, setTooltipId] = useState('');
-  const { user } = useAuthContext();
-  const { openLoginModal } = useAppStore();
 
   useEffect(() => {
     // Fetch events from the "events" collection in Firebase
@@ -37,37 +31,6 @@ const EventCenterPage = () => {
 
     fetchEvents();
   }, []);
-
-  const handleJoinEvent = async (id) => {
-    if (user) {
-      setLoading(true); // Set the saving state to indicate that the operation is in progress
-
-      const event = events.find((event) => event.id === id);
-      // Check if the user's ID is already in the participants array
-      if (event.participants.includes(user.id)) {
-        setDuplicateMsg('User is already successfully added to the event.');
-        setLoading(false);
-        return;
-      }
-
-      // Add the user's ID to the participants array
-      const updatedParticipants = [...event.participants, user.id];
-
-      // Create a reference to the event document in the "events" collection
-      const eventRef = doc(firestore, 'events', event.id);
-
-      try {
-        // Update the document with the updated participants array
-        await updateDoc(eventRef, { participants: updatedParticipants });
-      } catch (error) {
-        console.error('Error updating event:', error);
-      } finally {
-        setLoading(false); // Set the saving state to indicate that the operation is complete
-      }
-    }
-
-    openLoginModal();
-  };
 
   return (
     <Container
@@ -93,7 +56,6 @@ const EventCenterPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {events?.map((event) => (
             <div key={event.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-              {duplicateMsg && <div className="text-red-600">{duplicateMsg}</div>}
               <div className="bg-gradient-to-b from-indigo-500 to-blue-600 p-4">
                 <Header as="h2" className="text-white text-xl font-semibold">
                   {event.title}
@@ -105,27 +67,18 @@ const EventCenterPage = () => {
                   <p>Organizer: {event.organizer}</p>
                   <p data-tooltip-id="my-tooltip-1">
                     Description: {truncateDescription(event.description, 15)}{' '}
-                  </p>
-                  <ReactTooltip
-                    id="my-tooltip-1"
-                    place="right"
-                    content={event.description}
-                    className="max-w-sm"
-                  />
+										</p>
                   <p>
                     Total Participants: {event.participants.length} | {event.totalParticipants}
                   </p>
                   <p>Start: {event.dateStartTime}</p>
                   <p>End: {event.dateEndTime}</p>
                   <p>Date: {event.eventDate}</p>
-                  <Button
-                    color="secondary"
-                    loading={loading}
-                    className="text-white mt-2"
-                    onClick={() => handleJoinEvent(event.id)}
-                  >
-                    Join Event
-                  </Button>
+                  <Link href={`/event-center/${event.id}`}>
+                    <Button color="secondary" className="text-white mt-2">
+                      View Event
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

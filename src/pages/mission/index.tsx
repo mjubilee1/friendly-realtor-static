@@ -1,7 +1,7 @@
 import React from 'react';
-import { montrell } from '../assets';
+import { montrell } from '../../assets';
 import Image from 'next/image';
-import { Container } from '../components/UI';
+import { Container } from '../../components/UI';
 
 const MissionPage = () => {
   return (
