@@ -19,7 +19,10 @@ export const EventCategories = [
   { value: 'community_outreach_events', label: 'Community Outreach Events' },
   { value: 'realtor_appreciation_dinners', label: 'Realtor Appreciation Dinners' },
   { value: 'mortgage_and_financing_workshops', label: 'Mortgage and Financing Workshops' },
-  { value: 'real_estate_technology_demonstrations', label: 'Real Estate Technology Demonstrations' },
+  {
+    value: 'real_estate_technology_demonstrations',
+    label: 'Real Estate Technology Demonstrations',
+  },
   { value: 'property_market_updates', label: 'Property Market Updates' },
 ];
 
@@ -52,7 +55,7 @@ const EventCenterPage = () => {
     fetchEvents();
   }, []);
 
-	const customStyles = {
+  const customStyles = {
     control: (provided) => ({
       ...provided,
       borderRadius: '8px',
@@ -60,12 +63,12 @@ const EventCenterPage = () => {
     }),
   };
 
-	const filteredEvents = useMemo(() => {
-		if (selectedEvent) {
-			return events.filter((event) => event.category === selectedEvent);
-		}
-		return events; // Display all events when selectedEvent is empty
-	}, [events, selectedEvent]);
+  const filteredEvents = useMemo(() => {
+    if (selectedEvent) {
+      return events.filter((event) => event.category === selectedEvent);
+    }
+    return events; // Display all events when selectedEvent is empty
+  }, [events, selectedEvent]);
 
   return (
     <Container
@@ -75,18 +78,18 @@ const EventCenterPage = () => {
       className="min-h-screen bg-gray-100 py-6 px-4"
     >
       <div>
-				<div className='flex justify-between items-center'>
-        <Header as="h1" className="text-3xl font-extrabold text-gray-900 mb-6">
-          Event Center
-        </Header>
-				<Select
-					id="event-center-select"
-					options={EventCategories}
-					placeholder="Select Category"
-					onChange={(selectedOption) => setSelectedEvent(selectedOption.value)}
-					styles={customStyles}
-				/>
-				</div>
+        <div className="flex justify-between items-center">
+          <Header as="h1" className="text-3xl font-extrabold text-gray-900 mb-6">
+            Event Center
+          </Header>
+          <Select
+            id="event-center-select"
+            options={EventCategories}
+            placeholder="Select Category"
+            onChange={(selectedOption) => setSelectedEvent(selectedOption.value)}
+            styles={customStyles}
+          />
+        </div>
         <div className="my-4 text-black">
           Elevate your home buying journey with our Event Center, showcasing local events such as
           seminars and informational gatherings. Engage with participants, learn from seasoned
@@ -111,7 +114,7 @@ const EventCenterPage = () => {
                   <p>Organizer: {event.organizer}</p>
                   <p data-tooltip-id="my-tooltip-1">
                     Description: {truncateDescription(event.description, 15)}{' '}
-										</p>
+                  </p>
                   <p>
                     Total Participants: {event.participants.length} | {event.totalParticipants}
                   </p>

@@ -7,7 +7,7 @@ import { EventCategories } from '.';
 
 const EventPage = ({ data }) => {
   const [event, setEvent] = useState();
-	const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { openLoginModal } = useAppStore();
   const [duplicateMsg, setDuplicateMsg] = useState<string>('');
   const { user } = useAuthContext();
@@ -59,7 +59,7 @@ const EventPage = ({ data }) => {
   const imgAlt = event.title || 'Event Photo';
   const category = EventCategories.find((category) => category.value === event.category)?.label;
 
-	return (
+  return (
     <Container
       seoProps={{
         title: `${event.title} - FriendlyRealtor` || '',
@@ -78,7 +78,16 @@ const EventPage = ({ data }) => {
       className="event-container"
     >
       <div className="mx-auto p-4 md:p-8 max-w-2xl">
-        <Image src={imgUrl} alt={imgAlt} width={850} height={650} className="w-full mb-8 rounded-lg" />
+        <Image
+          src={imgUrl}
+          alt={imgAlt}
+          width={850}
+          height={650}
+          className="w-full mb-8 rounded-lg"
+        />
+        <Button color="secondary" className="text-white my-4 px-10" onClick={handleJoinEvent}>
+          Join Event
+        </Button>
         {duplicateMsg && <div className="text-red-600 my-4">{duplicateMsg}</div>}
         <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
         <p className="mb-2 text-lg italic">Location: {event.location}</p>
@@ -88,9 +97,6 @@ const EventPage = ({ data }) => {
         <p className="mb-2 text-lg italic">End Time: {event.dateEndTime}</p>
         <p className="mb-4 leading-relaxed">Description: {event.description}</p>
         <p className="mb-2 text-lg italic">Total Participants: {event.totalParticipants}</p>
-        <Button color="secondary" className="text-white mt-2" onClick={handleJoinEvent}>
-          Join Event
-        </Button>
       </div>
     </Container>
   );
