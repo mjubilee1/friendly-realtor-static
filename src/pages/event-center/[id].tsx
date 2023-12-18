@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useAuthContext, firestore } from '../../context';
 import { useAppStore } from '../../stores';
+import { EventCategories } from '.';
 
 const EventPage = ({ data }) => {
   const [event, setEvent] = useState();
@@ -56,8 +57,9 @@ const EventPage = ({ data }) => {
     event.photo ||
     'https://images.ctfassets.net/v3wxyl8kvdve/eHixnDXrSzYiTSusWBxvI/1239c81dc28ebc88d67dac22c2c9f003/1_jeAJ1_Kb4XacKzNFxlD2Og.webp';
   const imgAlt = event.title || 'Event Photo';
+  const category = EventCategories.find((category) => category.value === event.category)?.label;
 
-  return (
+	return (
     <Container
       seoProps={{
         title: `${event.title} - FriendlyRealtor` || '',
@@ -80,7 +82,12 @@ const EventPage = ({ data }) => {
         {duplicateMsg && <div className="text-red-600 my-4">{duplicateMsg}</div>}
         <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
         <p className="mb-2 text-lg italic">Location: {event.location}</p>
-        <p className="mb-4 leading-relaxed">{event.description}</p>
+        <p className="mb-2 text-lg italic">Category: {category}</p>
+        <p className="mb-2 text-lg italic">Date: {event.eventDate}</p>
+        <p className="mb-2 text-lg italic">Start Time: {event.dateStartTime}</p>
+        <p className="mb-2 text-lg italic">End Time: {event.dateEndTime}</p>
+        <p className="mb-4 leading-relaxed">Description: {event.description}</p>
+        <p className="mb-2 text-lg italic">Total Participants: {event.totalParticipants}</p>
         <Button color="secondary" className="text-white mt-2" onClick={handleJoinEvent}>
           Join Event
         </Button>
