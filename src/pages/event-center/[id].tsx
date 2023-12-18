@@ -16,6 +16,12 @@ const EventPage = ({ data }) => {
     setEvent(data);
   }, [data]);
 
+  useEffect(() => {
+    if (!!event && !!user && event.participants.includes(user.id)) {
+      setDuplicateMsg('User is already successfully added to the event.');
+    }
+  }, [user, event]);
+
   if (!event) {
     return (
       <div className="container mx-auto px-4">
@@ -27,13 +33,6 @@ const EventPage = ({ data }) => {
   const handleJoinEvent = async () => {
     if (user) {
       setLoading(true); // Set the saving state to indicate that the operation is in progress
-
-      // Check if the user's ID is already in the participants array
-      if (event.participants.includes(user.id)) {
-        setDuplicateMsg('User is already successfully added to the event.');
-        setLoading(false);
-      }
-
       // Add the user's ID to the participants array
       const updatedParticipants = [...event.participants, user.id];
 
@@ -41,6 +40,7 @@ const EventPage = ({ data }) => {
       const eventRef = doc(firestore, 'events', event.id);
 
       try {
+        console.log(' am i updating eveents');
         // Update the document with the updated participants array
         await updateDoc(eventRef, { participants: updatedParticipants });
       } catch (error) {
@@ -85,7 +85,12 @@ const EventPage = ({ data }) => {
           height={650}
           className="w-full mb-8 rounded-lg"
         />
-        <Button color="secondary" className="text-white my-4 px-10" onClick={handleJoinEvent}>
+        <Button
+          color="secondary"
+          className="text-white my-4 px-10"
+          loading={loading}
+          onClick={handleJoinEvent}
+        >
           Join Event
         </Button>
         {duplicateMsg && <div className="text-red-600 my-4">{duplicateMsg}</div>}
