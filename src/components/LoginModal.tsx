@@ -27,19 +27,11 @@ export const LoginModal = ({ mobile = false }) => {
 
   useEffect(() => {
     if (isLoginModalOpen) {
-      // Check if the user object exists (replace 'userObject' with the actual object or property you use)
-      const userObjectExists = user !== null && user !== undefined;
-
-      // If userObject doesn't exist, add the login:true query parameter
-      const queryParameters = userObjectExists ? {} : { login: true };
-
-      // Merge the query parameters with the existing ones
+      const queryParameters = { login: true };
       const updatedQuery = { ...router.query, ...queryParameters };
-
-      // Update the route with the new query parameters
       router.push({ pathname: router.pathname, query: updatedQuery });
     }
-  }, [isLoginModalOpen, user, router]);
+  }, [isLoginModalOpen]);
 
   const handleSubmit = useCallback(
     async (values) => {

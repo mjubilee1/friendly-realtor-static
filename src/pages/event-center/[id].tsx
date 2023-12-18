@@ -85,14 +85,16 @@ const EventPage = ({ data }) => {
           height={650}
           className="w-full mb-8 rounded-lg"
         />
-        {!duplicateMsg && <Button
-          color="secondary"
-          className="text-white my-4 px-10"
-          loading={loading}
-          onClick={handleJoinEvent}
-        >
-          Join Event
-        </Button>}
+        {!duplicateMsg && (
+          <Button
+            color="secondary"
+            className="text-white my-4 px-10"
+            loading={loading}
+            onClick={handleJoinEvent}
+          >
+            Join Event
+          </Button>
+        )}
         {duplicateMsg && <div className="text-red-600 my-4">{duplicateMsg}</div>}
         <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
         <p className="mb-2 text-lg italic">Location: {event.location}</p>

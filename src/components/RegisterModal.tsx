@@ -38,20 +38,11 @@ export const RegisterModal = ({ mobile = false }) => {
 
   useEffect(() => {
     if (isRegisterModalOpen) {
-      // Check if the user object exists (replace 'userObject' with the actual object or property you use)
-      const userObjectExists = user !== null && user !== undefined;
-
-      // If userObject doesn't exist, add the registration:true query parameter
-      const queryParameters = userObjectExists ? {} : { registration: true };
-
-      // Merge the query parameters with the existing ones
+      const queryParameters = { registration: true };
       const updatedQuery = { ...router.query, ...queryParameters };
-
-      // Update the route with the new query parameters
       router.push({ pathname: router.pathname, query: updatedQuery });
     }
-  }, [isRegisterModalOpen, user, router]);
-
+  }, [isRegisterModalOpen]);
   const handleSignUp = async (values) => {
     setLoading(true);
     try {
