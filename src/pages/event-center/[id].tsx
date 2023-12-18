@@ -1,11 +1,12 @@
 import { Header, Image, Container, Button } from '../../components/UI';
 import { useEffect, useState } from 'react';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useAuthContext, firestore } from '../../context';
 import { useAppStore } from '../../stores';
 
 const EventPage = ({ data }) => {
   const [event, setEvent] = useState();
+	const [loading, setLoading] = useState(false);
   const { openLoginModal } = useAppStore();
   const [duplicateMsg, setDuplicateMsg] = useState<string>('');
   const { user } = useAuthContext();
@@ -22,16 +23,14 @@ const EventPage = ({ data }) => {
     );
   }
 
-  const handleJoinEvent = async (id) => {
+  const handleJoinEvent = async () => {
     if (user) {
       setLoading(true); // Set the saving state to indicate that the operation is in progress
 
-      const event = events.find((event) => event.id === id);
       // Check if the user's ID is already in the participants array
       if (event.participants.includes(user.id)) {
         setDuplicateMsg('User is already successfully added to the event.');
         setLoading(false);
-        return;
       }
 
       // Add the user's ID to the participants array
@@ -82,7 +81,7 @@ const EventPage = ({ data }) => {
         <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
         <p className="mb-2 text-lg italic">Location: {event.location}</p>
         <p className="mb-4 leading-relaxed">{event.description}</p>
-        <Button color="secondary" className="text-white mt-2">
+        <Button color="secondary" className="text-white mt-2" onClick={handleJoinEvent}>
           Join Event
         </Button>
       </div>
