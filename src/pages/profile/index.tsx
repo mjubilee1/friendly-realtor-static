@@ -39,9 +39,9 @@ const HouseHunter = () => {
   const [userMessages, setUserMessages] = useState([]);
   const [saving2, setSaving2] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [isPlaidLinked, setIsPlaidLinked] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [token, setToken] = useState(null);
+  const [frequency, setFrequency] = useState('');
 
   useEffect(() => {
     if (user?.creditScore) {
@@ -168,6 +168,7 @@ const HouseHunter = () => {
             });
           } else if (existingDoc.data()) {
             const data = existingDoc.data();
+						setFrequency(data.frequency);
             setAccounts(data.accounts);
           }
         }
@@ -266,6 +267,23 @@ const HouseHunter = () => {
       console.error('Error fetching document:', error);
     }
     setSaving(false);
+  };
+
+	const handleOnChange = async (value) => {
+    setFrequency(value);
+    await updateFrequencyInFirestore(value);
+  };
+
+  const updateFrequencyInFirestore = async (value) => {
+    // Check if the accounts array exists (you may adjust this condition based on your data structure)
+    if (accounts && accounts.length > 0) {
+      // Assuming you have the necessary Firestore functions imported
+      const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+      const docRef = doc(plaidAccountsCollection, user.id);
+
+      // Update the frequency value in Firestore
+      await updateDoc(docRef, { frequency: value || '' });
+    }
   };
 
   const onPlaidSuccess = async (publicToken, metadata) => {
@@ -511,7 +529,9 @@ const HouseHunter = () => {
                   label: 'Monthly',
                 },
               ]}
-              placeholder="Select Schedule"
+							value={{ value: frequency, label: frequency.charAt(0).toUpperCase() + frequency.slice(1) }}
+              placeholder="Select Transfer Schedule"
+							onChange={(selectedOption) => handleOnChange(selectedOption.value)}
               styles={customStyles}
             />
             <p className="text-gray-600 mt-2">
