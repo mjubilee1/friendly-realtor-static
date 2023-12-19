@@ -40,29 +40,29 @@ const EventPage = ({ data }) => {
       const eventRef = doc(firestore, 'events', event.id);
 
       try {
-				const eventDateTimeString = `${event?.eventDate} ${event?.dateStartTime} - ${event?.dateEndTime}`;
+        const eventDateTimeString = `${event?.eventDate} ${event?.dateStartTime} - ${event?.dateEndTime}`;
 
-         // Send a POST request to your send-event-email API
-				 const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/send-event-email`, {
-					method: 'POST',
-					headers: {
-							'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-							email: user.emailAddress,
-							virtual: event.virtual || false,
-							link: event.link || '',
-							location: event.location || '',
-							date: eventDateTimeString,
-							name: event.title
-					}),
-			});
+        // Send a POST request to your send-event-email API
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/send-event-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: user.emailAddress,
+            virtual: event.virtual || false,
+            link: event.link || '',
+            location: event.location || '',
+            date: eventDateTimeString,
+            name: event.title,
+          }),
+        });
 
-			if (response.ok) {
-					console.log('Email sent successfully!');
-			} else {
-					console.error('Error sending email:', response.statusText);
-			}
+        if (response.ok) {
+          console.log('Email sent successfully!');
+        } else {
+          console.error('Error sending email:', response.statusText);
+        }
         // Update the document with the updated participants array
         await updateDoc(eventRef, { participants: updatedParticipants });
       } catch (error) {

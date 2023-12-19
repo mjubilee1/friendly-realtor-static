@@ -3723,6 +3723,7 @@ __metadata:
     react-hook-form: ^7.45.3
     react-markdown: ^8.0.7
     react-merge-refs: ^2.0.2
+    react-plaid-link: ^3.5.1
     react-select: ^5.7.4
     react-simple-star-rating: ^5.1.7
     react-social-icons: ^5.15.0
@@ -6860,6 +6861,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-plaid-link@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "react-plaid-link@npm:3.5.1"
+  dependencies:
+    prop-types: ^15.7.2
+    react-script-hook: ^1.6.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 35e9d8ebd1423dc8fe49045b8adb6eae27868876ae64e606a74fa13b01c6067496115dea49181f626cb6ba0b3006c83292c71411d5d440c1546610d69406cde4
+  languageName: node
+  linkType: hard
+
 "react-popper@npm:^2.3.0":
   version: 2.3.0
   resolution: "react-popper@npm:2.3.0"
@@ -6871,6 +6885,16 @@ __metadata:
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
   checksum: 837111c98738011c69b3069a464ea5bdcbf487105b6148e8faf90cb7337e134edb1b98b8824322941c378756cca30a15c18c25f558e53b85ed5762fa0dc8e6b2
+  languageName: node
+  linkType: hard
+
+"react-script-hook@npm:^1.6.0":
+  version: 1.7.2
+  resolution: "react-script-hook@npm:1.7.2"
+  peerDependencies:
+    react: ^16.8.6 || 17 - 18
+    react-dom: ^16.8.6 || 17 - 18
+  checksum: 74fb5ec2e6ec7eccad64a7a3b7e0d16e01e487d0880e7f123ad7433975707cfed47be604ce5cfd0d5c43d89be3f1a4fad46eba7d0bacd41f810705f30d958fa5
   languageName: node
   linkType: hard
 

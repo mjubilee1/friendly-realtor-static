@@ -5,12 +5,21 @@ import { Form } from '../../components/UI/Form';
 import { Radio } from '../../components/UI/Form/Radio';
 import { FileInput } from '../../components/UI/Form/FileInput';
 import { useForm } from 'react-hook-form';
-import { doc, getDoc, updateDoc, collection, Timestamp } from 'firebase/firestore';
+import { Select } from '../../components/UI/Select';
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  collection,
+  Timestamp,
+  setDoc,
+  serverTimestamp,
+} from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import Image from 'next/image';
 import { ref as databaseRef, push, set, onValue } from 'firebase/database';
 import moment from 'moment'; // Import moment.js for timestamp formatting
 import { filter } from 'lodash';
+import { PlaidLink } from 'react-plaid-link';
 
 const HouseHunter = () => {
   const { handleSubmit, register, reset, watch, setValue } = useForm({
@@ -30,6 +39,9 @@ const HouseHunter = () => {
   const [userMessages, setUserMessages] = useState([]);
   const [saving2, setSaving2] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [isPlaidLinked, setIsPlaidLinked] = useState(false);
+  const [accounts, setAccounts] = useState([]);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     if (user?.creditScore) {
@@ -124,6 +136,50 @@ const HouseHunter = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    const createPlaidLinkToken = async () => {
+      try {
+        if (user) {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/create-link-token`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId: user?.id || '' }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch Plaid Link token');
+          }
+          const data = await response.json();
+          setToken(data.link_token);
+          const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+          const docRef = doc(plaidAccountsCollection, user.id);
+
+          // Check if there's an existing document for the user
+          const existingDoc = await getDoc(docRef);
+          if (!existingDoc.exists()) {
+            // If no existing document, add a new one with the specified document ID
+            await setDoc(docRef, {
+              userId: user.id,
+              linkToken: data.link_token,
+              expiration: data.expiration,
+              createdAt: serverTimestamp(),
+            });
+          } else if (existingDoc.data()) {
+            const data = existingDoc.data();
+            setAccounts(data.accounts);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching Plaid Link token:', error);
+        // Handle the error as needed
+      }
+    };
+
+    createPlaidLinkToken();
+  }, [user]);
+
   const handleUserClick = (user) => {
     setSelectedUser(user);
   };
@@ -212,12 +268,74 @@ const HouseHunter = () => {
     setSaving(false);
   };
 
+  const onPlaidSuccess = async (publicToken, metadata) => {
+    try {
+      // Send the public token to your server to exchange it for an access token
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/set-access-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ public_token: publicToken }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to set access token');
+      }
+
+      const data = await response.json();
+
+      // Now data.access_token contains the access token
+      // Use data.access_token to fetch account information
+      const accountsResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/accounts`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${data.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!accountsResponse.ok) {
+        throw new Error('Failed to fetch accounts');
+      }
+
+      const accountsData = await accountsResponse.json();
+      const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+      const docRef = doc(plaidAccountsCollection, user.id);
+
+      // Check if there's an existing document for the user
+      const existingDoc = await getDoc(docRef);
+
+      if (existingDoc.exists()) {
+        // If there's an existing document, update it with the new accounts data
+        await updateDoc(docRef, {
+          accounts: accountsData.accounts, // assuming accountsData is the array of accounts
+          updatedAt: serverTimestamp(),
+        });
+      } else {
+        // If no existing document, you may choose to handle this case differently
+        console.error('No existing document found for the user.');
+      }
+      // Handle connected accounts as needed
+    } catch (error) {
+      console.error('Error handling Plaid success:', error);
+      // Handle the error as needed
+    }
+  };
+
   const formattedScore = 'NaN';
   if (!user) {
     return <div>You must be logged in to view this page.</div>;
   }
 
   const preapprovalText = preapproval && !!preapproval[0]?.name ? 'preapproval_document' : null;
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderRadius: '8px',
+      minHeight: 'unset',
+    }),
+  };
 
   return (
     <Container
@@ -226,131 +344,197 @@ const HouseHunter = () => {
         noindex: true,
       }}
     >
-      <div className="flex justify-between">
-        <Header as="h2">Welcome {`${user.firstName} ${user.lastName}`}</Header>
-        {/*<FreeReportModal user={user} setCreditProfile={setCreditProfile} />*/}
-      </div>
-      <Spacer />
-      <div className="my-4">
-        To help us better understand please fill out the form below if applicable.
-      </div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Row>
-          <Radio
-            label="Are you working with agent?"
-            options={[
-              {
-                name: 'Yes',
-                value: 'yes',
-              },
-              {
-                name: 'No',
-                value: 'no',
-              },
-            ]}
-            {...register('hasAgent')}
-          />
-        </Form.Row>
-        <Spacer />
-        <Form.Row>
-          <FileInput
-            label="Upload Preapproval"
-            {...register('preapproval')}
-            text={preapproval?.name || preapprovalText}
-          />
-        </Form.Row>
-        <Spacer />
-        <Form.Text
-          type="number"
-          label="What is your salary?"
-          placeholder="Salary"
-          {...register('salary')}
-        />
-        <Spacer className="mt-4" />
-        <Form.Row>
-          <Button type="submit" color="secondary" loading={saving}>
-            Save
-          </Button>
-        </Form.Row>
-      </Form>
-      <Spacer className="mb-6" />
-      {!!creditProfile ? (
-        <Bar number={creditProfile} />
-      ) : (
-        <div>Fill out the credit report to see credit score.</div>
-      )}
-      <div className="mt-8" />
-      {!!creditProfile && <p>{`You score is ${creditProfile}`}</p>}
-      <div className="mt-16" />
-      <Header as="h3" className="mb-4">
-        Messages
-      </Header>
-
-      <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/4 p-4">
-          {userMessages?.length > 0 && (
-            <div className="flex flex-col space-y-6">
-              {userMessages.map((message) => (
-                <div
-                  key={message.key}
-                  onClick={() => handleUserClick(message)}
-                  className="bg-white text-black rounded-lg shadow-md p-4 flex justify-between cursor-pointer transform transition hover:scale-105"
-                >
-                  <p className="text-lg font-semibold">{message.name}</p>
-                  <Button
-                    color="transparent"
-                    iconOnly
-                    icon={{ name: 'mail', color: 'secondary', size: 'large' }}
-                  />
-                </div>
-              ))}
-            </div>
+      <div className="flex flex-row flex-wrap">
+        <div className="flex-1">
+          <div className="flex justify-between">
+            <Header as="h2">Welcome {`${user.firstName} ${user.lastName}`}</Header>
+            {/*<FreeReportModal user={user} setCreditProfile={setCreditProfile} />*/}
+          </div>
+          <Spacer />
+          <div className="my-4">
+            To help us better understand please fill out the form below if applicable.
+          </div>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Row>
+              <Radio
+                label="Are you working with agent?"
+                options={[
+                  {
+                    name: 'Yes',
+                    value: 'yes',
+                  },
+                  {
+                    name: 'No',
+                    value: 'no',
+                  },
+                ]}
+                {...register('hasAgent')}
+              />
+            </Form.Row>
+            <Spacer />
+            <Form.Row>
+              <FileInput
+                label="Upload Preapproval"
+                {...register('preapproval')}
+                text={preapproval?.name || preapprovalText}
+              />
+            </Form.Row>
+            <Spacer />
+            <Form.Text
+              type="number"
+              label="What is your salary?"
+              placeholder="Salary"
+              {...register('salary')}
+            />
+            <Spacer className="mt-4" />
+            <Form.Row>
+              <Button type="submit" color="secondary" loading={saving}>
+                Save
+              </Button>
+            </Form.Row>
+          </Form>
+          <Spacer className="mb-6" />
+          {!!creditProfile ? (
+            <Bar number={creditProfile} />
+          ) : (
+            <div>Fill out the credit report to see credit score.</div>
           )}
-        </div>
-        <div className="lg:w-3/4 p-4">
-          {selectedUser?.id && (
-            <>
-              <div className="space-y-6">
-                {filter(messages, (message) => message.key === selectedUser.id).map((message) => {
-                  const isProfileUser = message.senderId === user.id;
-                  return (
+          <div className="mt-8" />
+          {!!creditProfile && <p>{`You score is ${creditProfile}`}</p>}
+          <div className="mt-16" />
+          <Header as="h3" className="mb-4">
+            Messages
+          </Header>
+          <div className="flex flex-col lg:flex-row">
+            <div className="p-4">
+              {userMessages?.length > 0 && (
+                <div className="flex flex-col space-y-6">
+                  {userMessages.map((message) => (
                     <div
-                      className={`${
-                        isProfileUser ? 'bg-gray-800' : 'bg-gray-500'
-                      } rounded p-4 text-white`}
+                      key={message.key}
+                      onClick={() => handleUserClick(message)}
+                      className="bg-white text-black rounded-lg shadow-md p-4 flex justify-between cursor-pointer transform transition hover:scale-105"
                     >
-                      <p className="text-lg font-semibold">
-                        {isProfileUser
-                          ? message.buyer?.firstName + ' ' + message.buyer?.lastName
-                          : message.user?.name}
-                      </p>
-                      <p className="text-white">{message.content}</p>
-                      <p className="text-white italic text-xs">{message.formattedTimestamp}</p>
+                      <p className="text-lg font-semibold">{message.name}</p>
+                      <Button
+                        color="transparent"
+                        iconOnly
+                        icon={{ name: 'mail', color: 'secondary', size: 'large' }}
+                      />
                     </div>
-                  );
-                })}
-              </div>
-              <div className="mt-4">
-                <textarea
-                  className="w-full h-20 p-4 mb-4 text-black rounded border-black border-2"
-                  placeholder="Type your message..."
-                  value={messageText}
-                  onChange={(event) => {
-                    setMessageText(event?.target.value);
-                  }}
-                />
-                <Button
-                  color="secondary"
-                  onClick={() => {
-                    handleSendMessage(selectedUser.id);
-                  }}
-                  loading={saving2}
-                >
-                  Send Message
-                </Button>
-              </div>
-            </>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="p-4">
+              {selectedUser?.id && (
+                <>
+                  <div className="space-y-6">
+                    {filter(messages, (message) => message.key === selectedUser.id).map(
+                      (message) => {
+                        const isProfileUser = message.senderId === user.id;
+                        return (
+                          <div
+                            className={`${
+                              isProfileUser ? 'bg-gray-800' : 'bg-gray-500'
+                            } rounded p-4 text-white`}
+                          >
+                            <p className="text-lg font-semibold">
+                              {isProfileUser
+                                ? message.buyer?.firstName + ' ' + message.buyer?.lastName
+                                : message.user?.name}
+                            </p>
+                            <p className="text-white">{message.content}</p>
+                            <p className="text-white italic text-xs">
+                              {message.formattedTimestamp}
+                            </p>
+                          </div>
+                        );
+                      },
+                    )}
+                  </div>
+                  <div className="mt-4">
+                    <textarea
+                      className="w-full h-20 p-4 mb-4 text-black rounded border-black border-2"
+                      placeholder="Type your message..."
+                      value={messageText}
+                      onChange={(event) => {
+                        setMessageText(event?.target.value);
+                      }}
+                    />
+                    <Button
+                      color="secondary"
+                      onClick={() => {
+                        handleSendMessage(selectedUser.id);
+                      }}
+                      loading={saving2}
+                    >
+                      Send Message
+                    </Button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="px-2">
+          <Header as="h1">Payment Method</Header>
+          <p className="my-2">
+            Add your payment method information here, providing the necessary details for a seamless
+            transaction.
+          </p>
+          {token && (
+            <PlaidLink
+              token={token}
+              onSuccess={onPlaidSuccess}
+              // onEvent={...}
+              // onExit={...}
+              style={{ backgroundColor: '#000000' }}
+            >
+              Connect bank account
+            </PlaidLink>
           )}
+          <div className="my-6">
+            <Select
+              id="plaid-select"
+              options={[
+                {
+                  value: 'weekly',
+                  label: 'Weekly',
+                },
+                {
+                  value: 'bi-weekly',
+                  label: 'Bi Weekly',
+                },
+                {
+                  value: 'monthly',
+                  label: 'Monthly',
+                },
+              ]}
+              placeholder="Select Schedule"
+              styles={customStyles}
+            />
+            <p className="text-gray-600 mt-2">
+              Choose how often you want to transfer money into your other account.
+            </p>
+          </div>
+
+          {accounts.map((account) => (
+            <div key={account.account_id} className="mt-6 ml-6">
+              <div className="flex flex-row gap-2">
+                <Header as="h5">Name: </Header>
+                <div>{account.name}</div>
+              </div>
+              <div className="flex flex-row gap-2">
+                <Header as="h5">Type: </Header>
+                <div>{account.subtype}</div>
+              </div>
+              <div className="flex flex-row gap-2">
+                <Header as="h5">Current Balance:</Header>
+                <div>${account.balances.current}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </Container>
