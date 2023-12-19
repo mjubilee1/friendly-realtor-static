@@ -16,6 +16,12 @@ const EventPage = ({ data }) => {
     setEvent(data);
   }, [data]);
 
+  useEffect(() => {
+    if (!!event && !!user && event.participants.includes(user.id)) {
+      setDuplicateMsg('User is already successfully added to the event.');
+    }
+  }, [user, event]);
+
   if (!event) {
     return (
       <div className="container mx-auto px-4">
@@ -27,13 +33,6 @@ const EventPage = ({ data }) => {
   const handleJoinEvent = async () => {
     if (user) {
       setLoading(true); // Set the saving state to indicate that the operation is in progress
-
-      // Check if the user's ID is already in the participants array
-      if (event.participants.includes(user.id)) {
-        setDuplicateMsg('User is already successfully added to the event.');
-        setLoading(false);
-      }
-
       // Add the user's ID to the participants array
       const updatedParticipants = [...event.participants, user.id];
 
@@ -41,6 +40,29 @@ const EventPage = ({ data }) => {
       const eventRef = doc(firestore, 'events', event.id);
 
       try {
+				const eventDateTimeString = `${event?.eventDate} ${event?.dateStartTime} - ${event?.dateEndTime}`;
+
+         // Send a POST request to your send-event-email API
+				 const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/send-event-email`, {
+					method: 'POST',
+					headers: {
+							'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+							email: user.emailAddress,
+							virtual: event.virtual || false,
+							link: event.link || '',
+							location: event.location || '',
+							date: eventDateTimeString,
+							name: event.title
+					}),
+			});
+
+			if (response.ok) {
+					console.log('Email sent successfully!');
+			} else {
+					console.error('Error sending email:', response.statusText);
+			}
         // Update the document with the updated participants array
         await updateDoc(eventRef, { participants: updatedParticipants });
       } catch (error) {
@@ -85,9 +107,16 @@ const EventPage = ({ data }) => {
           height={650}
           className="w-full mb-8 rounded-lg"
         />
-        <Button color="secondary" className="text-white my-4 px-10" onClick={handleJoinEvent}>
-          Join Event
-        </Button>
+        {!duplicateMsg && (
+          <Button
+            color="secondary"
+            className="text-white my-4 px-10"
+            loading={loading}
+            onClick={handleJoinEvent}
+          >
+            Join Event
+          </Button>
+        )}
         {duplicateMsg && <div className="text-red-600 my-4">{duplicateMsg}</div>}
         <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
         <p className="mb-2 text-lg italic">Location: {event.location}</p>
