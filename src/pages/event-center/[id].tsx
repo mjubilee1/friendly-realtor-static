@@ -112,7 +112,7 @@ const EventPage = ({ data }) => {
           height={650}
           className="w-full mb-8 rounded-lg"
         />
-        {duplicateMsg && (
+        {!duplicateMsg && (
           <Button
             color="secondary"
             className="text-white my-4 px-10"
