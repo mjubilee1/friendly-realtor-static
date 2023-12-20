@@ -437,28 +437,34 @@ const HouseHunter = () => {
         setMsg('Connect Bank Account First');
         return;
       }
+      const fromAccount = accounts.find((account) => account.name === sourceAccount);
+      const toAccount = accounts.find((account) => account.name === destinationAccount);
 
       const transferData = {
         accessToken: accessToken,
-        fromAccountID: 'your_from_account_id',
-        toAccountID: 'your_to_account_id',
+        fromAccountID: fromAccount?.account_id || '',
+        toAccountID: toAccount?.account_id || '',
         amount: recurringAmount,
         frequency: frequency,
+        name: user.firstName + ' ' + user.lastName,
       };
 
-      /*const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/create-recurring-transfer`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(transferData),
-			});*/
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/create-recurring-transfer`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(transferData),
+        },
+      );
 
       const responseData = await response.json();
 
       if (response.ok) {
         // Transfer created successfully
-        setMsg('Recurring transfer set up successfully');
+        setMsg('');
       } else {
         // Handle error
         setMsg(`Error setting up recurring transfer: ${responseData.error || 'Unknown error'}`);
@@ -731,10 +737,10 @@ const HouseHunter = () => {
             loading={transferLoading}
             className="bg-blue-500 my-4 round-sm py-2"
           >
-            Join Recurring Transfer
+            {accessToken ? 'Manage Recurring Payments' : 'Enroll in Recurring Payments'}
           </Button>
           {accessToken && (
-            <div className="flex flex-row flex-wrap just-between border-2 border-white">
+            <div className="flex flex-row mt-6 flex-wrap just-between border-2 border-white">
               {accounts?.length > 0 &&
                 accounts.map((sourceAccount) => (
                   <div key={sourceAccount.account_id} className="mt-6 ml-6">
