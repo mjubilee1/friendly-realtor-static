@@ -1,9 +1,10 @@
 import { Header, Image, Container, Button } from '../../components/UI';
 import { useEffect, useState } from 'react';
-import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore';
 import { useAuthContext, firestore } from '../../context';
 import { useAppStore } from '../../stores';
 import { EventCategories } from '.';
+import moment from 'moment';
 
 const EventPage = ({ data }) => {
   const [event, setEvent] = useState();
@@ -11,7 +12,7 @@ const EventPage = ({ data }) => {
   const { openLoginModal } = useAppStore();
   const [duplicateMsg, setDuplicateMsg] = useState<string>('');
   const { user } = useAuthContext();
-
+  const [message, setMessage] = useState<string>('');
   useEffect(() => {
     setEvent(data);
   }, [data]);
@@ -51,7 +52,7 @@ const EventPage = ({ data }) => {
           body: JSON.stringify({
             email: user.emailAddress,
             virtual: event.virtual || false,
-            link: event.link || '',
+            eventLink: event.link || '',
             location: event.location || '',
             date: eventDateTimeString,
             name: event.title,
@@ -59,12 +60,16 @@ const EventPage = ({ data }) => {
         });
 
         if (response.ok) {
-          console.log('Email sent successfully!');
+          setMessage('Email sent successfully!, check your email');
         } else {
-          console.error('Error sending email:', response.statusText);
+          setMessage(`Error sending email:', ${response.statusText}`);
         }
         // Update the document with the updated participants array
         await updateDoc(eventRef, { participants: updatedParticipants });
+
+        setTimeout(() => {
+          setMessage('');
+        }, [2000]);
       } catch (error) {
         console.error('Error updating event:', error);
       } finally {
@@ -107,7 +112,7 @@ const EventPage = ({ data }) => {
           height={650}
           className="w-full mb-8 rounded-lg"
         />
-        {!duplicateMsg && (
+        {duplicateMsg && (
           <Button
             color="secondary"
             className="text-white my-4 px-10"
@@ -117,6 +122,7 @@ const EventPage = ({ data }) => {
             Join Event
           </Button>
         )}
+        {message && <div className="text-green-500">{message}</div>}
         {duplicateMsg && <div className="text-red-600 my-4">{duplicateMsg}</div>}
         <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
         <p className="mb-2 text-lg italic">Location: {event.location}</p>
@@ -149,6 +155,10 @@ export async function getStaticProps({ params }) {
 
   try {
     const eventDocSnapshot = await getDoc(eventDocRef);
+    const createdAt =
+      eventDocSnapshot.data()?.createdAt instanceof Timestamp
+        ? moment(eventDocSnapshot.data()?.createdAt.toDate()).format('MMMM Do YYYY, h:mm:ss a')
+        : null;
 
     if (!eventDocSnapshot.exists()) {
       return {
@@ -156,7 +166,7 @@ export async function getStaticProps({ params }) {
       };
     }
 
-    const eventData = { id: eventDocSnapshot.id, ...eventDocSnapshot.data() };
+    const eventData = { ...eventDocSnapshot.data(), id: eventDocSnapshot.id, createdAt: createdAt };
 
     return {
       props: {
