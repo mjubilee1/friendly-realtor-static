@@ -41,7 +41,9 @@ const HouseHunter = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const [token, setToken] = useState(null);
+	const [accessToken, setAccessToken] = useState(null);
   const [frequency, setFrequency] = useState('');
+	const [unlinkLoading, setUnlinkLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (user?.creditScore) {
@@ -140,36 +142,40 @@ const HouseHunter = () => {
     const createPlaidLinkToken = async () => {
       try {
         if (user) {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/create-link-token`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userId: user?.id || '' }),
-          });
+					const response = await fetch(
+						`${process.env.NEXT_PUBLIC_SERVER_URL}/create-link-token`,
+						{
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({ userId: user?.id || '' }),
+						},
+					);
 
-          if (!response.ok) {
-            throw new Error('Failed to fetch Plaid Link token');
-          }
-          const data = await response.json();
-          setToken(data.link_token);
+					if (!response.ok) {
+						throw new Error('Failed to fetch Plaid Link token');
+					}
+					const res = await response.json();
+
+					setToken(res.link_token)
           const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
           const docRef = doc(plaidAccountsCollection, user.id);
 
           // Check if there's an existing document for the user
           const existingDoc = await getDoc(docRef);
           if (!existingDoc.exists()) {
+
             // If no existing document, add a new one with the specified document ID
             await setDoc(docRef, {
               userId: user.id,
-              linkToken: data.link_token,
-              expiration: data.expiration,
               createdAt: serverTimestamp(),
             });
           } else if (existingDoc.data()) {
             const data = existingDoc.data();
-						setFrequency(data.frequency);
+            setFrequency(data.frequency);
             setAccounts(data.accounts);
+            setAccessToken(data.plaidAccessToken);
           }
         }
       } catch (error) {
@@ -269,7 +275,7 @@ const HouseHunter = () => {
     setSaving(false);
   };
 
-	const handleOnChange = async (value) => {
+  const handleOnChange = async (value) => {
     setFrequency(value);
     await updateFrequencyInFirestore(value);
   };
@@ -303,13 +309,11 @@ const HouseHunter = () => {
 
       const data = await response.json();
 
-      // Now data.access_token contains the access token
-      // Use data.access_token to fetch account information
       const accountsResponse = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/accounts`, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${data.access_token}`,
           'Content-Type': 'application/json',
+					'Authorization': `Bearer ${data.access_token}`,
         },
       });
 
@@ -328,8 +332,11 @@ const HouseHunter = () => {
         // If there's an existing document, update it with the new accounts data
         await updateDoc(docRef, {
           accounts: accountsData.accounts, // assuming accountsData is the array of accounts
+          institution: metadata.institution,
+          plaidAccessToken: data.access_token,
           updatedAt: serverTimestamp(),
         });
+				setAccessToken(data.access_token)
       } else {
         // If no existing document, you may choose to handle this case differently
         console.error('No existing document found for the user.');
@@ -339,6 +346,39 @@ const HouseHunter = () => {
       console.error('Error handling Plaid success:', error);
       // Handle the error as needed
     }
+  };
+
+  const handleUnlinkBankAccount = async () => {
+    try {
+			setUnlinkLoading(true);
+      // Call your server endpoint to unlink the bank account
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/unlink-bank-account`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ plaidAccessToken: accessToken }),
+      });
+
+      if (response.ok) {
+				 // Query Firestore to update plaidAccessToken to null
+				 const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+				 const docRef = doc(plaidAccountsCollection, user.id);
+	 
+				 // Check if there's an existing document for the user
+				 const existingDoc = await getDoc(docRef);
+	 
+				 if (existingDoc.exists()) {
+					 // Update the document to set plaidAccessToken to null
+					 await updateDoc(docRef, { plaidAccessToken: null });
+				 }
+				setAccessToken(null);
+      }
+    } catch (error) {
+      console.error('Error unlinking bank account:', error);
+    } finally {
+			setUnlinkLoading(false);
+		}
   };
 
   const formattedScore = 'NaN';
@@ -501,16 +541,25 @@ const HouseHunter = () => {
             Add your payment method information here, providing the necessary details for a seamless
             transaction.
           </p>
-          {token && (
-            <PlaidLink
-              token={token}
-              onSuccess={onPlaidSuccess}
-              // onEvent={...}
-              // onExit={...}
-              style={{ backgroundColor: '#000000' }}
+          {!accessToken ? (
+            <>
+              <PlaidLink
+                token={token}
+                onSuccess={onPlaidSuccess}
+                style={{ backgroundColor: '#000000' }}
+              >
+                Connect bank account
+              </PlaidLink>
+            </>
+          ) : (
+            <Button
+              onClick={handleUnlinkBankAccount}
+							loading={unlinkLoading}
+							color="black"
+              className="bg-red-500 rounded-sm text-white px-4 py-2 hover:bg-red-600"
             >
-              Connect bank account
-            </PlaidLink>
+              Unlink bank account
+            </Button>
           )}
           <div className="my-6">
             <Select
@@ -529,9 +578,12 @@ const HouseHunter = () => {
                   label: 'Monthly',
                 },
               ]}
-							value={{ value: frequency, label: frequency.charAt(0).toUpperCase() + frequency.slice(1) }}
+              value={{
+                value: frequency,
+                label: frequency.charAt(0).toUpperCase() + frequency.slice(1),
+              }}
               placeholder="Select Transfer Schedule"
-							onChange={(selectedOption) => handleOnChange(selectedOption.value)}
+              onChange={(selectedOption) => handleOnChange(selectedOption.value)}
               styles={customStyles}
             />
             <p className="text-gray-600 mt-2">
@@ -539,7 +591,7 @@ const HouseHunter = () => {
             </p>
           </div>
 
-          {accounts.map((account) => (
+          {accessToken && accounts.map((account) => (
             <div key={account.account_id} className="mt-6 ml-6">
               <div className="flex flex-row gap-2">
                 <Header as="h5">Name: </Header>
