@@ -28,7 +28,7 @@ export const Select = React.forwardRef<
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isSelected ? '#3182CE' : 'white',
-      color: state.isSelected ? 'white' : 'black',
+      color: 'black',
       padding: '8px',
     }),
     singleValue: (provided) => ({

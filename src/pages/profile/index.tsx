@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useAuthContext, firestore, fireStorage, realtimeDb } from '../../context';
 import { Bar, Button, Header, Spacer, Container } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
@@ -41,9 +41,14 @@ const HouseHunter = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const [token, setToken] = useState(null);
-	const [accessToken, setAccessToken] = useState(null);
-  const [frequency, setFrequency] = useState('');
-	const [unlinkLoading, setUnlinkLoading] = useState<boolean>(false);
+  const [accessToken, setAccessToken] = useState(null);
+  const [frequency, setFrequency] = useState<string>('');
+  const [unlinkLoading, setUnlinkLoading] = useState<boolean>(false);
+  const [transferLoading, setTransferLoading] = useState<boolean>(false);
+  const [msg, setMsg] = useState<string | null>(null);
+  const [recurringAmount, setRecurringAmount] = useState<number>(0);
+  const [sourceAccount, setSourceAccount] = useState<string>('');
+  const [destinationAccount, setDestinationAccount] = useState<string>('');
 
   useEffect(() => {
     if (user?.creditScore) {
@@ -142,30 +147,26 @@ const HouseHunter = () => {
     const createPlaidLinkToken = async () => {
       try {
         if (user) {
-					const response = await fetch(
-						`${process.env.NEXT_PUBLIC_SERVER_URL}/create-link-token`,
-						{
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify({ userId: user?.id || '' }),
-						},
-					);
+          const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/create-link-token`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId: user?.id || '' }),
+          });
 
-					if (!response.ok) {
-						throw new Error('Failed to fetch Plaid Link token');
-					}
-					const res = await response.json();
+          if (!response.ok) {
+            throw new Error('Failed to fetch Plaid Link token');
+          }
+          const res = await response.json();
 
-					setToken(res.link_token)
+          setToken(res.link_token);
           const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
           const docRef = doc(plaidAccountsCollection, user.id);
 
           // Check if there's an existing document for the user
           const existingDoc = await getDoc(docRef);
           if (!existingDoc.exists()) {
-
             // If no existing document, add a new one with the specified document ID
             await setDoc(docRef, {
               userId: user.id,
@@ -174,6 +175,9 @@ const HouseHunter = () => {
           } else if (existingDoc.data()) {
             const data = existingDoc.data();
             setFrequency(data.frequency);
+            setRecurringAmount(data.transferAmount || 0);
+            setDestinationAccount(data?.destinationAccount?.label || null);
+            setSourceAccount(data?.sourceAccount?.label || null);
             setAccounts(data.accounts);
             setAccessToken(data.plaidAccessToken);
           }
@@ -292,6 +296,49 @@ const HouseHunter = () => {
     }
   };
 
+  const handleAmountChange = async (value) => {
+    if (value < 0) {
+      setMsg('Recurring amount cannot be negative');
+      return;
+    }
+    setMsg('');
+    setRecurringAmount(value);
+    await updateAmountInFirestore(value);
+  };
+
+  const updateAmountInFirestore = async (value) => {
+    if (accounts && accounts.length > 0) {
+      const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+      const docRef = doc(plaidAccountsCollection, user.id);
+      await updateDoc(docRef, { transferAmount: value || '' });
+    }
+  };
+  const handleSourceChange = async (value) => {
+    setSourceAccount(value.label);
+    await updateSourceInFirestore(value);
+  };
+
+  const updateSourceInFirestore = async (value) => {
+    if (accounts && accounts.length > 0) {
+      const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+      const docRef = doc(plaidAccountsCollection, user.id);
+      await updateDoc(docRef, { sourceAccount: value || null });
+    }
+  };
+
+  const handleDestinationChange = async (value) => {
+    setDestinationAccount(value.label);
+    await updateDestinationInFirestore(value);
+  };
+
+  const updateDestinationInFirestore = async (value) => {
+    if (accounts && accounts.length > 0) {
+      const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+      const docRef = doc(plaidAccountsCollection, user.id);
+      await updateDoc(docRef, { destinationAccount: value || null });
+    }
+  };
+
   const onPlaidSuccess = async (publicToken, metadata) => {
     try {
       // Send the public token to your server to exchange it for an access token
@@ -313,7 +360,7 @@ const HouseHunter = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-					'Authorization': `Bearer ${data.access_token}`,
+          Authorization: `Bearer ${data.access_token}`,
         },
       });
 
@@ -336,7 +383,8 @@ const HouseHunter = () => {
           plaidAccessToken: data.access_token,
           updatedAt: serverTimestamp(),
         });
-				setAccessToken(data.access_token)
+        setAccessToken(data.access_token);
+        setMsg('');
       } else {
         // If no existing document, you may choose to handle this case differently
         console.error('No existing document found for the user.');
@@ -350,7 +398,7 @@ const HouseHunter = () => {
 
   const handleUnlinkBankAccount = async () => {
     try {
-			setUnlinkLoading(true);
+      setUnlinkLoading(true);
       // Call your server endpoint to unlink the bank account
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/unlink-bank-account`, {
         method: 'POST',
@@ -361,24 +409,65 @@ const HouseHunter = () => {
       });
 
       if (response.ok) {
-				 // Query Firestore to update plaidAccessToken to null
-				 const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
-				 const docRef = doc(plaidAccountsCollection, user.id);
-	 
-				 // Check if there's an existing document for the user
-				 const existingDoc = await getDoc(docRef);
-	 
-				 if (existingDoc.exists()) {
-					 // Update the document to set plaidAccessToken to null
-					 await updateDoc(docRef, { plaidAccessToken: null });
-				 }
-				setAccessToken(null);
+        // Query Firestore to update plaidAccessToken to null
+        const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+        const docRef = doc(plaidAccountsCollection, user.id);
+
+        // Check if there's an existing document for the user
+        const existingDoc = await getDoc(docRef);
+
+        if (existingDoc.exists()) {
+          // Update the document to set plaidAccessToken to null
+          await updateDoc(docRef, { plaidAccessToken: null, accounts: [] });
+        }
+        setAccessToken(null);
       }
     } catch (error) {
       console.error('Error unlinking bank account:', error);
     } finally {
-			setUnlinkLoading(false);
-		}
+      setUnlinkLoading(false);
+    }
+  };
+
+  const joinRecurringTransfer = async () => {
+    try {
+      setTransferLoading(true);
+
+      if (!accessToken) {
+        setMsg('Connect Bank Account First');
+        return;
+      }
+
+      const transferData = {
+        accessToken: accessToken,
+        fromAccountID: 'your_from_account_id',
+        toAccountID: 'your_to_account_id',
+        amount: recurringAmount,
+        frequency: frequency,
+      };
+
+      /*const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/create-recurring-transfer`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(transferData),
+			});*/
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        // Transfer created successfully
+        setMsg('Recurring transfer set up successfully');
+      } else {
+        // Handle error
+        setMsg(`Error setting up recurring transfer: ${responseData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error joining recurring transfer:', error);
+    } finally {
+      setTransferLoading(false);
+    }
   };
 
   const formattedScore = 'NaN';
@@ -394,6 +483,16 @@ const HouseHunter = () => {
       minHeight: 'unset',
     }),
   };
+
+  const accountOptions =
+    accounts && accounts?.length > 0
+      ? accounts
+          .filter((destAccount) => destAccount.account_id !== sourceAccount.account_id)
+          .map((destAccount) => ({
+            value: destAccount.account_id,
+            label: destAccount.name,
+          }))
+      : [];
 
   return (
     <Container
@@ -487,7 +586,7 @@ const HouseHunter = () => {
             <div className="p-4">
               {selectedUser?.id && (
                 <>
-                  <div className="space-y-6">
+                  <div className="space-y-6 w-[480px]">
                     {filter(messages, (message) => message.key === selectedUser.id).map(
                       (message) => {
                         const isProfileUser = message.senderId === user.id;
@@ -535,8 +634,9 @@ const HouseHunter = () => {
             </div>
           </div>
         </div>
-        <div className="px-2">
+        <div className="pl-16">
           <Header as="h1">Payment Method</Header>
+          {msg && <p className="my-2 text-red-500">{msg}</p>}
           <p className="my-2">
             Add your payment method information here, providing the necessary details for a seamless
             transaction.
@@ -554,14 +654,17 @@ const HouseHunter = () => {
           ) : (
             <Button
               onClick={handleUnlinkBankAccount}
-							loading={unlinkLoading}
-							color="black"
+              loading={unlinkLoading}
+              color="black"
               className="bg-red-500 rounded-sm text-white px-4 py-2 hover:bg-red-600"
             >
               Unlink bank account
             </Button>
           )}
           <div className="my-6">
+            <p className="text-white my-2">
+              Choose how often you want to transfer money into your other account.
+            </p>
             <Select
               id="plaid-select"
               options={[
@@ -586,27 +689,74 @@ const HouseHunter = () => {
               onChange={(selectedOption) => handleOnChange(selectedOption.value)}
               styles={customStyles}
             />
-            <p className="text-gray-600 mt-2">
-              Choose how often you want to transfer money into your other account.
-            </p>
-          </div>
-
-          {accessToken && accounts.map((account) => (
-            <div key={account.account_id} className="mt-6 ml-6">
-              <div className="flex flex-row gap-2">
-                <Header as="h5">Name: </Header>
-                <div>{account.name}</div>
-              </div>
-              <div className="flex flex-row gap-2">
-                <Header as="h5">Type: </Header>
-                <div>{account.subtype}</div>
-              </div>
-              <div className="flex flex-row gap-2">
-                <Header as="h5">Current Balance:</Header>
-                <div>${account.balances.current}</div>
-              </div>
+            <div className="my-4">
+              <label className="text-white block mb-2">Recurring Amount</label>
+              <input
+                type="number"
+                value={recurringAmount}
+                onChange={(e) => handleAmountChange(parseInt(e.target.value))}
+                placeholder="Enter Amount"
+                className="rounded-md px-3 text-black py-2 border-2 border-gray-300"
+              />
             </div>
-          ))}
+          </div>
+          {accessToken && accountOptions?.length > 0 && (
+            <div>
+              <label className="text-white block mb-2">Source Account</label>
+              <Select
+                id="source-account-select"
+                value={sourceAccount && { value: sourceAccount, label: sourceAccount }}
+                options={accountOptions}
+                placeholder="Select Source Account"
+                onChange={(selectedOption) => handleSourceChange(selectedOption)}
+                styles={customStyles}
+              />
+              <div className="my-4" />
+              <label className="text-white block mb-2">Destination Account</label>
+              <Select
+                id="destination-account-select"
+                value={
+                  destinationAccount && { value: destinationAccount, label: destinationAccount }
+                }
+                options={accountOptions}
+                placeholder="Select Destination Account"
+                onChange={(selectedOption) => handleDestinationChange(selectedOption)}
+                styles={customStyles}
+              />
+            </div>
+          )}
+          <Button
+            color="black"
+            onClick={joinRecurringTransfer}
+            loading={transferLoading}
+            className="bg-blue-500 my-4 round-sm py-2"
+          >
+            Join Recurring Transfer
+          </Button>
+          {accessToken && (
+            <div className="flex flex-row flex-wrap just-between border-2 border-white">
+              {accounts?.length > 0 &&
+                accounts.map((sourceAccount) => (
+                  <div key={sourceAccount.account_id} className="mt-6 ml-6">
+                    <div className="flex flex-row gap-2">
+                      <Header as="h5">Source Account: </Header>
+                      <div>{sourceAccount.name}</div>
+                    </div>
+                    <div className="flex flex-row gap-2">
+                      <Header as="h5">Type: </Header>
+                      <div>{sourceAccount.subtype}</div>
+                    </div>
+                    <div className="flex flex-row gap-2">
+                      <Header as="h5">Current Balance:</Header>
+                      <div>${sourceAccount.balances.current}</div>
+                    </div>
+                    <div className="mt-4">
+                      <label className="text-white block mb-2">Select Destination Account</label>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
         </div>
       </div>
     </Container>
