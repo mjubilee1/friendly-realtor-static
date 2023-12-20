@@ -12,6 +12,8 @@ import { AuthContextProvider } from '@/context';
 import { useAppStore } from '../stores';
 import { parse } from 'querystring';
 import { useRouter } from 'next/router';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -21,6 +23,7 @@ const ubuntu = Ubuntu({
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const { openLoginModal, openRegisterModal } = useAppStore();
+  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -140,7 +143,9 @@ export default function App({ Component, pageProps }: AppProps) {
           </div>
           <div className="w-full min-h-screen">
             <DefaultSeo {...SEO} />
-            <Component {...pageProps} />
+            <Elements stripe={stripePromise}>
+              <Component {...pageProps} />
+            </Elements>
           </div>
           <Footer />
         </div>
