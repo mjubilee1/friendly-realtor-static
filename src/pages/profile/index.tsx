@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthContext, firestore, fireStorage, realtimeDb } from '../../context';
 import { Bar, Button, Header, Spacer, Container } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
@@ -178,8 +178,25 @@ const HouseHunter = () => {
             setRecurringAmount(data.transferAmount || 0);
             setDestinationAccount(data?.destinationAccount?.label || null);
             setSourceAccount(data?.sourceAccount?.label || null);
-            setAccounts(data.accounts);
             setAccessToken(data.plaidAccessToken);
+
+            const balancesResponse = await fetch(
+              `${process.env.NEXT_PUBLIC_SERVER_URL}/get-balances`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ accessToken: data.plaidAccessToken }),
+              },
+            );
+
+            if (balancesResponse.ok) {
+              const response = await balancesResponse.json();
+              setAccounts(response.balances);
+            } else {
+              throw new Error('Failed to fetch balances');
+            }
           }
         }
       } catch (error) {
