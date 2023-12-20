@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useAuthContext, firestore, fireStorage, realtimeDb } from '../../context';
 import { Bar, Button, Header, Spacer, Container } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
 import { Radio } from '../../components/UI/Form/Radio';
 import { FileInput } from '../../components/UI/Form/FileInput';
+import { PaymentMethod } from '../../components';
 import { useForm } from 'react-hook-form';
 import { Select } from '../../components/UI/Select';
 import {
@@ -49,6 +50,25 @@ const HouseHunter = () => {
   const [recurringAmount, setRecurringAmount] = useState<number>(0);
   const [sourceAccount, setSourceAccount] = useState<string>('');
   const [destinationAccount, setDestinationAccount] = useState<string>('');
+	const [accountOptions, setAccountOptions] = useState([]);
+
+	useEffect(() => {
+  if (!accounts || accounts.length === 0) {
+    setAccountOptions([]);
+    return;
+  }
+
+  const filteredAccounts = accounts.filter(
+    (destAccount) => destAccount.account_id !== sourceAccount.account_id
+  );
+
+  const mappedOptions = filteredAccounts.map((destAccount) => ({
+    value: destAccount.account_id,
+    label: destAccount.name,
+  }));
+
+  setAccountOptions(mappedOptions);
+}, [user, accounts]);
 
   useEffect(() => {
     if (user?.creditScore) {
@@ -159,7 +179,6 @@ const HouseHunter = () => {
             throw new Error('Failed to fetch Plaid Link token');
           }
           const res = await response.json();
-
           setToken(res.link_token);
           const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
           const docRef = doc(plaidAccountsCollection, user.id);
@@ -174,13 +193,13 @@ const HouseHunter = () => {
             });
           } else if (existingDoc.data()) {
             const data = existingDoc.data();
+						setAccessToken(data.plaidAccessToken);
             setFrequency(data.frequency);
             setRecurringAmount(data.transferAmount || 0);
             setDestinationAccount(data?.destinationAccount?.label || null);
             setSourceAccount(data?.sourceAccount?.label || null);
-            setAccessToken(data.plaidAccessToken);
 
-            if (accessToken) {
+            if (data.plaidAccessToken) {
               const balancesResponse = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/get-balances`,
                 {
@@ -494,7 +513,7 @@ const HouseHunter = () => {
         if (existingDoc.exists()) {
           await updateDoc(docRef, {
             sourceTransfer: responseData?.fromRetrieveTransfer || null,
-            destinationTransfer: responseData?.toRetrieveTransfer || null,
+						destinationTransfer: responseData?.toRetrieveTransfer || null
           });
         }
       } else {
@@ -520,16 +539,6 @@ const HouseHunter = () => {
       minHeight: 'unset',
     }),
   };
-
-  const accountOptions =
-    accounts && accounts?.length > 0
-      ? accounts
-          .filter((destAccount) => destAccount.account_id !== sourceAccount.account_id)
-          .map((destAccount) => ({
-            value: destAccount.account_id,
-            label: destAccount.name,
-          }))
-      : [];
 
   return (
     <Container
@@ -674,7 +683,8 @@ const HouseHunter = () => {
         <div className="pl-16">
           <Header as="h1">Payment Method</Header>
           {msg && <p className="my-2 text-red-500">{msg}</p>}
-          <p className="my-2">
+					<PaymentMethod />
+          <p className="mt-20 mb-4">
             Add your payment method information here, providing the necessary details for a seamless
             transaction.
           </p>
