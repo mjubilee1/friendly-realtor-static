@@ -180,22 +180,24 @@ const HouseHunter = () => {
             setSourceAccount(data?.sourceAccount?.label || null);
             setAccessToken(data.plaidAccessToken);
 
-            const balancesResponse = await fetch(
-              `${process.env.NEXT_PUBLIC_SERVER_URL}/get-balances`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
+            if (accessToken) {
+              const balancesResponse = await fetch(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/get-balances`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ accessToken: data.plaidAccessToken }),
                 },
-                body: JSON.stringify({ accessToken: data.plaidAccessToken }),
-              },
-            );
+              );
 
-            if (balancesResponse.ok) {
-              const response = await balancesResponse.json();
-              setAccounts(response.balances);
-            } else {
-              throw new Error('Failed to fetch balances');
+              if (balancesResponse.ok) {
+                const response = await balancesResponse.json();
+                setAccounts(response.balances);
+              } else {
+                throw new Error('Failed to fetch balances');
+              }
             }
           }
         }
@@ -454,6 +456,7 @@ const HouseHunter = () => {
         setMsg('Connect Bank Account First');
         return;
       }
+
       const fromAccount = accounts.find((account) => account.name === sourceAccount);
       const toAccount = accounts.find((account) => account.name === destinationAccount);
 
@@ -482,8 +485,19 @@ const HouseHunter = () => {
       if (response.ok) {
         // Transfer created successfully
         setMsg('');
+
+        const plaidAccountsCollection = collection(firestore, 'plaid_accounts');
+        const docRef = doc(plaidAccountsCollection, user.id);
+
+        // Check if there's an existing document for the user
+        const existingDoc = await getDoc(docRef);
+        if (existingDoc.exists()) {
+          await updateDoc(docRef, {
+            sourceTransfer: responseData?.fromRetrieveTransfer || null,
+            destinationTransfer: responseData?.toRetrieveTransfer || null,
+          });
+        }
       } else {
-        // Handle error
         setMsg(`Error setting up recurring transfer: ${responseData.error || 'Unknown error'}`);
       }
     } catch (error) {
