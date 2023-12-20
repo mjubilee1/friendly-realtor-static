@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthContext, firestore, fireStorage, realtimeDb } from '../../context';
 import { Bar, Button, Header, Spacer, Container } from '../../components/UI';
 import { Form } from '../../components/UI/Form';
@@ -50,25 +50,25 @@ const HouseHunter = () => {
   const [recurringAmount, setRecurringAmount] = useState<number>(0);
   const [sourceAccount, setSourceAccount] = useState<string>('');
   const [destinationAccount, setDestinationAccount] = useState<string>('');
-	const [accountOptions, setAccountOptions] = useState([]);
+  const [accountOptions, setAccountOptions] = useState([]);
 
-	useEffect(() => {
-  if (!accounts || accounts.length === 0) {
-    setAccountOptions([]);
-    return;
-  }
+  useEffect(() => {
+    if (!accounts || accounts.length === 0) {
+      setAccountOptions([]);
+      return;
+    }
 
-  const filteredAccounts = accounts.filter(
-    (destAccount) => destAccount.account_id !== sourceAccount.account_id
-  );
+    const filteredAccounts = accounts.filter(
+      (destAccount) => destAccount.account_id !== sourceAccount.account_id,
+    );
 
-  const mappedOptions = filteredAccounts.map((destAccount) => ({
-    value: destAccount.account_id,
-    label: destAccount.name,
-  }));
+    const mappedOptions = filteredAccounts.map((destAccount) => ({
+      value: destAccount.account_id,
+      label: destAccount.name,
+    }));
 
-  setAccountOptions(mappedOptions);
-}, [user, accounts]);
+    setAccountOptions(mappedOptions);
+  }, [user, accounts]);
 
   useEffect(() => {
     if (user?.creditScore) {
@@ -193,7 +193,7 @@ const HouseHunter = () => {
             });
           } else if (existingDoc.data()) {
             const data = existingDoc.data();
-						setAccessToken(data.plaidAccessToken);
+            setAccessToken(data.plaidAccessToken);
             setFrequency(data.frequency);
             setRecurringAmount(data.transferAmount || 0);
             setDestinationAccount(data?.destinationAccount?.label || null);
@@ -513,7 +513,7 @@ const HouseHunter = () => {
         if (existingDoc.exists()) {
           await updateDoc(docRef, {
             sourceTransfer: responseData?.fromRetrieveTransfer || null,
-						destinationTransfer: responseData?.toRetrieveTransfer || null
+            destinationTransfer: responseData?.toRetrieveTransfer || null,
           });
         }
       } else {
@@ -683,11 +683,8 @@ const HouseHunter = () => {
         <div className="pl-16">
           <Header as="h1">Payment Method</Header>
           {msg && <p className="my-2 text-red-500">{msg}</p>}
-					<PaymentMethod />
-          <p className="mt-20 mb-4">
-            Add your payment method information here, providing the necessary details for a seamless
-            transaction.
-          </p>
+          <PaymentMethod user={user} />
+          <div className="mt-20 mb-4 text-3xl">Bank Account Saving's Feature</div>
           {!accessToken ? (
             <>
               <PlaidLink

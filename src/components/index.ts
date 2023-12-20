@@ -21,7 +21,7 @@ export {
   Business,
   LoginModal,
   RegisterModal,
-	PaymentMethod,
+  PaymentMethod,
   ForgotPasswordModal,
   FreeReportModal,
   MortgageCalculator,

@@ -1251,6 +1251,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/react-stripe-js@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@stripe/react-stripe-js@npm:2.4.0"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    "@stripe/stripe-js": ^1.44.1 || ^2.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 4cf16c9bca6cff67cfef51d95a1521563dc579f5957ae0bcb773b958afa1a57bc90c35a157e2e11452a2d1c0c26eddbe5644afe7f07cd39ed55697385d7b18a9
+  languageName: node
+  linkType: hard
+
+"@stripe/stripe-js@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@stripe/stripe-js@npm:2.2.2"
+  checksum: c2a8c9c9ed63dbd96a8cdb8eb66423eb0a2e6012a773af17548d15a6888d75fa19971fb0a32ee2e9c57d292d791acbc645286ce51213e64bc8058b85dfa6dbd7
+  languageName: node
+  linkType: hard
+
 "@swc/helpers@npm:0.5.0":
   version: 0.5.0
   resolution: "@swc/helpers@npm:0.5.0"
@@ -3691,6 +3711,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "friendly-realtor-static@workspace:."
   dependencies:
+    "@stripe/react-stripe-js": ^2.4.0
+    "@stripe/stripe-js": ^2.2.2
     "@types/node": 18.15.13
     "@types/react": 18.0.38
     "@types/react-dom": 18.0.11
