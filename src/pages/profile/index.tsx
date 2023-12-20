@@ -684,7 +684,7 @@ const HouseHunter = () => {
           <Header as="h1">Payment Method</Header>
           {msg && <p className="my-2 text-red-500">{msg}</p>}
           <PaymentMethod user={user} />
-          <div className="mt-20 mb-4 text-3xl">Bank Account Saving's Feature</div>
+          {/*<div className="mt-20 mb-4 text-3xl">Bank Account Saving's Feature</div>
           {!accessToken ? (
             <>
               <PlaidLink
@@ -704,8 +704,8 @@ const HouseHunter = () => {
             >
               Unlink bank account
             </Button>
-          )}
-          <div className="my-6">
+          )}*/}
+          {/*<div className="my-6">
             <p className="text-white my-2">
               Choose how often you want to transfer money into your other account.
             </p>
@@ -743,7 +743,7 @@ const HouseHunter = () => {
                 className="rounded-md px-3 text-black py-2 border-2 border-gray-300"
               />
             </div>
-          </div>
+          </div>*/}
           {accessToken && accountOptions?.length > 0 && (
             <div>
               <label className="text-white block mb-2">Source Account</label>
@@ -769,14 +769,14 @@ const HouseHunter = () => {
               />
             </div>
           )}
-          <Button
+          {/*<Button
             color="black"
             onClick={joinRecurringTransfer}
             loading={transferLoading}
             className="bg-blue-500 my-4 round-sm py-2"
           >
             {accessToken ? 'Manage Recurring Payments' : 'Enroll in Recurring Payments'}
-          </Button>
+							</Button>*/}
           {accessToken && (
             <div className="flex flex-row mt-6 flex-wrap just-between border-2 border-white">
               {accounts?.length > 0 &&
