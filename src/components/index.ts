@@ -12,6 +12,7 @@ import { FreeReportModal } from './FreeReportModal/FreeReportModal';
 import { MortgageCalculator } from './MortgageCalculator';
 import { FinanceTable } from './FinanceTable';
 import { SendMessageModal } from './SendMessageModal';
+import { PaymentMethod } from './PaymentMethod';
 
 export {
   SendMessageModal,
@@ -20,6 +21,7 @@ export {
   Business,
   LoginModal,
   RegisterModal,
+  PaymentMethod,
   ForgotPasswordModal,
   FreeReportModal,
   MortgageCalculator,

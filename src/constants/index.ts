@@ -66,10 +66,10 @@ export const navLinks = [
     id: '/event-center',
     title: 'Find Nearby Events',
   },
-  {
+  /*{
     id: '/tools',
     title: 'AI Tools',
-  },
+  },*/
   {
     id: '/resources',
     title: 'Resources',

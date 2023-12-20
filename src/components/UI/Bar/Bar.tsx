@@ -28,7 +28,7 @@ const Bar = (props: BarProps) => {
         <span className="label-fair">Fair</span>
         <span className="label-poor">Poor</span>
       </div>
-      <div className="indicator absolute top-1/2 left-full transform -translate-y-1/2 bg-white px-2 rounded-md text-xs">
+      <div className="indicator absolute hidden top-1/2 left-full transform -translate-y-1/2 bg-white px-2 rounded-md text-xs">
         {formattedScore}
       </div>
     </div>

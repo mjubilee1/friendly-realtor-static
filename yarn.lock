@@ -1251,6 +1251,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/react-stripe-js@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@stripe/react-stripe-js@npm:2.4.0"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    "@stripe/stripe-js": ^1.44.1 || ^2.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 4cf16c9bca6cff67cfef51d95a1521563dc579f5957ae0bcb773b958afa1a57bc90c35a157e2e11452a2d1c0c26eddbe5644afe7f07cd39ed55697385d7b18a9
+  languageName: node
+  linkType: hard
+
+"@stripe/stripe-js@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@stripe/stripe-js@npm:2.2.2"
+  checksum: c2a8c9c9ed63dbd96a8cdb8eb66423eb0a2e6012a773af17548d15a6888d75fa19971fb0a32ee2e9c57d292d791acbc645286ce51213e64bc8058b85dfa6dbd7
+  languageName: node
+  linkType: hard
+
 "@swc/helpers@npm:0.5.0":
   version: 0.5.0
   resolution: "@swc/helpers@npm:0.5.0"
@@ -3691,6 +3711,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "friendly-realtor-static@workspace:."
   dependencies:
+    "@stripe/react-stripe-js": ^2.4.0
+    "@stripe/stripe-js": ^2.2.2
     "@types/node": 18.15.13
     "@types/react": 18.0.38
     "@types/react-dom": 18.0.11
@@ -3723,6 +3745,7 @@ __metadata:
     react-hook-form: ^7.45.3
     react-markdown: ^8.0.7
     react-merge-refs: ^2.0.2
+    react-plaid-link: ^3.5.1
     react-select: ^5.7.4
     react-simple-star-rating: ^5.1.7
     react-social-icons: ^5.15.0
@@ -6860,6 +6883,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-plaid-link@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "react-plaid-link@npm:3.5.1"
+  dependencies:
+    prop-types: ^15.7.2
+    react-script-hook: ^1.6.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 35e9d8ebd1423dc8fe49045b8adb6eae27868876ae64e606a74fa13b01c6067496115dea49181f626cb6ba0b3006c83292c71411d5d440c1546610d69406cde4
+  languageName: node
+  linkType: hard
+
 "react-popper@npm:^2.3.0":
   version: 2.3.0
   resolution: "react-popper@npm:2.3.0"
@@ -6871,6 +6907,16 @@ __metadata:
     react: ^16.8.0 || ^17 || ^18
     react-dom: ^16.8.0 || ^17 || ^18
   checksum: 837111c98738011c69b3069a464ea5bdcbf487105b6148e8faf90cb7337e134edb1b98b8824322941c378756cca30a15c18c25f558e53b85ed5762fa0dc8e6b2
+  languageName: node
+  linkType: hard
+
+"react-script-hook@npm:^1.6.0":
+  version: 1.7.2
+  resolution: "react-script-hook@npm:1.7.2"
+  peerDependencies:
+    react: ^16.8.6 || 17 - 18
+    react-dom: ^16.8.6 || 17 - 18
+  checksum: 74fb5ec2e6ec7eccad64a7a3b7e0d16e01e487d0880e7f123ad7433975707cfed47be604ce5cfd0d5c43d89be3f1a4fad46eba7d0bacd41f810705f30d958fa5
   languageName: node
   linkType: hard
 
