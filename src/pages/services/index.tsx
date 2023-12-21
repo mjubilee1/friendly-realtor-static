@@ -8,7 +8,7 @@ const ServicesPage = () => {
       seoProps={{
         title: 'FriendlyRealtor - Realtor Services',
         description:
-          "Designed specifically for realtors, this comprehensive realtor toolkit is a valuable resource that offers a wide range of resources and information to assist you in making informed decisions throughout your clients' home buying journey.",
+          'Tailored exclusively for agents, our extensive toolkit is designed to be a valuable asset, providing a diverse range of resources to support you in elevating your real estate expertise. Join our Event Center today and discover opportunities to increase cash flow while generating high-quality leads. Unlock a host of benefits tailored just for you as you embark on a journey to enhance your real estate success.',
       }}
     >
       <div className={`w-full overflow-hidden`}>

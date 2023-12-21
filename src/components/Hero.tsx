@@ -35,10 +35,11 @@ const Hero = () => {
       <div className={`flex-1 flex justify-center items-center md:px-12 px-6`}>
         <div className="text-center md:text-left">
           <h1 className="mb-8 font-ubuntu font-semibold text-[32px] text-white">
-            Tailored for agents, our extensive toolkit is a valuable asset providing a variety of
-            resources to support you in making informed decisions throughout your clients' home
-            buying journey. Join our agent referral program for exclusive benefits and enhance your
-            real estate expertise.
+            Tailored exclusively for agents, our extensive toolkit is designed to be a valuable
+            asset, providing a diverse range of resources to support you in elevating your real
+            estate expertise. Join our Event Center today and discover opportunities to increase
+            cash flow while generating high-quality leads. Unlock a host of benefits tailored just
+            for you as you embark on a journey to enhance your real estate success.
           </h1>
           <div className="flex flex-col md:flex-row items-center mt-8">
             <AddLink onClick={handleClick}>
