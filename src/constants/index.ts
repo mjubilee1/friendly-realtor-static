@@ -98,50 +98,22 @@ export const features = [
   {
     id: 'feature-0',
     icon: star,
-    title: 'Join our real estate referral program',
-    content: `Join our real estate referral program; it's free to use, allowing leads to message agents directly, and agents can acquire qualified/unqualified leads in real-time through our mobile app.`,
+    title: 'Unlock the Power of Event Hosting',
+    content: `Experience the benefits of our event hosting feature – it's free to download and use! Host and promote your events, allowing attendees to connect with you directly. Agents can acquire leads in real-time through our mobile app, making event management a breeze.`,
   },
   {
     id: 'feature-1',
     icon: quotes,
-    title: 'Streamline Showing Routes for New Realtors',
+    title: 'Effortless Event Planning for Realtors',
     content:
-      'Maximize efficiency by mapping showings based on proximity, helping new realtors prioritize appointments and minimize travel time.',
+      'Simplify event planning with our streamlined process. Plan and manage events based on location, helping realtors prioritize and maximize engagement, all within the Event Center.',
   },
   {
     id: 'feature-2',
     icon: shield,
-    title: 'Accurate and Swift CMA Estimates',
+    title: 'Instant Networking and Lead Generation',
     content:
-      'Gain an edge with precise and speedy CMA estimates, empowering realtors who need quick property value assessments for competitive advantage.',
-  },
-  {
-    id: 'feature-3',
-    icon: send,
-    title: 'Enhanced Communication and Collaboration',
-    content:
-      'Connect and chat with clients, fellow realtors, and lenders effortlessly, fostering effective collaboration and support throughout the deal process.',
-  },
-  {
-    id: 'feature-4',
-    icon: shield,
-    title: 'Simplified Client and Deal Management',
-    content:
-      ' Seamlessly organize and manage real estate clients and transactions, supporting realtors who struggle with client relationship management and administrative tasks.',
-  },
-  {
-    id: 'feature-5',
-    icon: quotes,
-    title: 'Boost Your Online Presence',
-    content:
-      'Claim your complimentary realtor profile to showcase recent achievements, providing a professional online presence to attract potential clients and demonstrate expertise.',
-  },
-  {
-    id: 'feature-6',
-    icon: star,
-    title: 'Overcome Real Estate Challenges',
-    content:
-      'Tackle the toughest aspects of being a real estate agent with comprehensive tools and resources, empowering realtors to navigate challenges confidently.',
+      'Boost your networking and lead generation efforts with the Event Center. Connect with potential clients, share insights, and enhance your real estate success with this powerful tool.',
   },
 ];
 
