@@ -98,20 +98,20 @@ export const features = [
   {
     id: 'feature-0',
     icon: star,
-    title: 'Unlock the Power of Event Hosting',
+    title: 'Seamless Realtor Events',
     content: `Experience the benefits of our event hosting feature – it's free to download and use! Host and promote your events, allowing attendees to connect with you directly. Agents can acquire leads in real-time through our mobile app, making event management a breeze.`,
   },
   {
     id: 'feature-1',
     icon: quotes,
-    title: 'Effortless Event Planning for Realtors',
+    title: 'Building Community Trust',
     content:
-      'Simplify event planning with our streamlined process. Plan and manage events based on location, helping realtors prioritize and maximize engagement, all within the Event Center.',
+      'Facilitate community trust by simplifying event coordination. Strategically plan and manage gatherings, prioritizing local connections to enhance realtor engagement—all through the Event Center.',
   },
   {
     id: 'feature-2',
     icon: shield,
-    title: 'Instant Networking and Lead Generation',
+    title: 'Instant Networking Boost',
     content:
       'Boost your networking and lead generation efforts with the Event Center. Connect with potential clients, share insights, and enhance your real estate success with this powerful tool.',
   },
