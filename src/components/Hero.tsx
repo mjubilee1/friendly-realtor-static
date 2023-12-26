@@ -1,7 +1,6 @@
 import React from 'react';
-import styles from '../styles/styles';
-import { apple } from '../assets';
-import { AddLink, Button } from './UI';
+import { friendlyrealtor } from '../assets';
+import { Button } from './UI';
 import Image from 'next/image';
 import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 import { useRouter } from 'next/router';
@@ -26,33 +25,27 @@ const Hero = () => {
     router.push('https://apps.apple.com/us/app/friendlyrealtor/id6446328944');
   };
 
-  const handleNavigateStipe = () => {
-    router.push('https://buy.stripe.com/fZeeY11WK13a5rOaEF');
-  };
-
   return (
-    <section id="home" className={`flex flex-col ${styles.paddingY}`}>
-      <div className={`flex-1 flex justify-center items-center md:px-12 px-6`}>
-        <div className="text-center md:text-left">
-          <h1 className="mb-8 font-ubuntu font-semibold text-[32px] text-white">
-            Tailored exclusively for agents, our extensive toolkit is designed to be a valuable
-            asset, providing a diverse range of resources to support you in elevating your real
-            estate expertise. Join our Event Center today and discover opportunities to increase
-            cash flow while generating high-quality leads. Unlock a host of benefits tailored just
-            for you as you embark on a journey to enhance your real estate success.
-          </h1>
-          <div className="flex flex-col md:flex-row items-center mt-8">
-            <AddLink onClick={handleClick}>
-              <Image
-                src={apple}
-                alt="friendly_realtor_app"
-                className="w-44 h-44 object-contain mb-4 md:mb-0 cursor-pointer"
-              />
-            </AddLink>
+    <div className="flex flex-row flex-wrap items-start gap-4">
+      <div className="flex-1 flex flex-col h-full">
+        <div className="h-full">
+          <div className="text-6xl font-light mb-6">Empowering Realtors Together</div>
+          <div>
+            Embark on a seamless realtor empowerment journey with our innovative platform.
+            Experience the benefits of our free event hosting feature, effortlessly connecting with
+            attendees. Simplifying event coordination and prioritizing local connections, the Event
+            Center catalyzes trust, fostering a community where networking transforms real estate
+            success.
           </div>
         </div>
+        <div className="mt-4">
+          <Button color="secondary" onClick={handleClick} className="py-4">
+            Download Mobile App
+          </Button>
+        </div>
       </div>
-    </section>
+      <Image src={friendlyrealtor} alt="friendly_realtor_image" className="w-[40rem] h-[40rem]" />
+    </div>
   );
 };
 

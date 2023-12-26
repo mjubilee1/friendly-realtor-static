@@ -6,6 +6,7 @@ import coinbase from './coinbase.png';
 import dropbox from './dropbox.png';
 import iphoneScreen from './iphone-screen.png';
 import homeBuyers from './happy-buyers01.jpg';
+import friendlyrealtor from './friendlyrealtor.png';
 import logo from './logo.png';
 import quotes from './quotes.svg';
 import robot from './robot.png';
@@ -51,6 +52,7 @@ export {
   arrowUp,
   discount,
   facebook,
+  friendlyrealtor,
   instagram,
   linkedin,
   twitter,
