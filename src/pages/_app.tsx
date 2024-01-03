@@ -51,6 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />{' '}
+        <meta name="apple-itunes-app" content="app-id=6446328944" />
         <link rel="icon" href="/logo.png" />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <script
