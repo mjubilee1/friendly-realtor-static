@@ -1,0 +1,23 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "Q8H3C43P77.jubileeinvestments.Real-Estate-App",
+        "paths": [
+          "/records/*"
+        ]
+      }
+    ]
+  },
+  "activitycontinuation": {
+    "apps": [
+      "Q8H3C43P77.jubileeinvestments.Real-Estate-App"
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "Q8H3C43P77.jubileeinvestments.Real-Estate-App"
+    ]
+  }
+}
