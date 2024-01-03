@@ -3,10 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appID": "Q8H3C43P77.jubileeinvestments.Real-Estate-App",
-        "paths": [
-          "/records/*"
-        ]
+        "appID": "Q8H3C43P77.jubileeinvestments.Real-Estate-App"
       }
     ]
   },
