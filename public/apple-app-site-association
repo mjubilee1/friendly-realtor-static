@@ -1,0 +1,36 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "Q8H3C43P77.jubileeinvestments.Real-Estate-App"
+        ],
+        "components": [
+          {
+            "/": "/home",
+            "comment": "Matches any URL whose path is /home"
+          },
+          {
+            "/": "/signup",
+            "comment": "Matches any URL whose path is /signup"
+          },
+          {
+            "/": "/login",
+            "comment": "Matches any URL whose path is /login"
+          }
+        ]
+      }
+    ]
+  },
+  "activitycontinuation": {
+    "apps": [
+      "Q8H3C43P77.jubileeinvestments.Real-Estate-App"
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "Q8H3C43P77.jubileeinvestments.Real-Estate-App"
+    ]
+  }
+}
