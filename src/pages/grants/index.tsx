@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { fetchEntries } from '../../utils/contentfulUtil';
 import Image from 'next/image';
 import { useState, useMemo } from 'react';
+import { fbEvent, gtagEvent } from '../../utils/analyticsUtil';
 
 const AllGrantsPage = ({ grants }) => {
   const grantFields = grants[0]?.fields;
@@ -50,7 +51,21 @@ const AllGrantsPage = ({ grants }) => {
                 { value: 'Virginia', label: 'Virginia' },
               ]}
               placeholder="Select Location"
-              onChange={(selectedOption) => setSelectedLocation(selectedOption.value)}
+              onChange={(selectedOption) => {
+                fbEvent('grant_location', {
+                  content_name: `selected location ${selectedOption?.value}`,
+                  content_category: 'user_interaction',
+                  value: 1,
+                });
+
+                gtagEvent({
+                  action: 'grant_location',
+                  category: 'user_interaction',
+                  label: `selected location ${selectedOption?.value}`,
+                  value: 1,
+                });
+                setSelectedLocation(selectedOption.value);
+              }}
               styles={customStyles}
             />
           </div>

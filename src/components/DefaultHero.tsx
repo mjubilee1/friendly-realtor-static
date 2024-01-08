@@ -1,10 +1,10 @@
 import React from 'react';
-import Image, { StaticImageData } from 'next/image';
-import { homeBuyers } from '../assets';
+import { StaticImageData } from 'next/image';
 import { Header, AddLink, Button } from './UI';
 import { RegisterModal } from './RegisterModal';
 import { useAuthContext } from '../context';
 import { useRouter } from 'next/router';
+import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 
 export type HeroProps = {
   src?: StaticImageData;
@@ -52,6 +52,18 @@ const DefaultHero = (props: HeroProps) => {
                   color="primary"
                   className="!text-black md:ml-2"
                   onClick={() => {
+                    fbEvent('home_hero_cta', {
+                      content_name: 'talk to realtor',
+                      content_category: 'user_interaction',
+                      value: 1,
+                    });
+
+                    gtagEvent({
+                      action: 'home_hero_cta',
+                      category: 'user_interaction',
+                      label: 'talk to realtor',
+                      value: 1,
+                    });
                     router.push({ pathname: `${router.pathname}/find-a-realtor` });
                   }}
                 >

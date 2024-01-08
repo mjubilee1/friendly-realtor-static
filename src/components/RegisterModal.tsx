@@ -6,7 +6,7 @@ import { firestore, auth } from '../context';
 import { Formik, Form, Field } from 'formik';
 import { usePopup } from './UI/Popup';
 import { splitName } from '../utils/commonUtil';
-import { gtagEvent } from '../utils/analyticsUtil';
+import { fbEvent, gtagEvent } from '../utils/analyticsUtil';
 import * as Yup from 'yup';
 import { user } from '../agents';
 import { useAppStore } from '../stores';
@@ -38,11 +38,24 @@ export const RegisterModal = ({ mobile = false }) => {
 
   useEffect(() => {
     if (isRegisterModalOpen) {
+      fbEvent('open_register', {
+        content_name: 'registration open',
+        content_category: 'user_interaction',
+        value: 1,
+      });
+
+      gtagEvent({
+        action: 'open_register',
+        category: 'user_interaction',
+        label: 'registration open',
+        value: 1,
+      });
       const queryParameters = { registration: true };
       const updatedQuery = { ...router.query, ...queryParameters };
       router.push({ pathname: router.pathname, query: updatedQuery });
     }
   }, [isRegisterModalOpen]);
+
   const handleSignUp = async (values) => {
     setLoading(true);
     try {
