@@ -28,6 +28,11 @@ const Hero = () => {
   return (
     <div className="flex flex-col md:flex-row items-start gap-4">
       <div className="flex-1 flex flex-col md:h-full">
+        <div>
+          <Button color="secondary" onClick={handleClick} className="py-4 mb-4">
+            Download Mobile App
+          </Button>
+        </div>
         <div className="md:mb-6 text-4xl md:text-6xl font-light mb-6">
           Empowering Realtors Together
         </div>
@@ -36,11 +41,6 @@ const Hero = () => {
           the benefits of our free event hosting feature, effortlessly connecting with attendees.
           Simplifying event coordination and prioritizing local connections, the Event Center
           catalyzes trust, fostering a community where networking transforms real estate success.
-        </div>
-        <div>
-          <Button color="secondary" onClick={handleClick} className="py-4">
-            Download Mobile App
-          </Button>
         </div>
       </div>
       <div className="mt-4 md:mt-0">
