@@ -4,6 +4,8 @@ import { SendMessageModal } from '../../components';
 import Link from 'next/link';
 import { firestore } from '../../context';
 import { collection, getDocs } from 'firebase/firestore';
+import moment from 'moment';
+import _ from 'lodash';
 
 const FindARealtorPage = ({ users }) => {
   const [realtors, setRealtors] = useState([]);
@@ -24,7 +26,24 @@ const FindARealtorPage = ({ users }) => {
 
   useEffect(() => {
     if (users?.length) {
-      setRealtors(users);
+      // Sort the users array by updatedAt using Moment.js
+      const sortedUsers = users.slice().sort((a, b) => {
+        const dateA = a.data.updatedAt ? moment(a.data.updatedAt.seconds * 1000) : null;
+        const dateB = b.data.updatedAt ? moment(b.data.updatedAt.seconds * 1000) : null;
+
+        // Compare dates
+        if (dateA && dateB) {
+          return dateB - dateA;
+        } else if (dateA) {
+          return -1; // Place items without updatedAt towards the end
+        } else if (dateB) {
+          return 1; // Place items without updatedAt towards the end
+        } else {
+          return 0; // Both items don't have updatedAt
+        }
+      });
+
+      setRealtors(sortedUsers);
     }
   }, [users]);
 
