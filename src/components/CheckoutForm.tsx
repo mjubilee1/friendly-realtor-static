@@ -16,14 +16,16 @@ const PaymentForm = ({ eventId, stripe, elements, setCheckoutError, totalAmount,
         return;
       }
 
-      await stripe.confirmPayment({
+      const result = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/event-center/${eventId}`,
         },
       });
-    } catch (error) {
-      setCheckoutError(error?.message || 'Error occurred on payment');
+
+      if (result.error) {
+        setCheckoutError(result.error.message || 'Error occurred on payment');
+      }
     } finally {
       setSaving(false);
     }

@@ -31,7 +31,7 @@ const EventPage = ({ data }) => {
 
   useEffect(() => {
     const fetchEventData = async () => {
-      const eventId = params.id;
+      const eventId = router.query.id || ''; // Use router.query.id to get the eventId from the URL
       const eventDocRef = doc(collection(firestore, 'events'), eventId);
 
       try {
@@ -79,7 +79,6 @@ const EventPage = ({ data }) => {
           await sendJoinEmail();
         }
       } catch (error) {
-        console.log(error);
         setMessage(error?.message || 'Error fetching payments');
       }
     };
@@ -155,7 +154,6 @@ const EventPage = ({ data }) => {
     'https://images.ctfassets.net/v3wxyl8kvdve/eHixnDXrSzYiTSusWBxvI/1239c81dc28ebc88d67dac22c2c9f003/1_jeAJ1_Kb4XacKzNFxlD2Og.webp';
   const imgAlt = event.title || 'Event Photo';
   const category = EventCategories.find((category) => category.value === event.category)?.label;
-
   return (
     <Container
       seoProps={{
@@ -210,8 +208,8 @@ const EventPage = ({ data }) => {
         className="bg-white p-6"
         closeXClassName="text-black"
       >
-        {checkoutError && <p>{checkoutError}</p>}
         <div className="text-black text-4xl my-4 text-center">{event.title}</div>
+        {checkoutError && <p className="text-red-500 my-2">{checkoutError}</p>}
         <CheckoutForm
           title={event.title}
           cost={event.cost || ''}
@@ -233,6 +231,38 @@ export async function getStaticPaths() {
   });
 
   return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const eventId = params.id;
+  const eventDocRef = doc(collection(firestore, 'events'), eventId);
+
+  try {
+    const eventDocSnapshot = await getDoc(eventDocRef);
+    const createdAt =
+      eventDocSnapshot.data()?.createdAt instanceof Timestamp
+        ? moment(eventDocSnapshot.data()?.createdAt.toDate()).format('MMMM Do YYYY, h:mm:ss a')
+        : null;
+
+    if (!eventDocSnapshot.exists()) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const eventData = { ...eventDocSnapshot.data(), id: eventDocSnapshot.id, createdAt: createdAt };
+
+    return {
+      props: {
+        data: eventData || null,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching event data:', error);
+    return {
+      notFound: true,
+    };
+  }
 }
 
 export default EventPage;
