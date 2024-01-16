@@ -30,7 +30,35 @@ const EventPage = ({ data }) => {
   const router = useRouter();
 
   useEffect(() => {
-    setEvent(data);
+    const fetchEventData = async () => {
+      const eventId = params.id;
+      const eventDocRef = doc(collection(firestore, 'events'), eventId);
+
+      try {
+        const eventDocSnapshot = await getDoc(eventDocRef);
+        const createdAt =
+          eventDocSnapshot.data()?.createdAt instanceof Timestamp
+            ? moment(eventDocSnapshot.data()?.createdAt.toDate()).format('MMMM Do YYYY, h:mm:ss a')
+            : null;
+
+        if (!eventDocSnapshot.exists()) {
+          return {
+            notFound: true,
+          };
+        }
+
+        const eventData = {
+          ...eventDocSnapshot.data(),
+          id: eventDocSnapshot.id,
+          createdAt: createdAt,
+        };
+        setEvent(eventData);
+      } catch (error) {
+        console.error('Error fetching event data:', error);
+      }
+    };
+
+    fetchEventData();
   }, [data]);
 
   useEffect(() => {
@@ -205,38 +233,6 @@ export async function getStaticPaths() {
   });
 
   return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
-  const eventId = params.id;
-  const eventDocRef = doc(collection(firestore, 'events'), eventId);
-
-  try {
-    const eventDocSnapshot = await getDoc(eventDocRef);
-    const createdAt =
-      eventDocSnapshot.data()?.createdAt instanceof Timestamp
-        ? moment(eventDocSnapshot.data()?.createdAt.toDate()).format('MMMM Do YYYY, h:mm:ss a')
-        : null;
-
-    if (!eventDocSnapshot.exists()) {
-      return {
-        notFound: true,
-      };
-    }
-
-    const eventData = { ...eventDocSnapshot.data(), id: eventDocSnapshot.id, createdAt: createdAt };
-
-    return {
-      props: {
-        data: eventData || null,
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching event data:', error);
-    return {
-      notFound: true,
-    };
-  }
 }
 
 export default EventPage;
