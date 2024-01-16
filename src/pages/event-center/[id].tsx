@@ -16,6 +16,7 @@ import { useSearchParams } from 'next/navigation';
 import { EventCategories } from '.';
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import { fbEvent, gtagEvent } from '../../utils/analyticsUtil';
 
 const EventPage = ({ data }) => {
   const [event, setEvent] = useState();
@@ -126,6 +127,19 @@ const EventPage = ({ data }) => {
     await updateDoc(eventRef, { participants: updatedParticipants });
   };
   const handleJoinEvent = async () => {
+    fbEvent(`click-join-event-${event.id || ''}`, {
+      content_name: 'click_join_event',
+      content_category: 'user_interaction',
+      value: 1,
+    });
+
+    gtagEvent({
+      action: `click-join-event-${event.id || ''}`,
+      category: 'user_interaction',
+      label: 'click_join_event',
+      value: 1,
+    });
+
     if (user) {
       setLoading(true); // Set the saving state to indicate that the operation is in progress
       // Add the user's ID to the participants array
