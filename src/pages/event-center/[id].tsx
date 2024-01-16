@@ -1,18 +1,34 @@
-import { Header, Image, Container, Button } from '../../components/UI';
+import { Header, Image, Container, Button, Modal } from '../../components/UI';
+import { CheckoutForm } from '../../components';
 import { useEffect, useState } from 'react';
-import { collection, getDocs, doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  arrayUnion,
+  updateDoc,
+  Timestamp,
+} from 'firebase/firestore';
 import { useAuthContext, firestore } from '../../context';
 import { useAppStore } from '../../stores';
+import { useSearchParams } from 'next/navigation';
 import { EventCategories } from '.';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 
 const EventPage = ({ data }) => {
   const [event, setEvent] = useState();
   const [loading, setLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState('');
+  const [showCheckout, setShowCheckout] = useState<boolean>(false);
   const { openLoginModal } = useAppStore();
   const [duplicateMsg, setDuplicateMsg] = useState<string>('');
   const { user } = useAuthContext();
   const [message, setMessage] = useState<string>('');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   useEffect(() => {
     setEvent(data);
   }, [data]);
@@ -23,6 +39,26 @@ const EventPage = ({ data }) => {
     }
   }, [user, event]);
 
+  useEffect(() => {
+    const fetchPaymentIntent = async () => {
+      try {
+        const paymentIntent = searchParams.get('payment_intent');
+        if (paymentIntent && user) {
+          const buyerRef = doc(firestore, 'buyers', user?.id);
+          await updateDoc(buyerRef, { paymentIntents: arrayUnion(paymentIntent) });
+          router.replace(`/event-center/${event.id}`, undefined, { shallow: true });
+
+          await sendJoinEmail();
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage(error?.message || 'Error fetching payments');
+      }
+    };
+
+    fetchPaymentIntent();
+  }, [searchParams, user]);
+
   if (!event) {
     return (
       <div className="container mx-auto px-4">
@@ -31,42 +67,48 @@ const EventPage = ({ data }) => {
     );
   }
 
+  const sendJoinEmail = async () => {
+    // Create a reference to the event document in the "events" collection
+    const eventRef = doc(firestore, 'events', event.id);
+    const updatedParticipants = [...event.participants, user.id];
+
+    const eventDateTimeString = `${event?.eventDate} ${event?.dateStartTime} - ${event?.dateEndTime}`;
+
+    // Send a POST request to your send-event-email API
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/send-event-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: user.emailAddress,
+        virtual: event.virtual || false,
+        eventLink: event.link || '',
+        location: event.location || '',
+        date: eventDateTimeString,
+        name: event.title,
+      }),
+    });
+
+    if (response.ok) {
+      setMessage('Email sent successfully!, check your email');
+    } else {
+      setMessage(`Error sending email:', ${response.statusText}`);
+    }
+    // Update the document with the updated participants array
+    await updateDoc(eventRef, { participants: updatedParticipants });
+  };
   const handleJoinEvent = async () => {
     if (user) {
       setLoading(true); // Set the saving state to indicate that the operation is in progress
       // Add the user's ID to the participants array
-      const updatedParticipants = [...event.participants, user.id];
-
-      // Create a reference to the event document in the "events" collection
-      const eventRef = doc(firestore, 'events', event.id);
-
       try {
-        const eventDateTimeString = `${event?.eventDate} ${event?.dateStartTime} - ${event?.dateEndTime}`;
-
-        // Send a POST request to your send-event-email API
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/send-event-email`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: user.emailAddress,
-            virtual: event.virtual || false,
-            eventLink: event.link || '',
-            location: event.location || '',
-            date: eventDateTimeString,
-            name: event.title,
-          }),
-        });
-
-        if (response.ok) {
-          setMessage('Email sent successfully!, check your email');
-        } else {
-          setMessage(`Error sending email:', ${response.statusText}`);
+        if (event.cost) {
+          setShowCheckout(true);
+          return;
         }
-        // Update the document with the updated participants array
-        await updateDoc(eventRef, { participants: updatedParticipants });
 
+        await sendJoinEmail();
         setTimeout(() => {
           setMessage('');
         }, [2000]);
@@ -104,18 +146,18 @@ const EventPage = ({ data }) => {
       }}
       className="event-container"
     >
-      <div className="mx-auto p-4 md:p-8 max-w-2xl">
+      <div className="p-4 md:p-8">
         <Image
           src={imgUrl}
           alt={imgAlt}
           width={850}
-          height={650}
-          className="w-full mb-8 rounded-lg"
+          height={850}
+          className="w-full h-[200px] mb-8 rounded-lg"
         />
         {!duplicateMsg && (
           <Button
             color="secondary"
-            className="text-white my-4 px-10"
+            className="text-white my-4 px-20 py-4"
             loading={loading}
             onClick={handleJoinEvent}
           >
@@ -127,12 +169,28 @@ const EventPage = ({ data }) => {
         <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
         <p className="mb-2 text-lg italic">Location: {event.location}</p>
         <p className="mb-2 text-lg italic">Category: {category}</p>
+        <p className="mb-2 text-lg italic">Cost: {`$${event.cost}` || 'Free'}</p>
         <p className="mb-2 text-lg italic">Date: {event.eventDate}</p>
         <p className="mb-2 text-lg italic">Start Time: {event.dateStartTime}</p>
         <p className="mb-2 text-lg italic">End Time: {event.dateEndTime}</p>
         <p className="mb-4 leading-relaxed">Description: {event.description}</p>
         <p className="mb-2 text-lg italic">Total Participants: {event.totalParticipants}</p>
       </div>
+      <Modal
+        open={showCheckout}
+        onClose={() => setShowCheckout(false)}
+        className="bg-white p-6"
+        closeXClassName="text-black"
+      >
+        {checkoutError && <p>{checkoutError}</p>}
+        <div className="text-black text-4xl my-4 text-center">{event.title}</div>
+        <CheckoutForm
+          title={event.title}
+          cost={event.cost || ''}
+          setCheckoutError={setCheckoutError}
+          eventId={event.id}
+        />
+      </Modal>
     </Container>
   );
 };

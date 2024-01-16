@@ -121,6 +121,7 @@ const EventCenterPage = () => {
                   <p>Start: {event.dateStartTime}</p>
                   <p>End: {event.dateEndTime}</p>
                   <p>Date: {event.eventDate}</p>
+                  <p>Cost: {event.cost ? `$${event.cost}` : 'Free'}</p>
                   <Link href={`/event-center/${event.id}`}>
                     <Button color="secondary" className="text-white mt-2">
                       View Event

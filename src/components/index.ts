@@ -13,8 +13,10 @@ import { MortgageCalculator } from './MortgageCalculator';
 import { FinanceTable } from './FinanceTable';
 import { SendMessageModal } from './SendMessageModal';
 import { PaymentMethod } from './PaymentMethod';
+import { CheckoutForm } from './CheckoutForm';
 
 export {
+  CheckoutForm,
   SendMessageModal,
   StarRating,
   DefaultHero,

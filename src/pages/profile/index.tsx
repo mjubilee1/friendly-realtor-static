@@ -7,6 +7,8 @@ import { FileInput } from '../../components/UI/Form/FileInput';
 import { PaymentMethod } from '../../components';
 import { useForm } from 'react-hook-form';
 import { Select } from '../../components/UI/Select';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import {
   doc,
   getDoc,
@@ -51,6 +53,7 @@ const HouseHunter = () => {
   const [sourceAccount, setSourceAccount] = useState<string>('');
   const [destinationAccount, setDestinationAccount] = useState<string>('');
   const [accountOptions, setAccountOptions] = useState([]);
+  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY);
 
   useEffect(() => {
     if (!accounts || accounts.length === 0) {
@@ -683,7 +686,9 @@ const HouseHunter = () => {
         <div className="pl-16">
           <Header as="h1">Payment Method</Header>
           {msg && <p className="my-2 text-red-500">{msg}</p>}
-          <PaymentMethod user={user} />
+          <Elements stripe={stripePromise}>
+            <PaymentMethod user={user} />
+          </Elements>
           {/*<div className="mt-20 mb-4 text-3xl">Bank Account Saving's Feature</div>
           {!accessToken ? (
             <>
