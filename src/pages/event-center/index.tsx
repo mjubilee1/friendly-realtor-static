@@ -113,7 +113,7 @@ const EventCenterPage = () => {
                 <div key={event.id} className="event">
                   <p>Organizer: {event.organizer}</p>
                   <p data-tooltip-id="my-tooltip-1">
-                    Description: {truncateDescription(event.description, 15)}{' '}
+                    Description: {truncateDescription(event.description, 100)}{' '}
                   </p>
                   <p>
                     Total Participants: {event.participants.length} | {event.totalParticipants}
