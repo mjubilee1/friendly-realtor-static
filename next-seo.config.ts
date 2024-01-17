@@ -7,7 +7,7 @@ const config: DefaultSeoProps = {
   openGraph: {
     type: 'website',
     title: 'Friendly Realtor',
-    url: 'https://friendlyrealtor.app/',
+    url: 'https://jubileespace.com/',
     siteName: 'Friendly Realtor',
     description:
       'Discover your dream home with our platform! We specialize in assisting first-time buyers, providing expert guidance and making the home buying process seamless. Find your perfect match while gaining a comprehensive understanding of the journey.',

@@ -1,22 +1,19 @@
-const siteUrl = "https://friendlyrealtor.app/";
+const siteUrl = 'https://jubileespace.com/';
 
 module.exports = {
   siteUrl,
-  exclude: ["/404", "/server-sitemap.xml"],
+  exclude: ['/404', '/server-sitemap.xml'],
   generateRobotsTxt: true,
-	outDir: "./public",
+  outDir: './public',
   robotsTxtOptions: {
     policies: [
       {
-        userAgent: "*",
-        disallow: ["/404"],
+        userAgent: '*',
+        disallow: ['/404'],
       },
-      { userAgent: "*", allow: "/" },
+      { userAgent: '*', allow: '/' },
     ],
-    additionalSitemaps: [
-      `${siteUrl}sitemap.xml`,
-      `${siteUrl}server-sitemap.xml`,
-    ],
+    additionalSitemaps: [`${siteUrl}sitemap.xml`, `${siteUrl}server-sitemap.xml`],
   },
-	sitemapSize: 7000,
+  sitemapSize: 7000,
 };
