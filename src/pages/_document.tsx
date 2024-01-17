@@ -14,7 +14,7 @@ export default function Document() {
                 "@type": "WebSite",
                 "name": "Jubilee Investments LLC",
                 "alternateName": "Jubilee Investments LLC",
-                "url": "https://friendlyrealtor.app/"
+                "url": "https://jubileespace.com/"
               }
             `,
           }}
@@ -32,7 +32,7 @@ export default function Document() {
                   "@type": "service",
                   "name": "Jubilee Investments LLC"
                 },
-                "license": "https://friendlyrealtor.app/"
+                "license": "https://jubileespace.com/"
               }
             `,
           }}
@@ -46,8 +46,8 @@ export default function Document() {
                 "@type": "localbusiness",
                 "name": "Jubilee Investments LLC",
                 "telephone": "2409064819",
-                "url": "https://friendlyrealtor.app/",
-                "logo": "https://friendlyrealtor.app/_next/static/media/logo.0d1f047c.png",
+                "url": "https://jubileespace.com/",
+                "logo": "https://jubileespace.com/_next/static/media/logo.0d1f047c.png",
                 "image": "https://images.ctfassets.net/v3wxyl8kvdve/3e4nrqrsn1ZinOk95n6dA9/2d72c227fd013b90d03babd869d83e41/Banner.png",
                 "pricerange": "$$$",
                 "description": "Assisting Buyers in Discovering Their Dream Home Our platform simplifies the path to homeownership for first-time buyers with expert guidance, comprehensive listings, and transparent financial assistance. Connecting Home Buyers with Top-Producing Agents in Your Area Our platform streamlines the process of matching home buyers with top-producing agents, ensuring you find the best fit for your needs.",
@@ -110,8 +110,8 @@ export default function Document() {
                 "@context": "http://www.schema.org",
                 "@type": "professionalService",
                 "name": "Jubilee Investments LLC",
-                "url": "https://friendlyrealtor.app/",
-                "logo": "https://friendlyrealtor.app/_next/static/media/logo.0d1f047c.png",
+                "url": "https://jubileespace.com/",
+                "logo": "https://jubileespace.com/_next/static/media/logo.0d1f047c.png",
                 "image": "https://images.ctfassets.net/v3wxyl8kvdve/3e4nrqrsn1ZinOk95n6dA9/2d72c227fd013b90d03babd869d83e41/Banner.png",
                 "priceRange": "Affordable",
                 "telephone": "2409064819",
@@ -199,7 +199,7 @@ export default function Document() {
                 "@context": "http://schema.org",
                 "@type": "Organization",
                 "name": "JubileeInvestments LLC",
-                "url": "https://friendlyrealtor.app/",
+                "url": "https://jubileespace.com/",
                 "sameAs": [
                   "https://www.instagram.com/friendlyrealtor.app/",
                   "https://www.facebook.com/profile.php?id=100091290482188",
@@ -219,7 +219,7 @@ export default function Document() {
               {
                 "@context": "http://schema.org",
                 "@type": "Organization",
-                "url": "https://friendlyrealtor.app/contact",
+                "url": "https://jubileespace.com/contact",
                 "contactPoint": [
                   {
                     "@type": "ContactPoint",
@@ -238,8 +238,8 @@ export default function Document() {
               {
                 "@context": "http://schema.org",
                 "@type": "Organization",
-                "url": "https://friendlyrealtor.app/",
-                "logo": "https://friendlyrealtor.app/_next/static/media/logo.0d1f047c.png"
+                "url": "https://jubileespace.com/",
+                "logo": "https://jubileespace.com/_next/static/media/logo.0d1f047c.png"
               }
             `,
           }}
@@ -256,7 +256,7 @@ export default function Document() {
                     "@type": "ListItem",
                     "position": 1,
                     "item": {
-                      "@id": "https://friendlyrealtor.app/",
+                      "@id": "https://jubileespace.com/",
                       "name": "Home"
                     }
                   },
@@ -264,7 +264,7 @@ export default function Document() {
                     "@type": "ListItem",
                     "position": 2,
                     "item": {
-                      "@id": "https://friendlyrealtor.app/find-a-realtor",
+                      "@id": "https://jubileespace.com/find-a-realtor",
                       "name": "Find A Realtor"
                     }
                   },
@@ -272,7 +272,7 @@ export default function Document() {
                     "@type": "ListItem",
                     "position": 3,
                     "item": {
-                      "@id": "https://friendlyrealtor.app/find-homes",
+                      "@id": "https://jubileespace.com/find-homes",
                       "name": "Search Homes"
                     }
                   },
@@ -280,7 +280,7 @@ export default function Document() {
                     "@type": "ListItem",
                     "position": 4,
                     "item": {
-                      "@id": "https://friendlyrealtor.app/grants",
+                      "@id": "https://jubileespace.com/grants",
                       "name": "Find Home Buying Program(s)"
                     }
                   },
@@ -288,7 +288,7 @@ export default function Document() {
                     "@type": "ListItem",
                     "position": 5,
                     "item": {
-                      "@id": "https://friendlyrealtor.app/event-center",
+                      "@id": "https://jubileespace.com/event-center",
                       "name": "Event Center"
                     }
                   },
@@ -296,7 +296,7 @@ export default function Document() {
                     "@type": "ListItem",
                     "position": 6,
                     "item": {
-                      "@id": "https://friendlyrealtor.app/tools",
+                      "@id": "https://jubileespace.com/tools",
                       "name": "AI Tools"
                     }
                   },
@@ -304,7 +304,7 @@ export default function Document() {
                     "@type": "ListItem",
                     "position": 7,
                     "item": {
-                      "@id": "https://friendlyrealtor.app/mission",
+                      "@id": "https://jubileespace.com/mission",
                       "name": "Our Mission"
                     }
                   }
@@ -322,13 +322,13 @@ export default function Document() {
                 "@type": "Article",
                 "headline": "Our Mission",
                 "description": "At FriendlyRealtor, we're your trusted partner on the path to homeownership. Our dedication is to help individuals and families turn their homeownership dreams into reality within the next 3-5 years. Friendly Realtor Montrell Montrell Jubilee, Founder & CEO Montrell's remarkable journey began on the scenic Eastern Shore of Virginia and Maryland, where he spent his formative years surrounded by the beauty of nature and the warmth of close-knit communities. With an unwavering passion for technology and innovation, he embarked on his educational path, ultimately finding his way to Towson University, where he delved deep into the world of computer science. His academic pursuits not only honed his technical skills but also instilled in him a profound appreciation for the possibilities of the digital age. Upon graduating, Montrell made a deliberate choice to immerse himself in the bustling and diverse landscape of Baltimore and Towson. Over the past four years, he has cultivated a rich tapestry of relationships and professional connections that have contributed to both his personal and career growth. His experiences have been instrumental in shaping FriendlyRealtor into the trusted entity it is today.",
-                "image": ["https://friendlyrealtor.app/_next/static/media/montrell.695da4c3.jpg"],
+                "image": ["https://jubileespace.com/_next/static/media/montrell.695da4c3.jpg"],
                 "datePublished": "2023-01-01T08:00:00+08:00",
                 "dateModified": "2023-11-11T09:20:00+08:00",
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/mission"
+                  "url": "https://jubileespace.com/mission"
                 }]
               }
             `,
@@ -349,7 +349,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/mmp-1st-time-advantage"
+                  "url": "https://jubileespace.com/grants/mmp-1st-time-advantage"
                 }]
               }
             `,
@@ -370,7 +370,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/maryland-mortgage-program-flex"
+                  "url": "https://jubileespace.com/grants/maryland-mortgage-program-flex"
                 }]
               }
             `,
@@ -391,7 +391,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/maryland-partner-match-programs"
+                  "url": "https://jubileespace.com/grants/maryland-partner-match-programs"
                 }]
               }
             `,
@@ -412,7 +412,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/montgomery-county-specialty-products"
+                  "url": "https://jubileespace.com/grants/montgomery-county-specialty-products"
                 }]
               }
             `,
@@ -433,7 +433,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/greenbelt-home-advantage"
+                  "url": "https://jubileespace.com/grants/greenbelt-home-advantage"
                 }]
               }
             `,
@@ -454,7 +454,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/maryland-home-ability-program"
+                  "url": "https://jubileespace.com/grants/maryland-home-ability-program"
                 }]
               }
             `,
@@ -475,7 +475,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/maryland-smartbuy-program"
+                  "url": "https://jubileespace.com/grants/maryland-smartbuy-program"
                 }]
               }
             `,
@@ -496,7 +496,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Friendly Realtor",
-                  "url": "https://friendlyrealtor.app/blogs/homes-by-friendly-realtor"
+                  "url": "https://jubileespace.com/blogs/homes-by-friendly-realtor"
                 }]
               }
             `,
@@ -517,7 +517,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/montgomery-county-specialty-products"
+                  "url": "https://jubileespace.com/grants/montgomery-county-specialty-products"
                 }]
               }
             `,
@@ -538,7 +538,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/greenbelt-home-advantage"
+                  "url": "https://jubileespace.com/grants/greenbelt-home-advantage"
                 }]
               }
             `,
@@ -559,7 +559,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/maryland-home-ability-program"
+                  "url": "https://jubileespace.com/grants/maryland-home-ability-program"
                 }]
               }
             `,
@@ -580,7 +580,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Jubilee Investments LLC",
-                  "url": "https://friendlyrealtor.app/grants/maryland-smartbuy-program"
+                  "url": "https://jubileespace.com/grants/maryland-smartbuy-program"
                 }]
               }
             `,
@@ -601,7 +601,7 @@ export default function Document() {
                 "author": [{
                   "@type": "Person",
                   "name": "Friendly Realtor",
-                  "url": "https://friendlyrealtor.app/blogs/homes-by-friendly-realtor"
+                  "url": "https://jubileespace.com/blogs/homes-by-friendly-realtor"
                 }]
               }
             `,

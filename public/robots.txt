@@ -1,14 +1,14 @@
-# Allow all web crawlers to access the entire site
+# *
+User-agent: *
+Disallow: /404
+
+# *
 User-agent: *
 Allow: /
 
-# Allow access to the AASA file if it is at the root
-Disallow: /404
-Allow: /apple-app-site-association
-
 # Host
-Host: https://friendlyrealtor.app/
+Host: https://jubileespace.com/
 
 # Sitemaps
-Sitemap: https://friendlyrealtor.app/sitemap.xml
-Sitemap: https://friendlyrealtor.app/server-sitemap.xml
+Sitemap: https://jubileespace.com/sitemap.xml
+Sitemap: https://jubileespace.com/server-sitemap.xml
