@@ -5,7 +5,7 @@ const MortgageCalculatorPage = () => {
   return (
     <Container
       seoProps={{
-        title: 'FriendlyRealtor - Mortgage Calculator',
+        title: 'JubileeSpace - Mortgage Calculator',
       }}
     >
       <div id="content-container" />
